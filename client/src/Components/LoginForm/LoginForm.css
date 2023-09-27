@@ -1,0 +1,9 @@
+.grid-pass {
+    margin-top: 10px;
+}
+
+.login-page{
+    background-image: url('../../../public/bg2.jpg');
+   background-size: cover;
+  height: 100vh;
+}

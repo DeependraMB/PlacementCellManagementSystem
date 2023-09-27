@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Nunito:wght@300;400;600;700;800&family=Ubuntu+Condensed&display=swap');
+
+.custom-slider .slick-slide {
+    margin: 0 5px; /* Adjust the margin to reduce the gap between images */
+  }
+  #head1{
+    font-weight: bolder;
+    font-size: 28px;
+  }
+  
+  #head2{
+    font-size: 50px;
+    font-weight: bolder;
+    font-family: 'Nunito', sans-serif;
+  }

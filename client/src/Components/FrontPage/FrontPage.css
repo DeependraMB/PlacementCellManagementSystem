@@ -1,0 +1,24 @@
+/* Default styles for larger screens */
+.background-effect {
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  /* Adjust styles for screens with a maximum width of 768px (typical tablet size) */
+  @media (max-width: 768px) {
+    .background-effect {
+      background-size: auto; /* or contain depending on your preference */
+      background-repeat: repeat; /* or no-repeat if you want it to repeat */
+    }
+  }
+  
+  /* Adjust styles for screens with a maximum width of 480px (typical mobile size) */
+  @media (max-width: 480px) {
+    .background-effect {
+      background-size: auto; /* or contain depending on your preference */
+      background-repeat: repeat; /* or no-repeat if you want it to repeat */
+    }
+  }
+  
+  /* Add additional media queries and styles as needed */
+  

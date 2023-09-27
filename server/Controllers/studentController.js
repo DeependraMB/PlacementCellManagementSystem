@@ -39,6 +39,7 @@ const studentRegController = async (req, res) => {
       role: formData.role,
     });
     console.log(newStudent);
+    console.log(newStudent);
     await newStudent.save();
     res.status(200).send({
       success: true,

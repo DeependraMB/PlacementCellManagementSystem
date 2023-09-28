@@ -3,8 +3,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./db');
 require('dotenv').config();
-const studentRoutes = require('../server/Routes/studentRoutes');
-const teacherRoutes = require('../server/Routes/teacherRoutes');
+const loginRoutes = require('../server/Routes/loginRoutes');
+const studentRoutes = require('./Routes/studentRoutes');
+const teacherRoutes = require('./Routes/teacherRoutes');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -18,8 +19,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/student/register", studentRoutes);
 app.use("/teacher/register", teacherRoutes);
 
-app.use("/student/login", studentRoutes);
-app.use("/teacher/login", teacherRoutes);
+// app.use("/student/login", studentRoutes);
+// app.use("/teacher/login", teacherRoutes);
+
+app.use("/user/login",loginRoutes)
 
 
 

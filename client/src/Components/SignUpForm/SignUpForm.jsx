@@ -19,8 +19,6 @@ import { useState } from "react";
 import axios from "axios";
 import validationSchema from "../../Helpers/ValidationSchema";
 
-
-
 export default function SignUpForm() {
   // const [firstname, setFirstname] = useState("");
   // const [lastname, setLastname] = useState("");
@@ -32,7 +30,6 @@ export default function SignUpForm() {
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
 
   // const formData = {
   //   firstname: firstname,
@@ -53,8 +50,6 @@ export default function SignUpForm() {
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
-
-
 
   async function onSubmit(data, e) {
     e.preventDefault();
@@ -337,7 +332,6 @@ export default function SignUpForm() {
           </Box>
         </Container>
       </div>
-      
     </div>
   );
 }

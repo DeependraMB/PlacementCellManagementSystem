@@ -13,38 +13,47 @@ import "./LoginForm.css";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useAuth } from "../../Context/AuthContext";
 
+const schema = yup.object().shape({
+  email: yup.string().required("Email is required").email("Invalid email format"),
+  password: yup.string().required("Password is required"),
+});
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { auth, setAuth } = useAuth();
+  const { handleSubmit, control, formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
+  });
+
   const navigate = useNavigate();
-  console.log(email,password);
 
-  const formData = {
-    email: email,
-    password: password,
-  };
-  console.log(formData);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log(formData)
-    console.log("handlesubmit Login Called");
+  const onSubmit = (formData) => {
+    console.log(formData);
     try {
-        
-        axios.post("http://localhost:5000/user/login/login", formData)
-        .then((res) =>{
-            if(res.data && res.data.success){
-                console.log(res.data.token);
-                navigate("/");
-            }
-        })
+      axios.post("http://localhost:5000/user/login/login", formData).then((res) => {
+        if (res.data && res.data.success) {
+          
+          setAuth({
+            ...auth,
+            name: res.data.user.name,
+            token: res.data.token,
+            email: res.data.user.email,
+            role: res.data.user.role,
+            _id: res.data.user._id,
+          });
+          // localStorage.setItem("auth",JSON.stringify(res.data))
+          sessionStorage.setItem("auth",JSON.stringify(res.data));
+          navigate("/studenthome");
+        }
+      });
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-
-  }
+  };
 
   return (
     <div>
@@ -81,60 +90,58 @@ function LoginForm() {
             <Typography component="h1" variant="h5">
               Sign In
             </Typography>
-            <form action="post" onSubmit={handleSubmit}>
-              
-                <Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="email"
-                      label="Email Adress"
-                      type="email"
-                      id="email"
-                      autoComplete="email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                      }}
-                    />
-                  </Grid>
-                  <br />
-                  <Grid item xs={12} className="grid-pass">
-                    <TextField
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
-                      value={password}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
-                    />
-                  </Grid>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid>
+                <Grid item xs={12}>
+                  <Controller
+                    name="email"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        
+                        fullWidth
+                        label="Email Address"
+                        
+                        autoComplete="email"
+                        error={!!errors.email}
+                        helperText={errors.email ? errors.email.message : ""}
+                      />
+                    )}
+                  />
                 </Grid>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Sign In
-                </Button>
-                <Grid container justifyContent="center">
-                  <Grid item className="already">
-                    <Link
-                      to="/home"
-                      sx={{ color: "black", textDecoration: "none" }}
-                    >
-                      Don't have an account?<span> Sign Up </span>
-                    </Link>
-                  </Grid>
+                <br />
+                <Grid item xs={12} className="grid-pass">
+                  <Controller
+                    name="password"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        
+                        fullWidth
+                        label="Password"
+                        type="password"
+                        autoComplete="new-password"
+                        error={!!errors.password}
+                        helperText={errors.password ? errors.password.message : ""}
+                      />
+                    )}
+                  />
                 </Grid>
-              
+              </Grid>
+              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                Sign In
+              </Button>
+              <Grid container justifyContent="center">
+                <Grid item className="already">
+                  <Link to="/home" sx={{ color: "black", textDecoration: "none" }}>
+                    Don't have an account?<span> Sign Up </span>
+                  </Link>
+                </Grid>
+              </Grid>
             </form>
           </Box>
         </Container>

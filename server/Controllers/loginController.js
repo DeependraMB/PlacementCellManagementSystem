@@ -20,16 +20,41 @@ const loginController = async (req, res) => {
       if (!isPasswordValid) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
+      // const payload = {
+      //   _id: user._id,
+      //   email: user.email, // Add the user's email to the payload
+      //   role: user.role,   // Add the user's role to the payload (if available)
+      // };
+
       const token = JWT.sign(
+        
         { _id: user._id },
         process.env.JWT_SECRETKEY,
         {
-          expiresIn: "7d",
+          expiresIn: "1d",
         }
       );
+
+      // const cookie = require('cookie');
+      // const jwtCookie = cookie.serialize('token', token, {
+      //   httpOnly: true,
+      //   secure: process.env.JWT_SECRETKEY === 'production', // Enable in production
+      //   sameSite: 'strict', // Adjust as needed
+      //   maxAge: 3600, // Token expiration time in seconds
+      //   path: '/', // Adjust as needed
+      // });
+  
+      // // Set the cookie in the response header
+      // res.setHeader('Set-Cookie', jwtCookie);
       res.status(200).json({
         success: true,
         message: "Login Successfully",
+        user: {
+          _id: user._id,
+          name: user.firstname,
+          email: user.email,
+          role: user.role,
+        },
         token,
       });
     } catch (error) {

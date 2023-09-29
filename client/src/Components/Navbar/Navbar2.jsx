@@ -7,6 +7,7 @@ function Navbar2() {
   return (
     <div className="container-fluid bg-light shadow">
       <nav className="navbar navbar-expand-sm bg-light navbar-light py-3 py-lg-3 px-0 px-lg-5 fixed-top shadow">
+        
         <div>
          <Logo/>
         </div>

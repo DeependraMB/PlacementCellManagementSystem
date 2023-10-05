@@ -45,6 +45,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["student", "teacher", "admin"],
   },
+  otp: {
+    type: String,
+  },
 });
 
 const User = mongoose.model("User", userSchema);

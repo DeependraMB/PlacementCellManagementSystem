@@ -1,0 +1,81 @@
+/* Reduce the drawer width on screens smaller than 600px */
+@media (max-width: 600px) {
+    .MuiDrawer-paper {
+      width: 60px; /* Adjust the width as needed */
+    }
+  }
+/* Hide the drawer toggle button on screens smaller than 600px */
+@media (max-width: 600px) {
+    .MuiAppBar-root .MuiIconButton-root {
+      display: none;
+    }
+  }
+/* Center the logo and nav items on screens smaller than 600px */
+@media (max-width: 600px) {
+    .MuiAppBar-root {
+      justify-content: center;
+    }
+  }
+/* Increase the avatar size in the header on screens smaller than 600px */
+@media (max-width: 600px) {
+    .MuiAppBar-root .MuiAvatar-root {
+      width: 40px; /* Adjust the width and height as needed */
+      height: 40px;
+    }
+  }
+/* Adjust the list item styles on screens smaller than 600px */
+@media (max-width: 600px) {
+    .MuiDrawer-root .MuiList-root .MuiListItem-root {
+      padding: 8px; /* Adjust the padding as needed */
+    }
+  }
+/* Adjust the list item styles on screens smaller than 600px */
+@media (max-width: 600px) {
+    .MuiDrawer-root .MuiList-root .MuiListItem-root {
+      padding: 8px; /* Adjust the padding as needed */
+    }
+  }
+
+  /* Style for screens smaller than 600px */
+@media (max-width: 600px) {
+    .MuiListItem-root {
+      /* Add your responsive styles here */
+    }
+  }
+  
+  /* Add this CSS code in your styles.css or styles.scss file */
+
+/* Reduce the drawer width on screens smaller than 600px */
+@media (max-width: 600px) {
+  .MuiDrawer-paper {
+    width: 60px; /* Adjust the width as needed */
+  }
+
+  /* Hide the drawer toggle button on screens smaller than 600px */
+  .MuiAppBar-root .MuiIconButton-root {
+    display: none;
+  }
+
+  /* Center the logo and nav items on screens smaller than 600px */
+  .MuiAppBar-root {
+    justify-content: center;
+  }
+
+  /* Increase the avatar size in the header on screens smaller than 600px */
+  .MuiAppBar-root .MuiAvatar-root {
+    width: 40px; /* Adjust the width and height as needed */
+    height: 40px;
+  }
+
+  /* Adjust the list item styles on screens smaller than 600px */
+  .MuiDrawer-root .MuiList-root .MuiListItem-root {
+    padding: 8px; /* Adjust the padding as needed */
+  }
+}
+
+/* Add more media queries for different screen sizes */
+@media (max-width: 900px) {
+  /* Add your responsive styles here for screens up to 900px width */
+}
+
+/* Add more media queries as needed for other screen sizes */

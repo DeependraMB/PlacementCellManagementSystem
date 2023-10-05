@@ -10,14 +10,17 @@ import StudentHome from "./Pages/StudentHome";
 import { useAuth } from "../../client/src/Context/AuthContext";
 import { Navigate } from "react-router-dom";
 import Checker from "./Pages/Checker";
-
+import StudentDash from "./Components/StudentDash/StudentDash";
+import PasswordReset from "./Components/PasswordReset/PasswordReset";
+import AdminHome from "./Pages/AdminHome";
+import AdminStudentManagePage from "./Pages/AdminStudentManagePage";
+import OtpVerification from "./Components/PasswordReset/OtpVerification";
 
 function App() {
   const { auth, setAuth } = useAuth();
   return (
     <div className="App">
       <Router>
-        {/* <AuthProvider> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUpPage />} />
@@ -25,18 +28,44 @@ function App() {
           <Route
             path="/studenthome"
             element={
-              auth.token ? (
+              auth.token && auth.role == "student" ? (
                 <StudentHome />
               ) : (
-                // Redirect to login if not authenticated
+                
                 <Navigate to="/signin" />
               )
             }
           />
-          <Route path="/checker" element={<Checker />} />
+          <Route
+            path="/adminhome"
+            element={
+              auth.token && auth.role == "admin" ? (
+                <AdminHome />
+              ) : (
+                
+                <Navigate to="/signin" />
+              )
+            }
+          />
+          <Route
+            path="/student-management"
+            element={
+              auth.token  ? (
+                <AdminStudentManagePage />
+              ) : (
+                
+                <Navigate to="/signin" />
+              )
+            }
+          />
+          {/* <Route path="/adminhome" element={<AdminHome />} /> */}
+          <Route path="/password-reset" element={<PasswordReset />} />
+          <Route path="/otp-verification" element={<OtpVerification />} />
+          {/* <Route path="/student-management" element={<AdminStudentManagePage />} /> */}
+          
         </Routes>
-        {/* </AuthProvider> */}
       </Router>
+      
     </div>
   );
 }

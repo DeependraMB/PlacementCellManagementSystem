@@ -13,12 +13,14 @@ const loginController = async (req, res) => {
     try {
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(401).json({ message: "Invalid Email or Password" });
+        return res.status(200).json({ 
+          success: false,
+          message: "Invalid Email or Password" });
       }
   
       const isPasswordValid = await comparePassword(password, user.password);
       if (!isPasswordValid) {
-        return res.status(401).json({ message: "Invalid credentials" });
+        return res.status(200).json({ message: "Invalid credentials" });
       }
       // const payload = {
       //   _id: user._id,
@@ -59,7 +61,9 @@ const loginController = async (req, res) => {
       });
     } catch (error) {
       console.error("Error during student login:", error);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ 
+        success: false,
+        message: "Internal server error" });
     }
   };
   

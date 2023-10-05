@@ -18,34 +18,26 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import axios from "axios";
 import validationSchema from "../../Helpers/ValidationSchema";
+import SnackBar from "../../Helpers/SnackBar";
+import { toast } from "react-toastify";
+import { FormControl, InputLabel } from "@mui/material";
 
 export default function SignUpForm() {
-  // const [firstname, setFirstname] = useState("");
-  // const [lastname, setLastname] = useState("");
-  // const [uniregno, setUniregno] = useState("");
   const [gender, setGender] = useState("");
-  // const [mobno, setMobno] = useState("");
-  // const [department, setDepartment] = useState("");
-  // const [graduationyear, setGraduationYear] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+  // const [open, setOpen] = useState(false);
+  // const [handleClose, setHandleClose] = useState("")
+  // const [message, setMessage] = useState("");
+  // const [severity, setSeverity] = useState("");
   const navigate = useNavigate();
 
-  // const formData = {
-  //   firstname: firstname,
-  //   lastname: lastname,
-  //   uniregno: uniregno,
-  //   gender: gender,
-  //   mobno: mobno,
-  //   department: department,
-  //   graduationyear: graduationyear,
-  //   email: email,
-  //   password: password,
-  // };
+  // function isSetOpen(){
+  //     setOpen(true)
+  // }
 
   const {
     handleSubmit,
     control,
+    trigger,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
@@ -60,10 +52,13 @@ export default function SignUpForm() {
         "http://localhost:5000/student/register/register",
         data
       );
-      if (res.data && res.data.success) {
+      if (res.data && res.data.success == true) {
+        toast.success(res.data.message);
         navigate("/signin");
-      } else {
-        // Handle other conditions if needed
+      }
+      if (res.data && res.data.success == false) {
+        toast.info(res.data.message);
+        navigate("/signin");
       }
     } catch (error) {
       console.log(error);
@@ -72,6 +67,7 @@ export default function SignUpForm() {
 
   return (
     <div>
+      {/* <SnackBar open={open} message="Default Message" severity="success" /> */}
       <div className="signup-page" style={{ paddingTop: "120px" }}>
         <Container
           component="main"
@@ -121,12 +117,16 @@ export default function SignUpForm() {
                         fullWidth
                         id="firstName"
                         label="First Name"
-                        autoFocus
+                        //autoFocus
+                        onBlur={() => trigger("firstName")}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          trigger("firstName");
+                        }}
                         error={!!errors.firstName}
                         helperText={
                           errors.firstName ? errors.firstName.message : ""
                         }
-                        //onChange={(e) => setFirstname(e.target.value)}
                       />
                     )}
                   />
@@ -139,16 +139,19 @@ export default function SignUpForm() {
                     render={({ field }) => (
                       <TextField
                         {...field}
-                        required
                         fullWidth
                         id="lastName"
                         label="Last Name"
                         autoComplete="family-name"
+                        onBlur={() => trigger("lastName")}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          trigger("lastName");
+                        }}
                         error={!!errors.lastName}
                         helperText={
                           errors.lastName ? errors.lastName.message : ""
                         }
-                        // onChange={(e) => setLastname(e.target.value)}
                       />
                     )}
                   />
@@ -161,45 +164,52 @@ export default function SignUpForm() {
                     render={({ field }) => (
                       <TextField
                         {...field}
-                        required
                         fullWidth
                         id="uniregno"
                         label="Uni. Reg. Number"
+                        onBlur={() => trigger("uniregno")}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          trigger("uniregno");
+                        }}
                         error={!!errors.uniregno}
                         helperText={
                           errors.uniregno ? errors.uniregno.message : ""
                         }
-                        // onChange={(e) => setUniregno(e.target.value)}
                       />
                     )}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Controller
-                    name="gender"
-                    control={control}
-                    defaultValue={gender} // Set the default value from the state variable
-                    render={({ field }) => (
-                      <div>
+                  <FormControl fullWidth>
+                    <InputLabel htmlFor="gender">Gender</InputLabel>
+                    <Controller
+                      name="gender"
+                      control={control}
+                      defaultValue={gender}
+                      render={({ field }) => (
                         <Select
                           {...field}
-                          fullWidth
-                          label="Gender"
                           id="gender"
+                          onBlur={() => trigger("gender")}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            trigger("gender");
+                          }}
                           error={!!errors.gender}
                         >
                           <MenuItem value="Male">Male</MenuItem>
                           <MenuItem value="Female">Female</MenuItem>
                           <MenuItem value="Other">Other</MenuItem>
                         </Select>
-                        {errors.gender && (
-                          <Typography variant="caption" color="error">
-                            {errors.gender.message}
-                          </Typography>
-                        )}
-                      </div>
+                      )}
+                    />
+                    {errors.gender && (
+                      <Typography variant="caption" color="error">
+                        {errors.gender.message}
+                      </Typography>
                     )}
-                  />
+                  </FormControl>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -210,13 +220,16 @@ export default function SignUpForm() {
                     render={({ field }) => (
                       <TextField
                         {...field}
-                        required
                         fullWidth
                         id="mobno"
                         label="Mobile Number"
+                        onBlur={() => trigger("mobno")}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          trigger("mobno");
+                        }}
                         error={!!errors.mobno}
                         helperText={errors.mobno ? errors.mobno.message : ""}
-                        // onChange={(e) => setMobno(e.target.value)}
                       />
                     )}
                   />
@@ -229,15 +242,18 @@ export default function SignUpForm() {
                     render={({ field }) => (
                       <TextField
                         {...field}
-                        required
                         fullWidth
                         id="department"
                         label="Department"
+                        onBlur={() => trigger("department")}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          trigger("deparment");
+                        }}
                         error={!!errors.department}
                         helperText={
                           errors.department ? errors.department.message : ""
                         }
-                        // onChange={(e) => setDepartment(e.target.value)}
                       />
                     )}
                   />
@@ -250,17 +266,20 @@ export default function SignUpForm() {
                     render={({ field }) => (
                       <TextField
                         {...field}
-                        required
                         fullWidth
                         id="graduationyear"
                         label="Graduation Year"
+                        onBlur={() => trigger("graduationyear")}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          trigger("graduationyear");
+                        }}
                         error={!!errors.graduationyear}
                         helperText={
                           errors.graduationyear
                             ? errors.graduationyear.message
                             : ""
                         }
-                        // onChange={(e) => setGraduationYear(e.target.value)}
                       />
                     )}
                   />
@@ -274,14 +293,17 @@ export default function SignUpForm() {
                     render={({ field }) => (
                       <TextField
                         {...field}
-                        required
                         fullWidth
                         id="email"
                         label="Email Address"
                         autoComplete="email"
+                        onBlur={() => trigger("email")}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          trigger("email");
+                        }}
                         error={!!errors.email}
                         helperText={errors.email ? errors.email.message : ""}
-                        //  onChange={(e) => setEmail(e.target.value)}
                       />
                     )}
                   />
@@ -294,17 +316,20 @@ export default function SignUpForm() {
                     render={({ field }) => (
                       <TextField
                         {...field}
-                        required
                         fullWidth
                         id="password"
                         label="Password"
                         type="password"
                         autoComplete="new-password"
+                        onBlur={() => trigger("password")}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          trigger("password");
+                        }}
                         error={!!errors.password}
                         helperText={
                           errors.password ? errors.password.message : ""
                         }
-                        //  onChange={(e) => setPassword(e.target.value)}
                       />
                     )}
                   />
@@ -332,6 +357,7 @@ export default function SignUpForm() {
           </Box>
         </Container>
       </div>
+      {/*  */}
     </div>
   );
 }

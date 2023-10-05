@@ -1,207 +1,323 @@
-import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import Navbar2 from '../Navbar/Navbar2';
-// import { mainListItems, secondaryListItems } from './listItems';
-// import Chart from './Chart';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
+import * as React from "react";
+import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import MuiDrawer from "@mui/material/Drawer";
+import Box from "@mui/material/Box";
+import MuiAppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Badge from "@mui/material/Badge";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Link from "@mui/material/Link";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import Logo from "../Logo/Logo";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import Avatar from "@mui/material/Avatar";
+import Scrollbar from "react-perfect-scrollbar";
+import "react-perfect-scrollbar/dist/css/styles.css";
+import { useTheme } from "@mui/material/styles";
+import "./StudentDash.css";
+import Logout from "../Logout/Logout";
+import { useAuth } from "../../Context/AuthContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import PersonIcon from "@mui/icons-material/Person";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import ExploreIcon from "@mui/icons-material/Explore";
+import BookIcon from "@mui/icons-material/Book";
+import FeedbackIcon from "@mui/icons-material/Feedback";
+import HelpIcon from "@mui/icons-material/Help";
+import ContactSupportIcon from "@mui/icons-material/ContactSupport";
+import ForumIcon from "@mui/icons-material/Forum";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+
+
+
+
 
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
+  transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  "& .MuiDrawer-paper": {
+    position: "relative",
+    whiteSpace: "nowrap",
+    width: drawerWidth,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    boxSizing: "border-box",
+    ...(!open && {
+      overflowX: "hidden",
+      transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.leavingScreen,
       }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
+      width: theme.spacing(7),
+      [theme.breakpoints.up("sm")]: {
+        width: theme.spacing(9),
+      },
+    }),
+  },
+}));
 
-
-export default function Dashboard() {
+export default function StudentDash(props) {
+  const navigate = useNavigate();
+  const { auth, setAuth } = useAuth();
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  return (
-   
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="absolute" open={open}>
-          
-          {/* <Navbar2/> */}
+  useEffect(() => {
+    const checkData = sessionStorage.getItem("auth");
+    if (!checkData) {
+      // If not authenticated and no auth data in session storage, redirect to login
+      navigate("/signin");
+    }
+  }, [auth.token, navigate, setAuth]);
 
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
+  return (
+    //<ThemeProvider theme={theme}>
+
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+
+      <AppBar position="absolute" open={open} className="bg-white">
+        <Toolbar
+          sx={{
+            pr: "24px", // keep right padding when drawer closed
+            display: "flex",
+            justifyContent: "space-between", // Align Logo and Nav Items horizontally
+            alignItems: "center", // Center items vertically
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton
               edge="start"
-              color="inherit"
+              color="dark"
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
+                marginRight: "36px",
+                ...(open && { display: "none" }),
               }}
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
+            <Logo />
+            <div className="" style={{ paddingLeft: "162px" }}>
+              <List
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  marginLeft: "5px",
+                  color: "black",
+                }}
+              >
+                <ListItem button component={Link} href="/">
+                  <ListItemText primary="Home" />
+                </ListItem>
+                <ListItem button component={Link} href="/">
+                  <ListItemText primary="Recruiters" />
+                </ListItem>
+                <ListItem button component={Link} href="/">
+                  <ListItemText primary="Facilities" />
+                </ListItem>
+                <ListItem button component={Link} href="/">
+                  <ListItemText primary="Announcements" />
+                </ListItem>
+                <ListItem button component={Link} href="/">
+                  <ListItemText primary="About" />
+                </ListItem>
+                <ListItem button component={Link} href="/">
+                  <ListItemText primary="Contact" />
+                </ListItem>
+              </List>
+            </div>
+            {/* <div>
+              <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
+            </div> */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginLeft: "45px",
+                justifyContent: "space-between",
+              }}
             >
-              Dashboard
-            </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          {/* <List component="nav">
-            {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
-          </List> */}
-        </Drawer>
-        <Box
-          component="main"
+              <NotificationsIcon
+                sx={{
+                  color: "black",
+                  width: 35,
+                  height: 35,
+                  "& .css-110b6rr-MuiSvgIcon-root": {
+                    fontSize: "30 ",
+                    justifyContent: "space-around",
+                  },
+                }}
+              />
+              <div style={{ marginRight: "5px", marginLeft: "5px" }}>
+                <Avatar>{auth.name.slice(0, 1)}</Avatar>
+              </div>
+              {auth.name ? <Logout varient="primary" /> : ""}
+            </div>
+          </Box>
+        </Toolbar>
+      </AppBar>
+
+      <Drawer variant="permanent" open={open}>
+        <Toolbar
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+
+            px: [1],
           }}
         >
-          <Toolbar />
-          {/* <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-             
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
-          
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid>
-              
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid>
-            </Grid>
-            <Copyright sx={{ pt: 4 }} />
-          </Container> */}
-        </Box>
+          <IconButton onClick={toggleDrawer}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </Toolbar>
+        <Divider />
+        <Scrollbar style={{ height: "90vh", overflowX: "hidden" }}>
+          <List component="nav">
+            <ListItemButton component={Link} href="/studenthome">
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Dashboard"
+                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+              />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Profile Settings"
+                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+              />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <NotificationsActiveIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Notifications"
+                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+              />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <BookIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Career Resources"
+                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+              />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <FeedbackIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Feedback"
+                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+              />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <HelpIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Help and Support"
+                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+              />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <ForumIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Forums"
+                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+              />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <ContactSupportIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Contact"
+                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+              />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Logout"
+                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+              />
+            </ListItemButton>
+            
+
+            <Divider />
+          </List>
+        </Scrollbar>
+      </Drawer>
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === "light"
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: "100vh",
+          overflow: "auto",
+        }}
+      >
+        <Toolbar />
+        {props.children}
       </Box>
-  
+    </Box>
+    //</ThemeProvider>
   );
 }

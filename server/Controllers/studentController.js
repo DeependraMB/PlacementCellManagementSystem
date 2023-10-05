@@ -48,7 +48,7 @@ const studentRegController = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      success: false,
+      success: a,
       message: "Error in signup",
       error: error,
     });

@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -13,26 +12,22 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import "./SignUpForm.css";
 import { useForm, Controller } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import axios from "axios";
-import validationSchema from "../../Helpers/ValidationSchema";
-import SnackBar from "../../Helpers/SnackBar";
+import { validationSchema } from "../../Helpers/ValidationSchema";
 import { toast } from "react-toastify";
 import { FormControl, InputLabel } from "@mui/material";
+import { useEffect } from "react";
 
 export default function SignUpForm() {
   const [gender, setGender] = useState("");
-  // const [open, setOpen] = useState(false);
-  // const [handleClose, setHandleClose] = useState("")
-  // const [message, setMessage] = useState("");
-  // const [severity, setSeverity] = useState("");
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartmentId, setSelectedDepartmentId] = useState("");
 
-  // function isSetOpen(){
-  //     setOpen(true)
-  // }
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -43,31 +38,61 @@ export default function SignUpForm() {
     resolver: yupResolver(validationSchema),
   });
 
+  useEffect(() => {
+    // Fetch department data when the component mounts
+    async function fetchDepartments() {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/departments/departments"
+        );
+        setDepartments(response.data);
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+      }
+    }
+
+    fetchDepartments();
+  }, []); // Empty dependency array ensures it only runs once
+
+  const handleVerifyEmail = async () => {
+    console.log(email);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/verify-email/verify-email",
+        { email }
+      );
+    } catch (error) {
+      console.error("Error verifying email:", error);
+    }
+  };
+
   async function onSubmit(data, e) {
     e.preventDefault();
     data.role = "student";
-    console.log(data);
+    
+    data.department = selectedDepartmentId;
+    
+
     try {
-      const res = await axios.post(
+      const response = await axios.post(
         "http://localhost:5000/student/register/register",
         data
       );
-      if (res.data && res.data.success == true) {
-        toast.success(res.data.message);
-        navigate("/signin");
-      }
-      if (res.data && res.data.success == false) {
-        toast.info(res.data.message);
+
+      if (response.data && response.data.success === false) {
+        toast.error(response.data.message);
+      } else if (response.data && response.data.success === true) {
+        toast.success(response.data.message);
         navigate("/signin");
       }
     } catch (error) {
       console.log(error);
+      toast.error("An error occurred. Please try again later.");
     }
   }
 
   return (
     <div>
-      {/* <SnackBar open={open} message="Default Message" severity="success" /> */}
       <div className="signup-page" style={{ paddingTop: "120px" }}>
         <Container
           component="main"
@@ -197,6 +222,9 @@ export default function SignUpForm() {
                             trigger("gender");
                           }}
                           error={!!errors.gender}
+                          fullWidth
+                          label="Gender"
+                          select // Add select prop to make it a dropdown
                         >
                           <MenuItem value="Male">Male</MenuItem>
                           <MenuItem value="Female">Female</MenuItem>
@@ -247,16 +275,65 @@ export default function SignUpForm() {
                         label="Department"
                         onBlur={() => trigger("department")}
                         onChange={(e) => {
+                          // Store the selected department ID in the state
+                          setSelectedDepartmentId(e.target.value);
+
+                          // Update the "field" value with the department name (as it was)
                           field.onChange(e);
-                          trigger("deparment");
+                          trigger("department");
                         }}
                         error={!!errors.department}
                         helperText={
                           errors.department ? errors.department.message : ""
                         }
-                      />
+                        select // Add select prop to make it a dropdown
+                      >
+                        {departments.map((department) => (
+                          <MenuItem
+                            key={department._id}
+                            value={department._id} // Use department._id as the value
+                          >
+                            {department.name}
+                          </MenuItem>
+                        ))}
+                      </TextField>
                     )}
                   />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel htmlFor="batch">Batch</InputLabel>
+                    <Controller
+                      name="batch"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          id="batch"
+                          onBlur={() => trigger("batch")}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            trigger("batch");
+                          }}
+                          error={!!errors.gender}
+                          fullWidth
+                          label="Batch"
+                          select
+                        >
+                          <MenuItem value="A">Div A</MenuItem>
+                          <MenuItem value="B">Div B</MenuItem>
+                          <MenuItem value="C">Div C</MenuItem>
+                        </Select>
+                      )}
+                    />
+                    {errors.gender && (
+                      <Typography variant="caption" color="error">
+                        {errors.batch.message}
+                      </Typography>
+                    )}
+                  </FormControl>
                 </Grid>
                 <Grid item xs={12}>
                   <Controller
@@ -291,23 +368,64 @@ export default function SignUpForm() {
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
+                      <div className="d-flex">
+                        <TextField
+                          {...field}
+                          fullWidth
+                          id="email"
+                          label="Email Address"
+                          value={email}
+                          autoComplete="email"
+                          onBlur={() => trigger("email")}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            setEmail(e.target.value);
+                            trigger("email");
+                          }}
+                          error={!!errors.email}
+                          helperText={errors.email ? errors.email.message : ""}
+                        />
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          onClick={() => handleVerifyEmail()}
+                          className="ms-2 btn" // Add margin to separate the button
+                          style={{ height: "55px" }}
+                        >
+                          Verify
+                        </Button>
+                      </div>
+                    )}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Controller
+                    name="otpemail"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
                       <TextField
                         {...field}
                         fullWidth
-                        id="email"
-                        label="Email Address"
-                        autoComplete="email"
-                        onBlur={() => trigger("email")}
+                        id="otpemail"
+                        label="Enter OTP"
+                        type="tetx"
+                        autoComplete="otpemail"
+                        onBlur={() => trigger("otpemail")}
                         onChange={(e) => {
                           field.onChange(e);
-                          trigger("email");
+                          trigger("otpemail");
                         }}
-                        error={!!errors.email}
-                        helperText={errors.email ? errors.email.message : ""}
+                        error={!!errors.otpemail}
+                        helperText={
+                          errors.otpemail ? errors.otpemail.message : ""
+                        }
                       />
                     )}
                   />
                 </Grid>
+
                 <Grid item xs={12}>
                   <Controller
                     name="password"
@@ -346,12 +464,12 @@ export default function SignUpForm() {
             </form>
             <Grid container justifyContent="center">
               <Grid item className="already">
-                <Link
-                  to="/home"
-                  sx={{ color: "black", textDecoration: "none" }}
+                <NavLink
+                  to="/signin"
+                  style={{ textDecoration: "none", color: "black" }}
                 >
                   Already have an account?<span> Sign in </span>
-                </Link>
+                </NavLink>
               </Grid>
             </Grid>
           </Box>

@@ -9,12 +9,11 @@ import LoginPage from "./Pages/LoginPage";
 import StudentHome from "./Pages/StudentHome";
 import { useAuth } from "../../client/src/Context/AuthContext";
 import { Navigate } from "react-router-dom";
-import Checker from "./Pages/Checker";
-import StudentDash from "./Components/StudentDash/StudentDash";
 import PasswordReset from "./Components/PasswordReset/PasswordReset";
 import AdminHome from "./Pages/AdminHome";
 import AdminStudentManagePage from "./Pages/AdminStudentManagePage";
 import OtpVerification from "./Components/PasswordReset/OtpVerification";
+import StudentUpdateProfile from "./Pages/StudentUpdateProfile";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -28,7 +27,7 @@ function App() {
           <Route
             path="/studenthome"
             element={
-              auth.token && auth.role == "student" ? (
+              auth.token && auth.role === "student" ? (
                 <StudentHome />
               ) : (
                 
@@ -39,7 +38,7 @@ function App() {
           <Route
             path="/adminhome"
             element={
-              auth.token && auth.role == "admin" ? (
+              auth.token && auth.role === "admin" ? (
                 <AdminHome />
               ) : (
                 
@@ -61,8 +60,18 @@ function App() {
           {/* <Route path="/adminhome" element={<AdminHome />} /> */}
           <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="/otp-verification" element={<OtpVerification />} />
-          {/* <Route path="/student-management" element={<AdminStudentManagePage />} /> */}
-          
+          <Route path="/studupdateprofile" element={<StudentUpdateProfile />} />
+          <Route
+            path="/stud-update-profile"
+            element={
+              auth.token  ? (
+                <StudentUpdateProfile />
+              ) : (
+                
+                <Navigate to="/signin" />
+              )
+            }
+          />
         </Routes>
       </Router>
       

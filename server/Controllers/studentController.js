@@ -3,20 +3,45 @@ const { hashPassword, comparePassword } = require("../Helpers/registerHelper");
 const JWT = require("jsonwebtoken");
 const AuthMiddleware = require("../Middleware/AuthMiddleware");
 const User = require("../Models/userModel");
+const OTP = require("../Models/otpModel");
+
+
+
 
 //Student Register Controller
+
 
 const studentRegController = async (req, res) => {
   try {
     const formData = req.body;
     console.log(formData);
+    
+
+    const email = formData.email;
+
+    const storedOTPRecord = await OTP.findOne({ email });
+
+   
+    const otpemail = formData.otpemail;
+    console.log(otpemail)
+    // const otp = formData.otp; // Assuming OTP is included in the request body
+
+    
+
+    if (!storedOTPRecord || otpemail !== storedOTPRecord.otp) {
+      return res.status(200).json({ 
+        success: false, 
+        message: "Invalid OTP" });
+    }
+
+    await OTP.deleteOne({ email });
 
     //Check User Exist or Not
     const existingUser = await User.findOne({ email: formData.email });
 
     //Already Existing
     if (existingUser) {
-      return res.status(200).send({
+      return res.status(201).json({
         success: false,
         message: "Already Registered ,Please Login",
       });
@@ -32,23 +57,23 @@ const studentRegController = async (req, res) => {
       lastname: formData.lastName,
       gender: formData.gender,
       phno: formData.mobno,
-      department: formData.department,
+      departmentId: formData.department,
+      batch: formData.batch,
       graduationYear: formData.graduationyear,
       email: formData.email,
       password: hashedPassword,
       role: formData.role,
     });
-    console.log(newStudent);
-    console.log(newStudent);
     await newStudent.save();
-    res.status(200).send({
+    res.status(200).json({
       success: true,
       message: "User Registered Successfully",
     });
+
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      success: a,
+      success: error,
       message: "Error in signup",
       error: error,
     });

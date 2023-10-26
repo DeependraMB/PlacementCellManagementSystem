@@ -7,7 +7,12 @@ const loginRoutes = require('../server/Routes/loginRoutes');
 const studentRoutes = require('./Routes/studentRoutes');
 const teacherRoutes = require('./Routes/teacherRoutes');
 const resetpasswordRoutes = require('./Routes/resetpasswordRoutes');
+const verifyEmailRoutes = require('../server/Routes/verifyEmailRoutes')
 const User = require("./Models/userModel");
+const departmentRouter = require("./Routes/departmentRouter")
+const studentDetailsRoutes = require("./Routes/studentDetailsRoutes");
+
+const otpStore = {};
 
 const app = express();
 const PORT = process.env.PORT;
@@ -22,13 +27,11 @@ app.use(bodyParser.json());
 app.use("/student/register", studentRoutes);
 app.use("/teacher/register", teacherRoutes);
 
-// app.use("/student/login", studentRoutes);
-// app.use("/teacher/login", teacherRoutes);
-
 app.use("/user/login",loginRoutes)
 
-
 app.use("/user/reset-password", resetpasswordRoutes);
+
+app.use("/verify-email", verifyEmailRoutes)
 
 // Define a route to fetch students
 app.get('/get-students', async (req, res) => {
@@ -41,6 +44,11 @@ app.get('/get-students', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+// Route to fetch all departments
+app.use("/departments" , departmentRouter);
+
+app.use("/studentDetails", studentDetailsRoutes);
 
 
 

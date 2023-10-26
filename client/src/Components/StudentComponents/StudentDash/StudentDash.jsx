@@ -1,22 +1,17 @@
 import * as React from "react";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import Logo from "../Logo/Logo";
+import Logo from "../../Logo/Logo";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -26,15 +21,13 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import Avatar from "@mui/material/Avatar";
 import Scrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import { useTheme } from "@mui/material/styles";
 import "./StudentDash.css";
-import Logout from "../Logout/Logout";
-import { useAuth } from "../../Context/AuthContext";
+import Logout from "../../Logout/Logout";
+import { useAuth } from "../../../Context/AuthContext";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import ExploreIcon from "@mui/icons-material/Explore";
 import BookIcon from "@mui/icons-material/Book";
 import FeedbackIcon from "@mui/icons-material/Feedback";
 import HelpIcon from "@mui/icons-material/Help";
@@ -42,12 +35,7 @@ import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ForumIcon from "@mui/icons-material/Forum";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
-
-
-
-
-
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -68,7 +56,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== "close",
 })(({ theme, open }) => ({
   "& .MuiDrawer-paper": {
     position: "relative",
@@ -104,7 +92,6 @@ export default function StudentDash(props) {
   useEffect(() => {
     const checkData = sessionStorage.getItem("auth");
     if (!checkData) {
-      // If not authenticated and no auth data in session storage, redirect to login
       navigate("/signin");
     }
   }, [auth.token, navigate, setAuth]);
@@ -115,13 +102,13 @@ export default function StudentDash(props) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
 
-      <AppBar position="absolute" open={open} className="bg-white">
+      <AppBar position="absolute" open={open} className="bg-white ">
         <Toolbar
           sx={{
-            pr: "24px", // keep right padding when drawer closed
+            pr: "24px",
             display: "flex",
-            justifyContent: "space-between", // Align Logo and Nav Items horizontally
-            alignItems: "center", // Center items vertically
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -189,8 +176,11 @@ export default function StudentDash(props) {
                   },
                 }}
               />
-              <div style={{ marginRight: "5px", marginLeft: "5px" }}>
-                <Avatar>{auth.name.slice(0, 1)}</Avatar>
+              <div
+                className="avatar-menu"
+                style={{ marginRight: "5px", marginLeft: "5px" }}
+              >
+                <Avatar className="avatar">{auth.name.slice(0, 1)}</Avatar>
               </div>
               {auth.name ? <Logout varient="primary" /> : ""}
             </div>
@@ -215,24 +205,30 @@ export default function StudentDash(props) {
         <Divider />
         <Scrollbar style={{ height: "90vh", overflowX: "hidden" }}>
           <List component="nav">
-            <ListItemButton component={Link} href="/studenthome">
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Dashboard"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Profile Settings"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
+            <NavLink to="/studenthome">
+              <ListItemButton>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Dashboard"
+                  sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                />
+              </ListItemButton>
+            </NavLink>
+
+            <NavLink to="/stud-update-profile">
+              <ListItemButton>
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Profile Settings"
+                  sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                />
+              </ListItemButton>
+            </NavLink>
+
             <ListItemButton>
               <ListItemIcon>
                 <NotificationsActiveIcon />
@@ -296,7 +292,6 @@ export default function StudentDash(props) {
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
             </ListItemButton>
-            
 
             <Divider />
           </List>

@@ -68,7 +68,7 @@ function Navbar() {
               Facilities
             </Link>
             <Link to="/" className="nav-item nav-link l fw-bold ">
-              A<span style={linkStyles}>nnouncements</span>
+              <span style={linkStyles}>Announcements</span>
             </Link>
             <Link
               to="/"

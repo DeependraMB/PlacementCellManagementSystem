@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,30 +8,36 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useState } from "react";
-import axios from "axios";
-import { NavLink, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useAuth } from "../../Context/AuthContext";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar2 from "../Navbar/Navbar2";
 import { toast } from "react-toastify";
 
+// Define the validation schema for the email address
+const validationSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Invalid email address")
+    .required("Email address is required"),
+});
+
 function PasswordReset() {
   const [email, setEmail] = useState("");
-//   console.log(email);
-
-  const formData = {
-    email : email,
-  }
-
   const navigate = useNavigate();
 
-  async function handleSubmit(e) {
-    e.preventDefault(); // Prevent the default form submission behavior
-  
+  // Use useForm with yupResolver and the validation schema
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+
+  // Handle form submission
+  const onSubmit = async (formData) => {
     try {
       const response = await fetch(
         "http://localhost:5000/user/reset-password/forgot-password",
@@ -43,10 +49,10 @@ function PasswordReset() {
           body: JSON.stringify(formData),
         }
       );
-  
+
       if (response.ok) {
         const data = await response.json();
-  
+
         if (data.success === false) {
           toast.error(data.message);
         } else {
@@ -60,8 +66,7 @@ function PasswordReset() {
       console.error(error);
       toast.error("Network error. Please try again later.");
     }
-  }
-  
+  };
 
   return (
     <div>
@@ -71,9 +76,7 @@ function PasswordReset() {
           component="main"
           sx={{
             backgroundColor: "white",
-            // margin: "0 0 0 auto",
             marginTop: "0px",
-            // marginRight: "140px",
             width: "330px",
             display: "flex",
             flexDirection: "column",
@@ -99,21 +102,30 @@ function PasswordReset() {
             <Typography component="h1" variant="h5" sx={{ marginTop: 2 }}>
               Reset Password
             </Typography>
-            <form method="post" onSubmit={handleSubmit}>
+            <form method="post" onSubmit={handleSubmit(onSubmit)}>
               <Grid sx={{ marginTop: 3 }}>
                 <Grid item xs={12}>
-                  <TextField
+                  <Controller
                     name="email"
-                    fullWidth
-                    label="Email Address"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        label="Email Address"
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          setEmail(e.target.value);
+                        }}
+                        error={!!errors.email}
+                        helperText={errors.email ? errors.email.message : ""}
+                      />
+                    )}
                   />
                 </Grid>
-                <br />
               </Grid>
               <Button
                 type="submit"

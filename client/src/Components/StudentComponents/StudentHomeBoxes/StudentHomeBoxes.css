@@ -1,0 +1,118 @@
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1*var(--bs-gutter-y));
+    margin-right: calc(-.5*var(--bs-gutter-x));
+    margin-left: calc(-.5*var(--bs-gutter-x));
+}
+.backg{
+    color: red;
+}
+
+.ui-item{
+    position: relative;
+    height: 130px;
+    width: 100%;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border: 1px solid #ecedf2;
+    box-shadow: 0 6px 15px rgba(64,79,104,.05);
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.ui-item .right{
+    text-align: right;
+
+}
+
+.ui-item .left .icon1{
+    position: relative;
+    display: block;
+    height: 70px;
+    width: 70px;
+    line-height: 70px;
+    font-size: 40px;
+    color: #ed1616;
+    text-align: center;
+    background-color: rgb(244, 192, 192);
+    border-radius: 8px;
+}
+.ui-item .left .icon2{
+    position: relative;
+    display: block;
+    height: 70px;
+    width: 70px;
+    line-height: 70px;
+    font-size: 40px;
+    color: rgb(176, 176, 30);
+    text-align: center;
+    background-color: rgb(238, 238, 191);
+    border-radius: 8px;
+}
+.ui-item .left .icon3{
+    position: relative;
+    display: block;
+    height: 70px;
+    width: 70px;
+    line-height: 70px;
+    font-size: 40px;
+    color: green;
+    text-align: center;
+    background-color: rgb(205, 248, 205);
+    border-radius: 8px;
+}
+.ui-item .left .icon4{
+    position: relative;
+    display: block;
+    height: 70px;
+    width: 70px;
+    line-height: 70px;
+    font-size: 40px;
+    color: #1967d2;
+    text-align: center;
+    background-color: rgb(196, 196, 240);
+    border-radius: 8px;
+}
+
+
+.ui-item.ui-green p{
+    color: green;
+    font-weight: bold;
+}
+.ui-item.ui-green h4{
+    color: green;
+}
+
+.ui-item.ui-red p{
+    color: red;
+     font-weight: bold;
+}
+.ui-item.ui-red h4{
+    color: red;
+}
+
+.ui-item.ui-yellow p{
+    color: rgb(176, 176, 30);
+     font-weight: bold;
+}
+.ui-item.ui-yellow h4{
+    color: rgb(186, 186, 36);
+}
+
+.ui-item.ui-blue p{
+    color: blue;
+     font-weight: bold;
+}
+.ui-item.ui-blue h4{
+    color: blue;
+}
+
+.icon2-small {
+    font-size: 15px; /* Adjust the size as needed */
+  }
+  

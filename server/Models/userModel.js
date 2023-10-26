@@ -24,7 +24,10 @@ const userSchema = new mongoose.Schema({
     type: String,
    // required: true,
   },
-  department: {
+  departmentId: {
+    type: String,
+  },
+  batch: {
     type: String,
    // required: true,
   },
@@ -48,6 +51,11 @@ const userSchema = new mongoose.Schema({
   otp: {
     type: String,
   },
+  otpemail: {
+    type: String,
+  },
+ 
+
 });
 
 const User = mongoose.model("User", userSchema);

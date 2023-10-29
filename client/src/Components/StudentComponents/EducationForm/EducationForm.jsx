@@ -1,18 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Grid, Button } from "@mui/material";
+import { useAuth } from "../../../Context/AuthContext";
+import { useEffect } from "react";
+import axios from "axios";
+
 
 const textFieldStyle = {
   borderBottom: "2px solid #1976D2", // Replace with your actual primary color
 };
 
 function EducationForm({ data, setData, onNext, onBack }) {
+  const { auth } = useAuth();
+  const [studentData, setStudentData] = useState("");
+
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  
+  const fetchStudentData = async () => {
+    try {
+      const studentId = auth._id;
+      
+      const response = await axios.get(`http://localhost:5000/get-student-byid/${studentId}`);
+      const departmentId = response.data.departmentId;
+      console.log(response);
+      const departmentResponse = await axios.get(`http://localhost:5000/get-department-name/${departmentId}`);
+      const departmentName = departmentResponse.data.departmentName;
+      setStudentData({ ...response.data, departmentName });
+    } catch (error) {
+      console.error("Error fetching student data:", error);
+      // Additional error handling, such as displaying a user-friendly message.
+    }
+  };
+  
+
+  // Make the data fetching call when the component renders
+  fetchStudentData();
+
+
+  
+
   return (
-    <form style={{ marginLeft: "80px", marginRight: "80px", marginTop: "50px" }}>
+    <form
+      style={{ marginLeft: "80px", marginRight: "80px", marginTop: "50px" }}
+    >
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -20,27 +55,31 @@ function EducationForm({ data, setData, onNext, onBack }) {
             label="Department"
             fullWidth
             style={textFieldStyle}
-            value={data.department}
+            value={data.department || studentData.departmentName}
             onChange={handleChange}
+            id="department"
+            autoFocus
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             name="batch"
-            label="Batch"
+            // label="Batch"
             fullWidth
             style={textFieldStyle}
-            value={data.batch}
+            value={data.batch || studentData.batch}
             onChange={handleChange}
+           id="batch"
+           
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             name="graduationyear"
-            label="Graduation Year"
+            // label="Graduation Year"
             fullWidth
             style={textFieldStyle}
-            value={data.graduationyear}
+            value={data.graduationyear || studentData.graduationYear}
             onChange={handleChange}
           />
         </Grid>

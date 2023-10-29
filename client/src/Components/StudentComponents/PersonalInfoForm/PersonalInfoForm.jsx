@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   TextField,
   Grid,
@@ -9,16 +9,35 @@ import {
   Button,
   Divider,
 } from "@mui/material";
+import { useAuth } from "../../../Context/AuthContext";
+import { useEffect } from "react";
+import axios from "axios";
 
 const blueBorder = {
   borderBottom: "2px solid #2196F3", // Replace with your preferred blue color
 };
 
 function PersonalInfoForm({ data, setData, onNext, onBack }) {
+  const { auth, setAuth } = useAuth();
+  const [studentData, setStudentData] = useState("");
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prevData) => ({ ...prevData, [name]: value }));
   };
+
+  useEffect(() => {
+    const studentId = auth._id;
+
+    axios
+      .get(`http://localhost:5000/get-student-byid/${studentId}`)
+      .then((response) => {
+        setStudentData(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <form
@@ -26,14 +45,16 @@ function PersonalInfoForm({ data, setData, onNext, onBack }) {
     >
       <Grid container spacing={4}>
         <Grid item xs={12} sm={6}>
+          
           <TextField
             name="firstName"
             label="First Name"
             color="primary"
             fullWidth
-            value={data.firstName}
+            value={  data.firstName|| studentData.firstname}
             onChange={handleChange}
-            InputProps={{ style: blueBorder }} // Apply the blue border style here
+            InputProps={{ style: blueBorder }} 
+            autoFocus
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -41,9 +62,10 @@ function PersonalInfoForm({ data, setData, onNext, onBack }) {
             name="lastName"
             label="Last Name"
             fullWidth
-            value={data.lastName}
+            value={data.lastName || studentData.lastname}
             onChange={handleChange}
-            InputProps={{ style: blueBorder }} // Apply the blue border style here
+            InputProps={{ style: blueBorder }}
+            autoFocus
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -51,9 +73,10 @@ function PersonalInfoForm({ data, setData, onNext, onBack }) {
             name="uniregno"
             label="Uni. Reg. Number"
             fullWidth
-            value={data.uniregno}
+            value={data.uniregno || studentData.userId}
             onChange={handleChange}
-            InputProps={{ style: blueBorder }} // Apply the blue border style here
+            InputProps={{ style: blueBorder }}
+            autoFocus
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -72,7 +95,7 @@ function PersonalInfoForm({ data, setData, onNext, onBack }) {
             name="phno"
             label="Phone Number"
             fullWidth
-            value={data.phno}
+            value={data.phno || studentData.phno}
             onChange={handleChange}
             InputProps={{ style: blueBorder }} // Apply the blue border style here
           />
@@ -102,9 +125,10 @@ function PersonalInfoForm({ data, setData, onNext, onBack }) {
             name="collegeEmail"
             label="College Email ID"
             fullWidth
-            value={data.collegeEmail}
+            value={data.collegeEmail || studentData.email}
             onChange={handleChange}
-            InputProps={{ style: blueBorder }} // Apply the blue border style here
+            InputProps={{ style: blueBorder }}
+            disabled
           />
         </Grid>
         <Grid item xs={12} sm={6}>

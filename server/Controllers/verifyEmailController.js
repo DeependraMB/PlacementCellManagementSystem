@@ -3,7 +3,6 @@ const User = require("../Models/userModel");
 const crypto = require("crypto");
 const OTP = require("../Models/otpModel");
 
-
 const emailUser = "campusnexa@gmail.com";
 const emailPassword = "jvcs eswe akkc gsqn";
 
@@ -15,30 +14,26 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
-
 // Generate and send OTP
 exports.sendOTP = async (req, res) => {
   const { email } = req.body;
   console.log(email);
 
+  // Check if an OTP already exists for this email
+  const existingOTP = await OTP.findOne({ email });
 
- 
-    // Check if an OTP already exists for this email
-    const existingOTP = await OTP.findOne({ email });
-
-    if (existingOTP) {
-      return res
-        .status(400)
-        .json({ success: false, message: "OTP already sent for this email" });
-    }
+  if (existingOTP) {
+    return res
+      .status(400)
+      .json({ success: false, message: "OTP already sent for this email" });
+  }
 
   // Generate a 6-digit OTP
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   console.log(otp);
 
   await OTP.create({ email, otp });
-  
+
   const mailOptions = {
     from: emailUser,
     to: email,
@@ -71,5 +66,4 @@ exports.sendOTP = async (req, res) => {
       message: "OTP sent successfully.",
     });
   });
-
 };

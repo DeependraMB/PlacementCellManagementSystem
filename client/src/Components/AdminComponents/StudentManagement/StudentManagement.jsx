@@ -10,10 +10,10 @@ import TableRow from "@mui/material/TableRow";
 import axios from "axios";
 
 const columns = [
-  { id: "_id", label: "ID", minWidth: 50 },
+  { id: "serialNumber", label: "Serial No", minWidth: 20 },
   { id: "firstname", label: "First Name", minWidth: 100 },
   { id: "lastname", label: "Last Name", minWidth: 100 },
-  { id: "department", label: "Department", minWidth: 100 },
+  { id: "department", label: "Department", minWidth: 100 }, // Assuming "department" contains department name
   { id: "gender", label: "Gender", minWidth: 50 },
   { id: "graduationYear", label: "Passout Year", minWidth: 80 },
   { id: "email", label: "Email", minWidth: 150 },
@@ -30,14 +30,16 @@ export default function StudentManagement() {
       try {
         const response = await axios.get("http://localhost:5000/get-students");
         console.log(response.data);
-        setUsers(response.data); // Assuming the response data has a similar structure to your initial "rows" data
+        setUsers(
+          response.data.map((user, index) => ({ ...user, serialNumber: index + 1 }))
+        );
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
 
     fetchData();
-  }, []); // The empty dependency array ensures this effect runs only once on component mount.
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -49,10 +51,10 @@ export default function StudentManagement() {
   };
 
   return (
-    <div>
+    <div className="my-5 mx-5">
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 545 }}>
-          <Table stickyHeader aria-label="sticky table">
+        <TableContainer sx={{ maxHeight: 720 }}>
+          <Table stickyHeader aria-label="sticky table" sx={{ borderRadius: "8px" }}>
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
@@ -62,9 +64,12 @@ export default function StudentManagement() {
                       minWidth: column.minWidth,
                       position: "sticky",
                       top: 0,
-                      backgroundColor: "white",
+                      backgroundColor: "#defcfb",
                       zIndex: 100,
                       fontWeight: "bold",
+                      border: "2px solid #000",
+                      borderRadius: "3px",
+                      textAlign: "center",
                     }}
                   >
                     {column.label}
@@ -76,9 +81,16 @@ export default function StudentManagement() {
               {users
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
-                  <TableRow key={row.id}>
+                  <TableRow
+                    key={row.id}
+                    style={{
+                      border: "1px solid #000",
+                    }}
+                  >
                     {columns.map((column) => (
-                      <TableCell key={column.id}>{row[column.id]}</TableCell>
+                      <TableCell key={column.id} style={{ border: "1px solid #000" }}>
+                        {column.id === "department" ? row.department : row[column.id]}
+                      </TableCell>
                     ))}
                   </TableRow>
                 ))}
@@ -86,7 +98,7 @@ export default function StudentManagement() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[20, 25, 100]}
+          rowsPerPageOptions={[10, 25, 100]}
           component="div"
           count={users.length}
           rowsPerPage={rowsPerPage}

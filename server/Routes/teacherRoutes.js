@@ -7,6 +7,8 @@ const AuthMiddleware = require("../Middleware/AuthMiddleware");
 //REGISTER || Teacher
 
 router.post("/register", async (req,res) =>{
+    console.log(res.data);
+    
     try {
         await teacherRegController(req, res);
     } catch (error) {

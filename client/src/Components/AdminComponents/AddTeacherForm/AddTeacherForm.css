@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Nunito:wght@300;400;600;700;800&family=Ubuntu+Condensed&display=swap');
+
+.already span{
+    color: red;
+    margin-bottom: 50px;
+}
+
+.form{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.add-teacher-page{
+    background-image: url('../../../../public/bg103.jpg');
+   background-size: cover;
+  height: 185vh;
+  padding-left: 30px;
+}

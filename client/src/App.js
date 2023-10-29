@@ -14,6 +14,9 @@ import AdminHome from "./Pages/AdminHome";
 import AdminStudentManagePage from "./Pages/AdminStudentManagePage";
 import OtpVerification from "./Components/PasswordReset/OtpVerification";
 import StudentUpdateProfile from "./Pages/StudentUpdateProfile";
+import AddTeacherPage from "./Pages/AdminPages/AddTeacherPage";
+import AddTeacherForm from "./Components/AdminComponents/AddTeacherForm/AddTeacherForm";
+import TeacherManagePage from "./Pages/AdminPages/TeacherManagePage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -30,7 +33,6 @@ function App() {
               auth.token && auth.role === "student" ? (
                 <StudentHome />
               ) : (
-                
                 <Navigate to="/signin" />
               )
             }
@@ -41,7 +43,6 @@ function App() {
               auth.token && auth.role === "admin" ? (
                 <AdminHome />
               ) : (
-                
                 <Navigate to="/signin" />
               )
             }
@@ -49,10 +50,9 @@ function App() {
           <Route
             path="/student-management"
             element={
-              auth.token  ? (
+              auth.token ? (
                 <AdminStudentManagePage />
               ) : (
-                
                 <Navigate to="/signin" />
               )
             }
@@ -64,17 +64,23 @@ function App() {
           <Route
             path="/stud-update-profile"
             element={
-              auth.token  ? (
-                <StudentUpdateProfile />
-              ) : (
-                
-                <Navigate to="/signin" />
-              )
+              auth.token ? <StudentUpdateProfile /> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/add-teacher"
+            element={
+              auth.token ? <AddTeacherForm /> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/teacher-management"
+            element={
+              auth.token ? <TeacherManagePage /> : <Navigate to="/signin" />
             }
           />
         </Routes>
       </Router>
-      
     </div>
   );
 }

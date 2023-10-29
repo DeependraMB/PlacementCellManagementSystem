@@ -1,16 +1,28 @@
 const { hashPassword,comparePassword } = require('../Helpers/registerHelper');
-const Teacher = require('../Models/teacherModel');
+const User = require('../Models/userModel');
 const JWT = require("jsonwebtoken");
 const AuthMiddleware = require('../Middleware/AuthMiddleware');
+const nodemailer = require('nodemailer');
+
+const emailUser = "campusnexa@gmail.com";
+const emailPassword = "jvcs eswe akkc gsqn";
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: emailUser,
+    pass: emailPassword,
+  },
+});
 
 //Teacher Register COntroller
 
 const teacherRegController = async (req, res) => {
     try {
       const formData = req.body;
-  
+      console.log(formData);
       //Check User Exist or Not
-      const existingUser = await Teacher.findOne({ email: formData.email });
+      const existingUser = await User.findOne({ email: formData.email });
   
       //Already Existing
       if (existingUser) {
@@ -23,22 +35,39 @@ const teacherRegController = async (req, res) => {
       //DataBase Insertion
       const hashedPassword = await hashPassword(formData.password);
   
-      const newTeacher = new Teacher ({
-          firstname : formData.firstname,
-          lastname : formData.lastname,
+      const newTeacher = new User({
+          firstname : formData.firstName,
+          lastname : formData.lastName,
           gender : formData.gender,
-          department : formData.department,
-          graduationYear : formData.graduationYear,
-          classteacher : formData.classteacher,
-          phno : formData.phno,
+          departmentId : formData.department,
+          batch : formData.batch,
+          phno : formData.mobno,
           email : formData.email,
-          password : hashedPassword
+          password : hashedPassword,
+          role : formData.role
       });
       await newTeacher.save();
+
+      const mailOptions = {
+        from: emailUser,
+        to: formData.email,
+        subject: 'Teacher Registration Confirmation',
+        text: `You have been successfully registered as a teacher.\nYour email: ${formData.email}\nYour password: ${formData.password}`,
+      };
+
+
       res.status(200).send({
           success : true,
           message : "Teacher Registered Successfully",
       })
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log("Email not sent: " + error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
   
   
     } catch (error) {

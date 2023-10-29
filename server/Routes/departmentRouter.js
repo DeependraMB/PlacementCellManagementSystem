@@ -6,7 +6,7 @@ const Department = require("../Models/departmentModel");
 router.get("/departments", async (req, res) => {
     console.log(res.data);
   try {
-    const departments = await Department.find({}, "name");
+    const departments = await Department.find({}, "_id name departmentId");
     res.status(200).json(departments);
   } catch (error) {
     console.error("Error fetching departments:", error);

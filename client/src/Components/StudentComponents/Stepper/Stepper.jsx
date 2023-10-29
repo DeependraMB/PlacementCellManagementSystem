@@ -66,6 +66,7 @@ function ProfileUpdateStepper() {
     resume: "",
     workLocation: "",
   });
+  console.log(formData)
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

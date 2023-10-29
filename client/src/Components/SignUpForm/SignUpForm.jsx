@@ -26,6 +26,7 @@ export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [departments, setDepartments] = useState([]);
   const [selectedDepartmentId, setSelectedDepartmentId] = useState("");
+  const [selectedDepartmentName, setSelectedDepartmentName] = useState("");
 
   const navigate = useNavigate();
 
@@ -46,6 +47,7 @@ export default function SignUpForm() {
           "http://localhost:5000/departments/departments"
         );
         setDepartments(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching departments:", error);
       }
@@ -69,10 +71,10 @@ export default function SignUpForm() {
   async function onSubmit(data, e) {
     e.preventDefault();
     data.role = "student";
-    
-    data.department = selectedDepartmentId;
-    
 
+    data.department = selectedDepartmentId;
+
+    console.log(data);
     try {
       const response = await axios.post(
         "http://localhost:5000/student/register/register",
@@ -263,42 +265,43 @@ export default function SignUpForm() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Controller
-                    name="department"
-                    control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        fullWidth
-                        id="department"
-                        label="Department"
-                        onBlur={() => trigger("department")}
-                        onChange={(e) => {
-                          // Store the selected department ID in the state
-                          setSelectedDepartmentId(e.target.value);
+                  <Grid item xs={12}>
+                    <Controller
+                      name="department"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          id="department"
+                          label="Department"
+                          onBlur={() => trigger("department")}
+                          onChange={(e) => {
+                            setSelectedDepartmentId(e.target.value);
 
-                          // Update the "field" value with the department name (as it was)
-                          field.onChange(e);
-                          trigger("department");
-                        }}
-                        error={!!errors.department}
-                        helperText={
-                          errors.department ? errors.department.message : ""
-                        }
-                        select // Add select prop to make it a dropdown
-                      >
-                        {departments.map((department) => (
-                          <MenuItem
-                            key={department._id}
-                            value={department._id} // Use department._id as the value
-                          >
-                            {department.name}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    )}
-                  />
+                            // Set the selected department ID as the value
+                            field.onChange(e.target.value);
+                            trigger("department");
+                          }}
+                          error={!!errors.department}
+                          helperText={
+                            errors.department ? errors.department.message : ""
+                          }
+                          select
+                        >
+                          {departments.map((department) => (
+                            <MenuItem
+                              key={department._id}
+                              value={department.departmentId}
+                            >
+                              {department.name}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      )}
+                    />
+                  </Grid>
                 </Grid>
 
                 <Grid item xs={12}>

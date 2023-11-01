@@ -77,7 +77,9 @@ function LoginForm() {
               navigate("/studenthome");
             } else if (res.data.user.role === "admin") {
               navigate("/adminhome");
-            } 
+            } else if (res.data.user.role === "teacher") {
+              navigate("/teacherhome")
+            }
           } else {
             toast.error(res.data.message)
           }

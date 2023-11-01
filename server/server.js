@@ -35,6 +35,10 @@ app.use("/user/reset-password", resetpasswordRoutes);
 
 app.use("/verify-email", verifyEmailRoutes);
 
+app.use("/departments", departmentRouter);
+
+app.use("/studentdetails", studentDetailsRoutes);
+
 app.get("/get-students", async (req, res) => {
   try {
     const students = await User.find({ role: "student" });
@@ -55,13 +59,13 @@ app.get("/get-teachers", async (req, res) => {
   }
 });
 
-app.get("/get-student-byid/:id", async (req, res) => {
-  const studentId = req.params.id;
+app.get("/get-user-byid/:id", async (req, res) => {
+  const userId = req.params.id;
   
   try {
-    const student = await User.findById(studentId);
-
-    res.json(student);
+    const users = await User.findById(userId);
+    
+    res.json(users);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -71,7 +75,7 @@ app.get("/get-student-byid/:id", async (req, res) => {
 app.get('/get-department-name/:departmentId', async (req, res) => {
   try {
     const departmentId = req.params.departmentId;
-    
+   
     const department = await Department.findOne({departmentId});
     
     if (!department) {
@@ -85,9 +89,6 @@ app.get('/get-department-name/:departmentId', async (req, res) => {
   }
 });
 
-app.use("/departments", departmentRouter);
-
-app.use("/studentDetails", studentDetailsRoutes);
 
 app.listen(PORT, () => {
   console.log("\x1b[44m\x1b[33m%s\x1b[0m", `Server is running on port ${PORT}`);

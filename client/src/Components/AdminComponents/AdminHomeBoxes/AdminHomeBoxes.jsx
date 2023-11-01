@@ -68,7 +68,34 @@ function AdminHomeBoxes() {
               </div>
             </Button>
           </div>
-          <Grid
+          <div>
+            <Button
+              component={Link}
+              to="/add-teacher"
+              variant="contained"
+              sx={{
+                backgroundColor: "white",
+                height: "34vh",
+                marginLeft: "140px",
+                float: "left",
+                flexBasis: "100%",
+                borderRadius: "20px",
+                boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                cursor: "pointer",
+              }}
+            >
+              <div
+                style={{
+                  color: "black",
+                  fontWeight: "bold",
+                  fontSize: "23px",
+                }}
+              >
+                Add Teacher
+              </div>
+            </Button>
+          </div>
+          {/* <Grid
             item
             xs={3}
             sx={{
@@ -91,8 +118,8 @@ function AdminHomeBoxes() {
             >
               Add Teacher
             </div>
-          </Grid>
-          <Grid
+          </Grid> */}
+          {/* <Grid
             item
             xs={3}
             sx={{
@@ -114,7 +141,7 @@ function AdminHomeBoxes() {
             >
               Feedbacks
             </div>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
     </div>

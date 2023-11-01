@@ -1,55 +1,56 @@
+
+
 const mongoose = require("mongoose");
 
-const studentDetailsSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  uniregno: String,
-  gender: String,
-  phno: String,
-  dob: String,
-  personalEmail: String,
-  collegeEmail: String,
-  fatherName: String,
-  motherName: String,
-  houseName: String,
-  postOffice: String,
-  city: String,
-  state: String,
-  pincode: String,
-  nationality: String,
-  department: String,
-  batch: String,
-  graduationyear: String,
-  tenthPercentage: String,
-  tenthCGPA: String,
-  tenthBoard: String,
-  tenthSchoolName: String,
-  twelfthPercentage: String,
-  twelfthCGPA: String,
-  twelfthBoard: String,
-  twelfthSchoolName: String,
-  ugCourseName: String,
-  ugPercentage: String,
-  ugCGPA: String,
-  ugYearOfGraduation: String,
-  collegeName: String,
-  ugUniversity: String,
-  mcaAggregateCGPA: String,
-  activeArrears: String,
-  historyOfArrears: String,
-  university: String,
-  technicalSkills: String,
-  certifications: String,
-  internships: String,
-  projects: String,
-  githubLink: String,
-  linkedinLink: String,
-  achievements: String,
-  languagesKnown: String,
-  profilePhoto: String,
-  resume: String,
-  workLocation: String,
+// Create a schema for your data
+const PersonalSchema = new mongoose.Schema({
+  
+  dob: {
+    type: String,
+    
+  },
+  personalemail: {
+    type: String,
+    
+  },
+  email: {
+    type: String,
+    
+  },
+  fathername: {
+    type: String,
+    
+  },
+  mothername: {
+    type: String,
+    
+  },
+  housename: {
+    type: String,
+    
+  },
+  postoffice: {
+    type: String,
+    
+  },
+  city: {
+    type: String,
+    
+  },
+  state: {
+    type: String,
+    
+  },
+  pincode: {
+    type: String,
+    
+  },
+  nationality: {
+    type: String,
+    
+  },
 });
 
-const StudentDetails = mongoose.model("StudentDetails", studentDetailsSchema);
-module.exports = StudentDetails;
+const Personal = mongoose.model("Personal", PersonalSchema);
+
+module.exports = Personal

@@ -1,11 +1,10 @@
 import * as React from "react";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
@@ -22,21 +21,19 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import Avatar from "@mui/material/Avatar";
 import Scrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import { useTheme } from "@mui/material/styles";
+import "./TeacherDash.css";
 import Logout from "../../Logout/Logout";
 import { useAuth } from "../../../Context/AuthContext";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import PersonIcon from "@mui/icons-material/Person";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import BookIcon from "@mui/icons-material/Book";
-import FeedbackIcon from "@mui/icons-material/Feedback";
-import HelpIcon from "@mui/icons-material/Help";
-import ContactSupportIcon from "@mui/icons-material/ContactSupport";
-import ForumIcon from "@mui/icons-material/Forum";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { NavLink, useNavigate } from "react-router-dom";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
+import SchoolIcon from "@mui/icons-material/School";
+import AssessmentIcon from "@mui/icons-material/Assessment";
+import WorkIcon from "@mui/icons-material/Work";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -57,7 +54,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== "close",
 })(({ theme, open }) => ({
   "& .MuiDrawer-paper": {
     position: "relative",
@@ -82,7 +79,7 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-export default function AdminDash(props) {
+export default function TeacherDash(props) {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
   const [open, setOpen] = React.useState(false);
@@ -93,7 +90,6 @@ export default function AdminDash(props) {
   useEffect(() => {
     const checkData = sessionStorage.getItem("auth");
     if (!checkData) {
-      // If not authenticated and no auth data in session storage, redirect to login
       navigate("/signin");
     }
   }, [auth.token, navigate, setAuth]);
@@ -104,13 +100,13 @@ export default function AdminDash(props) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
 
-      <AppBar position="absolute" open={open} className="bg-light">
+      <AppBar position="absolute" open={open} className="bg-white ">
         <Toolbar
           sx={{
-            pr: "24px", // keep right padding when drawer closed
+            pr: "24px",
             display: "flex",
-            justifyContent: "space-between", // Align Logo and Nav Items horizontally
-            alignItems: "center", // Center items vertically
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -126,10 +122,8 @@ export default function AdminDash(props) {
             >
               <MenuIcon />
             </IconButton>
-            <div style={{ marginLeft: "550px" }}>
-              <Logo />
-            </div>
-            {/* <div className="" style={{ paddingLeft: "162px" }}>
+            <Logo />
+            <div className="" style={{ paddingLeft: "162px" }}>
               <List
                 sx={{
                   display: "flex",
@@ -157,7 +151,7 @@ export default function AdminDash(props) {
                   <ListItemText primary="Contact" />
                 </ListItem>
               </List>
-            </div> */}
+            </div>
             {/* <div>
               <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
             </div> */}
@@ -165,9 +159,8 @@ export default function AdminDash(props) {
               style={{
                 display: "flex",
                 alignItems: "center",
-                marginLeft: "225px",
+                marginLeft: "45px",
                 justifyContent: "space-between",
-                float: "right",
               }}
             >
               <NotificationsIcon
@@ -181,8 +174,11 @@ export default function AdminDash(props) {
                   },
                 }}
               />
-              <div style={{ marginRight: "5px", marginLeft: "5px" }}>
-                <Avatar>{auth.name.slice(0, 1)}</Avatar>
+              <div
+                className="avatar-menu"
+                style={{ marginRight: "5px", marginLeft: "5px" }}
+              >
+                <Avatar className="avatar">{auth.name.slice(0, 1)}</Avatar>
               </div>
               {auth.name ? <Logout varient="primary" /> : ""}
             </div>
@@ -207,98 +203,60 @@ export default function AdminDash(props) {
         <Divider />
         <Scrollbar style={{ height: "90vh", overflowX: "hidden" }}>
           <List component="nav">
-            <ListItemButton component={Link} href="/adminhome">
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Dashboard"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Profile Settings"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <NotificationsActiveIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Notifications Send"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <ListItemButton component={Link} href="/student-management">
-              <ListItemIcon>
-                <BookIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Student Manage"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <ListItemButton component={Link} href="/teacher-management">
-              <ListItemIcon>
-                <BookIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Teachers Manage"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <FeedbackIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Notes Manage"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <HelpIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Reports"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <ForumIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Forums"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <ContactSupportIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Aptitudetest Manage"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Logout"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
+            <NavLink to="/student-assistance" className="nav-link">
+              <ListItemButton>
+                <ListItemIcon>
+                  <AssignmentIndIcon />{" "}
+                  {/* You can use the appropriate Material-UI icon */}
+                </ListItemIcon>
+                <ListItemText primary="Student Assistance" />
+              </ListItemButton>
+            </NavLink>
 
-            <Divider />
+            <NavLink to="/mock-aptitude-conduct" className="nav-link">
+              <ListItemButton>
+                <ListItemIcon>
+                  <RecordVoiceOverIcon /> {/* Use the appropriate icon */}
+                </ListItemIcon>
+                <ListItemText primary="Mock Aptitude Conduct" />
+              </ListItemButton>
+            </NavLink>
+
+            {/* <NavLink to="/support-and-training" className="nav-link">
+              <ListItemButton>
+                <ListItemIcon>
+                  <SchoolIcon />
+                </ListItemIcon>
+                <ListItemText primary="Support and Training" />
+              </ListItemButton>
+            </NavLink> */}
+
+            <NavLink to="/review-aptitude-tests" className="nav-link">
+              <ListItemButton>
+                <ListItemIcon>
+                  <AssessmentIcon /> {/* Use the appropriate icon */}
+                </ListItemIcon>
+                <ListItemText primary="Review Aptitude Tests" />
+              </ListItemButton>
+            </NavLink>
+
+            <NavLink to="/placement-workshop-facilitation" className="nav-link">
+              <ListItemButton>
+                <ListItemIcon>
+                  <WorkIcon /> {/* Use the appropriate icon */}
+                </ListItemIcon>
+                <ListItemText primary="Workshop Facilitation" />
+              </ListItemButton>
+            </NavLink>
+
+            <NavLink to="/contribute-to-resource-library" className="nav-link">
+              <ListItemButton>
+                <ListItemIcon>
+                  <LibraryBooksIcon /> {/* Use the appropriate icon */}
+                </ListItemIcon>
+                <ListItemText primary="Notes Share" />
+              </ListItemButton>
+            </NavLink>
           </List>
         </Scrollbar>
       </Drawer>

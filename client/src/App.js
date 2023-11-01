@@ -14,9 +14,11 @@ import AdminHome from "./Pages/AdminHome";
 import AdminStudentManagePage from "./Pages/AdminStudentManagePage";
 import OtpVerification from "./Components/PasswordReset/OtpVerification";
 import StudentUpdateProfile from "./Pages/StudentUpdateProfile";
+
 import AddTeacherPage from "./Pages/AdminPages/AddTeacherPage";
-import AddTeacherForm from "./Components/AdminComponents/AddTeacherForm/AddTeacherForm";
 import TeacherManagePage from "./Pages/AdminPages/TeacherManagePage";
+import TeacherHome from '../src/Pages/TeacherPages/TeacherHome';
+import StudentAssistancePage from '../src/Pages/TeacherPages/StudentAssistancePage'
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -70,13 +72,25 @@ function App() {
           <Route
             path="/add-teacher"
             element={
-              auth.token ? <AddTeacherForm /> : <Navigate to="/signin" />
+              auth.token ? <AddTeacherPage /> : <Navigate to="/signin" />
             }
           />
           <Route
             path="/teacher-management"
             element={
               auth.token ? <TeacherManagePage /> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/teacherhome"
+            element={
+              auth.token ? <TeacherHome /> : <Navigate to="/signin" />
+            }
+          />
+           <Route
+            path="/student-assistance"
+            element={
+              auth.token ? <StudentAssistancePage /> : <Navigate to="/signin" />
             }
           />
         </Routes>

@@ -1,0 +1,101 @@
+[{
+  "_id": {
+    "$oid": "6534fb69eb8a60d5561ded64"
+  },
+  "title": "Sample PDF",
+  "fileURL": "https://example.com/sample.pdf",
+  "isLocked": false,
+  "openCount": 0,
+  "closeCount": 0
+},
+{
+  "_id": {
+    "$oid": "6534fc90eb8a60d5561ded66"
+  },
+  "title": "PDF1",
+  "fileURL": "https://example.com/sample.pdf",
+  "isLocked": true,
+  "openCount": 0,
+  "closeCount": 0,
+  "price": "50"
+},
+{
+  "_id": {
+    "$oid": "6534fc90eb8a60d5561ded67"
+  },
+  "title": "PDF2",
+  "fileURL": "https://example.com/sample2.pdf",
+  "isLocked": true,
+  "openCount": 0,
+  "closeCount": 0
+},
+{
+  "_id": {
+    "$oid": "6534fc90eb8a60d5561ded68"
+  },
+  "title": "PDF3",
+  "fileURL": "https://example.com/sample2.pdf",
+  "isLocked": true,
+  "openCount": 0,
+  "closeCount": 0
+},
+{
+  "_id": {
+    "$oid": "6534fc90eb8a60d5561ded69"
+  },
+  "title": "PDF4",
+  "fileURL": "https://example.com/sample2.pdf",
+  "isLocked": true,
+  "openCount": 0,
+  "closeCount": 0
+},
+{
+  "_id": {
+    "$oid": "6534fc90eb8a60d5561ded6a"
+  },
+  "title": "PDF5",
+  "fileURL": "https://example.com/sample2.pdf",
+  "isLocked": true,
+  "openCount": 0,
+  "closeCount": 0
+},
+{
+  "_id": {
+    "$oid": "6534fc90eb8a60d5561ded6b"
+  },
+  "title": "PDF6",
+  "fileURL": "https://example.com/sample2.pdf",
+  "isLocked": true,
+  "openCount": 0,
+  "closeCount": 0
+},
+{
+  "_id": {
+    "$oid": "6534fc90eb8a60d5561ded6c"
+  },
+  "title": "PDF7",
+  "fileURL": "https://example.com/sample2.pdf",
+  "isLocked": true,
+  "openCount": 0,
+  "closeCount": 0
+},
+{
+  "_id": {
+    "$oid": "6534fc90eb8a60d5561ded6d"
+  },
+  "title": "PDF8",
+  "fileURL": "https://example.com/sample2.pdf",
+  "isLocked": true,
+  "openCount": 0,
+  "closeCount": 0
+},
+{
+  "_id": {
+    "$oid": "6534fc90eb8a60d5561ded6e"
+  },
+  "title": "PDF9",
+  "fileURL": "https://example.com/sample2.pdf",
+  "isLocked": true,
+  "openCount": 0,
+  "closeCount": 0
+}]

@@ -4,9 +4,8 @@ import { useAuth } from "../../../Context/AuthContext";
 import { useEffect } from "react";
 import axios from "axios";
 
-const textFieldStyle = {
-  borderBottom: "2px solid #1976D2",
-
+const blueBorder = {
+  borderBottom: "2px solid #2196F3", // Replace with your preferred blue color
 };
 
 function EducationForm({ onNext, onBack }) {
@@ -368,23 +367,24 @@ function EducationForm({ onNext, onBack }) {
             }}
             id="department"
             autoFocus
+            InputProps={{ style: blueBorder }}
             error={!!departmentError}
             helperText={departmentError}
-            style={textFieldStyle}
-          />
+            />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             name="batch"
-            // label="Batch"
+           
+            label="Batch"
             fullWidth
-            style={textFieldStyle}
             value={batch || studentData.batch}
             onChange={(e) => {
               setBatch(e.target.value);
               validateBatch(e.target.value);
             }}
             id="batch"
+            InputProps={{ style: blueBorder }}
             error={!!batchError}
             helperText={batchError}
           />
@@ -394,12 +394,12 @@ function EducationForm({ onNext, onBack }) {
             name="graduationyear"
             // label="Graduation Year"
             fullWidth
-            style={textFieldStyle}
             value={graduationyear || studentData.graduationYear}
             onChange={(e) => {
               setGraduationyear(e.target.value);
               validateGraduationYear(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!graduationyearError}
             helperText={graduationyearError}
           />
@@ -409,12 +409,12 @@ function EducationForm({ onNext, onBack }) {
             name="tenthpercentage"
             label="10th Percentage"
             fullWidth
-            style={textFieldStyle}
             value={tenthpercentage}
             onChange={(e) => {
               setTenthpercentage(e.target.value);
               validateTenthPercentage(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!tenthpercentageError}
             helperText={tenthpercentageError}
           />
@@ -424,12 +424,12 @@ function EducationForm({ onNext, onBack }) {
             name="tenthCGPA"
             label="10th CGPA"
             fullWidth
-            style={textFieldStyle}
             value={tenthCGPA}
             onChange={(e) => {
               setTenthCGPA(e.target.value);
               validateTenthCGPA(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!tenthCGPAError}
             helperText={tenthCGPAError}
           />
@@ -439,12 +439,12 @@ function EducationForm({ onNext, onBack }) {
             name="tenthboard"
             label="10th Board"
             fullWidth
-            style={textFieldStyle}
             value={tenthboard}
             onChange={(e) => {
               setTenthboard(e.target.value);
               validateTenthBoard(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!tenthboardError}
             helperText={tenthboardError}
           />
@@ -454,12 +454,12 @@ function EducationForm({ onNext, onBack }) {
             name="tenthschoolname"
             label="10th School Name"
             fullWidth
-            style={textFieldStyle}
             value={tenthschoolname}
             onChange={(e) => {
               setTenthschoolname(e.target.value);
               validateTenthSchoolName(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!tenthschoolnameError}
             helperText={tenthschoolnameError}
           />
@@ -469,12 +469,12 @@ function EducationForm({ onNext, onBack }) {
             name="twelthpercentage"
             label="12th Percentage"
             fullWidth
-            style={textFieldStyle}
             value={twelthpercentage}
             onChange={(e) => {
               setTwelthpercentage(e.target.value);
               validateTwelthPercentage(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!twelthpercentageError}
             helperText={twelthpercentageError}
           />
@@ -484,12 +484,12 @@ function EducationForm({ onNext, onBack }) {
             name="twelthCGPA"
             label="12th CGPA"
             fullWidth
-            style={textFieldStyle}
             value={twelthCGPA}
             onChange={(e) => {
               setTwelthCGPA(e.target.value);
               validateTwelthCGPA(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!twelthCGPAError}
             helperText={twelthCGPAError}
           />
@@ -499,12 +499,12 @@ function EducationForm({ onNext, onBack }) {
             name="twelthboard"
             label="12th Board"
             fullWidth
-            style={textFieldStyle}
             value={twelthboard}
             onChange={(e) => {
               setTwelthboard(e.target.value);
               validateTwelthBoard(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!twelthboardError}
             helperText={twelthboardError}
           />
@@ -514,12 +514,12 @@ function EducationForm({ onNext, onBack }) {
             name="twelthschoolname"
             label="12th School Name"
             fullWidth
-            style={textFieldStyle}
             value={twelthschoolname}
             onChange={(e) => {
               setTwelthschoolname(e.target.value);
               validateTenthSchoolName(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!twelthschoolnameError}
             helperText={twelthschoolnameError}
           />
@@ -529,12 +529,12 @@ function EducationForm({ onNext, onBack }) {
             name="ugcoursename"
             label="Name of UG Course"
             fullWidth
-            style={textFieldStyle}
             value={ugcoursename}
             onChange={(e) => {
               setUgcoursename(e.target.value);
               validateUgCourseName(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!ugcoursenameError}
             helperText={ugcoursenameError}
           />
@@ -544,12 +544,12 @@ function EducationForm({ onNext, onBack }) {
             name="ugpercentage"
             label="UG Percentage"
             fullWidth
-            style={textFieldStyle}
             value={ugpercentage}
             onChange={(e) => {
               setUgpercentage(e.target.value);
               validateUgPercentage(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!ugpercentageError}
             helperText={ugpercentageError}
           />
@@ -559,12 +559,12 @@ function EducationForm({ onNext, onBack }) {
             name="ugCGPA"
             label="UG CGPA"
             fullWidth
-            style={textFieldStyle}
             value={ugCGPA}
             onChange={(e) => {
               setUgCGPA(e.target.value);
               validateUgCGPA(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!ugCGPAError}
             helperText={ugCGPAError}
           />
@@ -574,12 +574,12 @@ function EducationForm({ onNext, onBack }) {
             name="ugyearofgraduation"
             label="Year of Graduation (UG)"
             fullWidth
-            style={textFieldStyle}
             value={ugyearofgraduation}
             onChange={(e) => {
               setUgyearofgraduation(e.target.value);
               validateUgYearOfGraduation(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!ugyearofgraduationError}
             helperText={ugyearofgraduationError}
           />
@@ -589,12 +589,12 @@ function EducationForm({ onNext, onBack }) {
             name="collegename"
             label="College Name"
             fullWidth
-            style={textFieldStyle}
             value={collegename}
             onChange={(e) => {
               setCollegename(e.target.value);
               validateCollegeName(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!collegenameError}
             helperText={collegenameError}
           />
@@ -604,12 +604,12 @@ function EducationForm({ onNext, onBack }) {
             name="uguniversity"
             label="University of UG"
             fullWidth
-            style={textFieldStyle}
             value={uguniversity}
             onChange={(e) => {
               setUguniversity(e.target.value);
               validateUgUniversity(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!uguniversityError}
             helperText={uguniversityError}
           />
@@ -619,12 +619,12 @@ function EducationForm({ onNext, onBack }) {
             name="mcaaggregateCGPA"
             label="MCA Aggregate CGPA"
             fullWidth
-            style={textFieldStyle}
             value={mcaaggregateCGPA}
             onChange={(e) => {
               setMcaaggregateCGPA(e.target.value);
               validateMcaAggregateCGPA(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!mcaaggregateCGPAError}
             helperText={mcaaggregateCGPAError}
           />
@@ -634,12 +634,12 @@ function EducationForm({ onNext, onBack }) {
             name="activearrears"
             label="Active Arrears"
             fullWidth
-            style={textFieldStyle}
             value={activearrears}
             onChange={(e) => {
               setActivearrears(e.target.value);
               validateActiveArrears(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!activearrearsError}
             helperText={activearrearsError}
           />
@@ -649,12 +649,12 @@ function EducationForm({ onNext, onBack }) {
             name="historyofarrears"
             label="History of Arrears"
             fullWidth
-            style={textFieldStyle}
             value={historyofarrears}
             onChange={(e) => {
               setHistoryofarrears(e.target.value);
               validateHistoryOfArrears(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!historyofarrearsError}
             helperText={historyofarrearsError}
           />
@@ -664,12 +664,12 @@ function EducationForm({ onNext, onBack }) {
             name="university"
             label="University"
             fullWidth
-            style={textFieldStyle}
             value={university}
             onChange={(e) => {
               setUniversity(e.target.value);
               validateUniversity(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!universityError}
             helperText={universityError}
           />

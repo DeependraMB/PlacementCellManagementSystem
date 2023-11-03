@@ -26,7 +26,7 @@ import { useTheme } from "@mui/material/styles";
 import Logout from "../../Logout/Logout";
 import { useAuth } from "../../../Context/AuthContext";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import BookIcon from "@mui/icons-material/Book";
@@ -252,15 +252,17 @@ export default function AdminDash(props) {
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
             </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <FeedbackIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Notes Manage"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
+            <NavLink to="/notes-management" className="nav-link">
+              <ListItemButton>
+                <ListItemIcon>
+                  <FeedbackIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Notes Manage"
+                  sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                />
+              </ListItemButton>
+            </NavLink>
             <ListItemButton>
               <ListItemIcon>
                 <HelpIcon />

@@ -23,7 +23,7 @@ const columns = [
 export default function StudentManagement() {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,12 +64,13 @@ export default function StudentManagement() {
                       minWidth: column.minWidth,
                       position: "sticky",
                       top: 0,
-                      backgroundColor: "#defcfb",
+                      backgroundColor: "#ffff",
                       zIndex: 100,
                       fontWeight: "bold",
-                      border: "2px solid #000",
+                      backgroundColor: "black",
                       borderRadius: "3px",
                       textAlign: "center",
+                      color: "white",
                     }}
                   >
                     {column.label}
@@ -80,15 +81,16 @@ export default function StudentManagement() {
             <TableBody>
               {users
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
+                .map((row,index) => (
                   <TableRow
                     key={row.id}
                     style={{
                       border: "1px solid #000",
+                      backgroundColor: index % 2 === 0 ? "#f5f5f5" : "white",
                     }}
                   >
                     {columns.map((column) => (
-                      <TableCell key={column.id} style={{ border: "1px solid #000" }}>
+                      <TableCell key={column.id} style={{   }}>
                         {column.id === "department" ? row.department : row[column.id]}
                       </TableCell>
                     ))}

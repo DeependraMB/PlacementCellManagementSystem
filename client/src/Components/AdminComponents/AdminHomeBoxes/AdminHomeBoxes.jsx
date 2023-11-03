@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
@@ -6,144 +6,147 @@ import Typography from "@mui/material/Typography";
 import { useAuth } from "../../../Context/AuthContext";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
+import PeopleIcon from "@mui/icons-material/People";
+import SchoolIcon from "@mui/icons-material/School";
+import CheckIcon from "@mui/icons-material/Check";
+import NoteIcon from "@mui/icons-material/Note";
 
 function AdminHomeBoxes() {
-   const { auth, setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
+  const [studentCount, setStudentCount] = useState(0);
+  const [teacherCount, setTeacherCount] = useState(0);
+  const [placedStudentsCount, setPlacedStudentsCount] = useState(0);
+  const [totalNotes, setTotalNotes] = useState(0);
+
+  // Fetch data from your project's backend or data source
+  useEffect(() => {
+    // Simulate fetching data (replace with actual API calls)
+    setStudentCount(150);
+    setTeacherCount(10);
+    setPlacedStudentsCount(75);
+    setTotalNotes(500);
+  }, []);
+
   return (
-    <div className="">
-      <Box sx={{ width: "100%" }}>
-        <Grid
-          container
-          rowSpacing={1}
-          columnSpacing={{ xs: 3, sm: 2, md: 2 }}
-          sx={{ marginTop: "40px" }}
-        >
-          {/* <Grid
-            item
-            xs={3}
-            sx={{
-              backgroundColor: "#ffff",
-              marginLeft: "35px",
-              height: "80vh",
-              borderRadius: "10px",
-            }}
-          >
-            <div className="py-3">
-              <Avatar sx={{ width: "250px", height: "250px", margin: "auto" }}>
-                H
-              </Avatar>
-              {/* <Typography variant="h4" component="h2">
-                {auth.name}
-              </Typography>
-              <Typography variant="h5" component="h3">
-                {auth.email}
-              </Typography> */}
-          {/* </div>
-          </Grid> */}
-          
-          <div>
-            <Button
-              component={Link}
-              to="/student-management"
-              variant="contained"
-              sx={{
-                backgroundColor: "white",
-                height: "34vh",
-                marginLeft: "140px",
-                float: "left",
-                flexBasis: "100%",
-                borderRadius: "20px",
-                boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                cursor: "pointer",
-              }}
-            >
-              <div
-                style={{
-                  color: "black",
-                  fontWeight: "bold",
-                  fontSize: "23px",
-                }}
-              >
-                Student Management
+    <div>
+      <div className="row m-5">
+        <div className="col-lg-3 col-sm-6">
+          <div className="card bg-primary text-high-emphasis-inverse mb-4">
+            <div className="card-body pb-0 d-flex justify-content-between">
+              <div className="text-center"> {/* Center text */}
+                <div className="fs-3 fw-semibold" style={{paddingTop:"40px"}}>
+                  {studentCount}
+                  <span className="fs-6 fw-normal"></span>
+                </div>
+                <div className="">Students</div>
               </div>
-            </Button>
-          </div>
-          <div>
-            <Button
-              component={Link}
-              to="/add-teacher"
-              variant="contained"
-              sx={{
-                backgroundColor: "white",
-                height: "34vh",
-                marginLeft: "140px",
-                float: "left",
-                flexBasis: "100%",
-                borderRadius: "20px",
-                boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                cursor: "pointer",
-              }}
-            >
-              <div
+              <PeopleIcon fontSize="large" /> {/* Increase icon size */}
+            </div>
+            <div className="chart-wrapper mt-3 mx-3" style={{ height: 70 }}>
+              <canvas
+                data-testid="canvas"
+                height={119}
+                role="img"
+                width={312}
                 style={{
-                  color: "black",
-                  fontWeight: "bold",
-                  fontSize: "23px",
+                  height: "69.5906px",
+                  display: "block",
+                  boxSizing: "border-box",
+                  width: "182.456px",
                 }}
-              >
-                Add Teacher
-              </div>
-            </Button>
+              />
+            </div>
           </div>
-          {/* <Grid
-            item
-            xs={3}
-            sx={{
-              backgroundColor: "white",
-              height: "34vh",
-              marginLeft: "30px",
-              float: "left",
-              flexBasis: "100%", // Set flexBasis to 100% for full width
-              borderRadius: "20px",
-              boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-            }}
-          >
-            <div
-              className=""
-              style={{
-                paddingTop: "80px",
-                fontWeight: "bold",
-                fontSize: "23px",
-              }}
-            >
-              Add Teacher
+        </div>
+        <div className="col-lg-3 col-sm-6">
+          <div className="card bg-info text-high-emphasis-inverse mb-4">
+            <div className="card-body pb-0 d-flex justify-content-between align-items-start justify-content-center">
+              <div className="text-center"> {/* Center text */}
+                <div className="fs-3 fw-semibold" style={{paddingTop:"40px"}}>
+                  {teacherCount}
+                  <span className="fs-6 fw-normal"></span>
+                </div>
+                <div>Teachers</div>
+              </div>
+              <SchoolIcon fontSize="large" /> {/* Increase icon size */}
             </div>
-          </Grid> */}
-          {/* <Grid
-            item
-            xs={3}
-            sx={{
-              backgroundColor: "white",
-              height: "34vh",
-              marginLeft: "35px",
-              float: "left",
-              flexBasis: "100%", // Set flexBasis to 100% for full width
-              borderRadius: "20px",
-              boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-            }}
-          >
-            <div
-              style={{
-                paddingTop: "80px",
-                fontWeight: "bold",
-                fontSize: "23px",
-              }}
-            >
-              Feedbacks
+            <div className="chart-wrapper mt-3 mx-3" style={{ height: 70 }}>
+              <canvas
+                data-testid="canvas"
+                height={119}
+                role="img"
+                width={312}
+                style={{
+                  height: "69.5906px",
+                  display: "block",
+                  boxSizing: "border-box",
+                  width: "182.456px",
+                }}
+              />
+              <div
+                className="chartjs-tooltip"
+                style={{ opacity: 0, left: 21, top: "141.801px" }}
+              ></div>
             </div>
-          </Grid> */}
-        </Grid>
-      </Box>
+          </div>
+        </div>
+        <div className="col-lg-3 col-sm-6">
+          <div className="card bg-warning text-high-emphasis-inverse mb-4">
+            <div className="card-body pb-0 d-flex justify-content-between align-items-start justify-content-center">
+              <div className="text-center"> {/* Center text */}
+                <div className="fs-3 fw-semibold" style={{paddingTop:"40px"}}>
+                  {placedStudentsCount}
+                  <span className="fs-6 fw-normal"></span>
+                </div>
+                <div>Placed Students</div>
+              </div>
+              <CheckIcon fontSize="large" /> {/* Increase icon size */}
+            </div>
+            <div className="chart-wrapper mt-3" style={{ height: 70 }}>
+              <canvas
+                data-testid="canvas"
+                height={119}
+                role="img"
+                width={367}
+                style={{
+                  height: "69.5906px",
+                  display: "block",
+                  boxSizing: "border-box",
+                  width: "214.62px",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="col-lg-3 col-sm-6">
+          <div className="card bg-danger text-high-emphasis-inverse mb-4">
+            <div className="card-body pb-0 d-flex justify-content-between align-items-start justify-content-center">
+              <div className="text-center"> {/* Center text */}
+                <div className="fs-4 fw-semibold" style={{paddingTop:"40px"}}>
+                  {totalNotes}
+                  <span className="fs-6 fw-normal" ></span>
+                </div>
+                <div>Total Notes</div>
+              </div>
+              <NoteIcon fontSize="large" /> {/* Increase icon size */}
+            </div>
+            <div className="chart-wrapper mt-3 mx-3" style={{ height: 70 }}>
+              <canvas
+                data-testid="canvas"
+                height={119}
+                role="img"
+                width={312}
+                style={{
+                  height: "69.5906px",
+                  display: "block",
+                  boxSizing: "border-box",
+                  width: "182.456px",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

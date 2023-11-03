@@ -249,7 +249,7 @@ export default function TeacherDash(props) {
               </ListItemButton>
             </NavLink>
 
-            <NavLink to="/contribute-to-resource-library" className="nav-link">
+            <NavLink to="/notes-share" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
                   <LibraryBooksIcon /> {/* Use the appropriate icon */}

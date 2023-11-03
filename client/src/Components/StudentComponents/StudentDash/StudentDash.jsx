@@ -238,15 +238,17 @@ export default function StudentDash(props) {
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
             </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <BookIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Career Resources"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
+            <NavLink to="/notes-material">
+              <ListItemButton>
+                <ListItemIcon>
+                  <BookIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Career Resources"
+                  sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                />
+              </ListItemButton>
+            </NavLink>
             <ListItemButton>
               <ListItemIcon>
                 <FeedbackIcon />

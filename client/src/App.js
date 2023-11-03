@@ -17,8 +17,14 @@ import StudentUpdateProfile from "./Pages/StudentUpdateProfile";
 
 import AddTeacherPage from "./Pages/AdminPages/AddTeacherPage";
 import TeacherManagePage from "./Pages/AdminPages/TeacherManagePage";
-import TeacherHome from '../src/Pages/TeacherPages/TeacherHome';
-import StudentAssistancePage from '../src/Pages/TeacherPages/StudentAssistancePage'
+import TeacherHome from "../src/Pages/TeacherPages/TeacherHome";
+import StudentAssistancePage from "../src/Pages/TeacherPages/StudentAssistancePage";
+import NotesManagementPage from "./Pages/AdminPages/NotesManagementPage";
+import NotesShare from "./Pages/TeacherPages/NotesShare";
+import NotesShareForm from './Pages/TeacherPages/NotesShareForm'
+import NotesMaterial from "./Components/StudentComponents/NotesMaterial/NotesMaterial";
+import NotesMaterialPage from "./Pages/StudentPages/NotesMaterialPage";
+
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -59,10 +65,16 @@ function App() {
               )
             }
           />
-          {/* <Route path="/adminhome" element={<AdminHome />} /> */}
+          <Route
+            path="/studentupdateprofile"
+            element={
+              auth.token ? <StudentUpdateProfile /> : <Navigate to="/signin" />
+            }
+          />
+
           <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="/otp-verification" element={<OtpVerification />} />
-          <Route path="/studupdateprofile" element={<StudentUpdateProfile />} />
+
           <Route
             path="/stud-update-profile"
             element={
@@ -83,15 +95,32 @@ function App() {
           />
           <Route
             path="/teacherhome"
-            element={
-              auth.token ? <TeacherHome /> : <Navigate to="/signin" />
-            }
+            element={auth.token ? <TeacherHome /> : <Navigate to="/signin" />}
           />
-           <Route
+          <Route
             path="/student-assistance"
             element={
               auth.token ? <StudentAssistancePage /> : <Navigate to="/signin" />
             }
+          />
+          <Route
+            path="/notes-management"
+            element={
+              auth.token ? <NotesManagementPage /> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/notes-share"
+            element={auth.token ? <NotesShare/> : <Navigate to="/signin" />}
+          />
+
+          <Route
+            path="/notes-share-form"
+            element={auth.token ? <NotesShareForm /> : <Navigate to="/signin" />}
+          />
+           <Route
+            path="/notes-material"
+            element={auth.token ? <NotesMaterialPage /> : <Navigate to="/signin" />}
           />
         </Routes>
       </Router>

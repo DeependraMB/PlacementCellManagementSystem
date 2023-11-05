@@ -293,7 +293,7 @@ function EducationForm({ onNext, onBack }) {
   
   const educationData = {
     program : program,
-    email: studentData.email,
+    email: auth.email,
     tenthpercentage: tenthpercentage,
     tenthCGPA: tenthCGPA,
     tenthboard: tenthboard,
@@ -348,7 +348,7 @@ function EducationForm({ onNext, onBack }) {
           "http://localhost:5000/studentdetails/educationdetails",
           educationData
         );
-        onNext();
+        onNext(educationData, 'education');
       } catch (error) {
         console.log(error);
       }
@@ -568,7 +568,7 @@ function EducationForm({ onNext, onBack }) {
                 name="batch"
                 label="Batch"
                 fullWidth
-                value={batch}
+                value={batch || studentData.batch}
                 onChange={(e) => {
                   setBatch(e.target.value);
                   validateBatch(e.target.value);

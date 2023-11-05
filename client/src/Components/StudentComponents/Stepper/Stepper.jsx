@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Button, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 import PersonalInfoForm from "../PersonalInfoForm/PersonalInfoForm";
 import EducationForm from "../EducationForm/EducationForm";
 import SkillsForm from "../SkillsForm/SkillsForm";
 import DeclarationForm from "../DeclarationForm/DeclarationForm";
+import { toast } from "react-toastify";
 
 const steps = [
   "Step 1: Personal Information",
@@ -16,6 +18,9 @@ const steps = [
 
 function ProfileUpdateStepper() {
   const [activeStep, setActiveStep] = useState(0);
+  const [formState, setFormState] = useState({});
+  const history = useNavigate();
+
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -25,11 +30,21 @@ function ProfileUpdateStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStepSubmit = () => {
+  const handleStepSubmit = (data, key) => {
     window.scrollTo(0, 0);
     if (activeStep === steps.length - 1) {
       // Handle final step submission logic here
+       
+      history("/studenthome");
+      toast.success("Update Profile Successfully!!!");
     } else {
+      if(key) {
+        setFormState({
+          ...formState,
+          [key]: data,
+        })
+      }
+     
       handleNext();
     }
   };
@@ -78,7 +93,7 @@ function ProfileUpdateStepper() {
             {activeStep === 2 && (
               <SkillsForm onNext={handleStepSubmit} onBack={handleBack} />
             )}
-            {activeStep === 3 && <DeclarationForm />}
+            {activeStep === 3 && <DeclarationForm formData={formState} onBack={handleBack} />}
             {isLastStep && (
               <Button
                 variant="contained"

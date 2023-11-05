@@ -159,7 +159,7 @@ function SkillsForm({ onNext, onBack }) {
             },
           }
         );
-        onNext();
+        onNext(skillsData, 'skills');
       } catch (error) {
         // Handle network errors
         console.error("Error submitting the form:", error);

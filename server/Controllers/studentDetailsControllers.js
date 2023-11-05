@@ -238,8 +238,8 @@ const skillsFormUpdate = async (req, res) => {
       githublink: formData.githublink,
       linkedinlink: formData.linkedinlink,
       languagesknown: formData.languagesknown,
-      profilephoto: req.files["profilephoto"][0].filename,
-      resume: req.files["resume"][0].filename,
+      profilephoto: req?.files?.profilephoto && req.files.profilephoto[0] && req.files.profilephoto[0].filename,
+      resume: req?.files?.resume && req.files.resume[0] && req.files.resume[0].filename,
     };
     await Skills.updateOne({ email: formData.email }, updatedData);
     res.status(200).json({ message: "Data Updated Successfully!!!!" });

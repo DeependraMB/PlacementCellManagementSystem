@@ -113,43 +113,49 @@ function PersonalInfoForm({ onNext }) {
   };
 
   const validateDob = (value) => {
+    const isValid = false;
     if (!value) {
       setDobError("Date of Birth is required");
     } else {
-      // Split the date string into month, day, and year parts
-      const dateParts = value.split("/");
-
-      if (dateParts.length !== 3) {
-        setDobError("Invalid date format. Please use MM/DD/YYYY format.");
-      } else {
-        const month = parseInt(dateParts[0], 10);
-        const day = parseInt(dateParts[1], 10);
-        const year = parseInt(dateParts[2], 10);
-
-        // Check if month, day, and year are valid
-        if (isNaN(month) || isNaN(day) || isNaN(year)) {
-          setDobError("Invalid date format. Please use MM/DD/YYYY format.");
-        } else {
-          const dobDate = new Date(year, month - 1, day); // month is 0-based
-          const today = new Date();
-          const age = today.getFullYear() - dobDate.getFullYear();
-
-          // Check if the date is a valid date and the person is at least 18 years old
-          if (
-            dobDate.getDate() === day &&
-            dobDate.getMonth() === month - 1 &&
-            dobDate.getFullYear() === year &&
-            age >= 18
-          ) {
-            setDobError("");
-          } else {
-            setDobError(
-              "Invalid date or age. You must be at least 18 years old."
-            );
-          }
-        }
-      }
+      setDobError("");
     }
+    //  else {
+    //   // Split the date string into month, day, and year parts
+    //   const dateParts = value.split("/");
+
+    //   if (dateParts.length !== 3) {
+    //     setDobError("Invalid date format. Please use MM/DD/YYYY format.");
+    //   } else {
+    //     const month = parseInt(dateParts[0], 10);
+    //     const day = parseInt(dateParts[1], 10);
+    //     const year = parseInt(dateParts[2], 10);
+
+    //     // Check if month, day, and year are valid
+    //     if (isNaN(month) || isNaN(day) || isNaN(year)) {
+    //       setDobError("Invalid date format. Please use MM/DD/YYYY format.");
+    //     } else {
+    //       const dobDate = new Date(year, month - 1, day); // month is 0-based
+    //       const today = new Date();
+    //       const age = today.getFullYear() - dobDate.getFullYear();
+
+    //       // Check if the date is a valid date and the person is at least 18 years old
+    //       if (
+    //         dobDate.getDate() === day &&
+    //         dobDate.getMonth() === month - 1 &&
+    //         dobDate.getFullYear() === year &&
+    //         age >= 18
+    //       ) {
+    //         setDobError("");
+    //         isValid = true;
+    //       } else {
+    //         setDobError(
+    //           "Invalid date or age. You must be at least 18 years old."
+    //         );
+    //       }
+    //     }
+    //   }
+    // }
+    return isValid;
   };
   const validatePersonalEmail = (value) => {
     // Regular expression pattern for a valid email
@@ -180,19 +186,24 @@ function PersonalInfoForm({ onNext }) {
     }
   };
   const validateFatherName = (value) => {
+    let isValid = false;
     // Define your validation rules for the father's name here
     // For example, you can check if it contains only letters and spaces
     const namePattern = /^[A-Za-z ]+$/;
 
     if (!value) {
       setFathernameError("Father's name is required");
+
     } else if (!namePattern.test(value)) {
       setFathernameError(
         "Father's name should only contain letters and spaces"
       );
     } else {
       setFathernameError("");
+      isValid = true;
     }
+
+    return isValid;
   };
 
   const validateMotherName = (value) => {
@@ -292,6 +303,8 @@ function PersonalInfoForm({ onNext }) {
   };
 
   const validateForm = () => {
+    // const isFatherNameValid = validateFatherName(fathername);
+    // const isDobValid = validateDob(dob)
     setIsFormValid(
       !dobError &&
         !personalemailError &&
@@ -305,6 +318,8 @@ function PersonalInfoForm({ onNext }) {
         !pincodeError &&
         !nationalityError
     );
+
+    // return isFatherNameValid && isDobValid;
   };
 
   console.log(studentData);
@@ -354,11 +369,10 @@ function PersonalInfoForm({ onNext }) {
   console.log(userData);
 
   async function onSubmit(event) {
+    console.log('ppppppppppppppp')
     event.preventDefault();
-    validateDob(dob);
     validatePersonalEmail(personalemail);
     validateCollegeEmail(email);
-    validateFatherName(fathername);
     validateMotherName(mothername);
     validateHouseName(housename);
     validatePostOffice(postoffice);
@@ -368,6 +382,8 @@ function PersonalInfoForm({ onNext }) {
     validateNationality(nationality);
 
     validateForm();
+
+    console.log(isFormValid)
 
     if (isFormValid) {
       try {
@@ -380,7 +396,7 @@ function PersonalInfoForm({ onNext }) {
           "http://localhost:5000/studentdetails/userdetails",
           userData
         );
-        onNext();
+        onNext({personalData, userData}, 'personalData');
       } catch (error) {
         console.log(error);
       }
@@ -431,7 +447,7 @@ function PersonalInfoForm({ onNext }) {
             label="First Name"
             color="primary"
             fullWidth
-            value={firstname || studentData.firstname}
+            value={firstname || ''}
             onChange={(e) => {
               setFirstname(e.target.value);
               validateFirstname(e.target.value);
@@ -447,7 +463,7 @@ function PersonalInfoForm({ onNext }) {
             name="lastname"
             label="Last Name"
             fullWidth
-            value={lastname || studentData.lastname}
+            value={lastname || ''}
             onChange={(e) => {
               setLastname(e.target.value);
               validateLastname(e.target.value);
@@ -463,7 +479,7 @@ function PersonalInfoForm({ onNext }) {
             name="uniregno"
             label="Uni. Reg. Number"
             fullWidth
-            value={uniregno || studentData.uniregno}
+            value={uniregno || ''}
             onChange={(e) => {
               setUniregno(e.target.value);
               validateUniregno(e.target.value);
@@ -474,17 +490,19 @@ function PersonalInfoForm({ onNext }) {
             helperText={uniregnoError}
           />
         </Grid>
+        {console.log(gender, 'ppppppppp')}
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <InputLabel htmlFor="gender">Gender</InputLabel>
             <Select
               name="gender"
-              value={gender || studentData.gender}
+              value={gender || ''}
               onChange={(e) => {
                 setGender(e.target.value);
                 validateGender(e.target.value);
               }}
             >
+              {/* <MenuItem value="" disabled={true}>Please Select Gender</MenuItem> */}
               <MenuItem value="Male">Male</MenuItem>
               <MenuItem value="Female">Female</MenuItem>
               <MenuItem value="Other">Other</MenuItem>
@@ -498,7 +516,7 @@ function PersonalInfoForm({ onNext }) {
             name="mobno"
             label="Phone Number"
             fullWidth
-            value={mobno || studentData.mobno}
+            value={mobno || ''}
             onChange={(e) => {
               setMobno(e.target.value);
               validatePhoneNumber(e.target.value);
@@ -513,7 +531,7 @@ function PersonalInfoForm({ onNext }) {
             name="dob"
             label="Date of Birth"
             fullWidth
-            value={dob || studentData.dob}
+            value={dob || ''}
             onChange={(e) => {
               setDob(e.target.value);
               validateDob(e.target.value);
@@ -521,6 +539,7 @@ function PersonalInfoForm({ onNext }) {
             InputProps={{ style: blueBorder }}
             error={!!dobError}
             helperText={dobError}
+            type="date"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -528,7 +547,7 @@ function PersonalInfoForm({ onNext }) {
             name="personalemail"
             label="Personal Email ID"
             fullWidth
-            value={personalemail || studentData.personalemail}
+            value={personalemail || ''}
             onChange={(e) => {
               setPersonalemail(e.target.value);
               validatePersonalEmail(e.target.value);
@@ -543,7 +562,7 @@ function PersonalInfoForm({ onNext }) {
             name="email"
             label="College Email ID"
             fullWidth
-            value={email || studentData.email}
+            value={email || ''}
             onChange={(e) => {
               setEmail(e.target.value);
               validateCollegeEmail(e.target.value);
@@ -558,7 +577,7 @@ function PersonalInfoForm({ onNext }) {
             name="fathername"
             label="Father Name"
             fullWidth
-            value={fathername || studentData.fathername}
+            value={fathername || ''}
             onChange={(e) => {
               setFathername(e.target.value);
               validateFatherName(e.target.value);
@@ -573,7 +592,7 @@ function PersonalInfoForm({ onNext }) {
             name="mothername"
             label="Mother Name"
             fullWidth
-            value={mothername || studentData.mothername}
+            value={mothername || ''}
             onChange={(e) => {
               setMothername(e.target.value);
               validateMotherName(e.target.value);
@@ -588,7 +607,7 @@ function PersonalInfoForm({ onNext }) {
             name="housename"
             label="House Name"
             fullWidth
-            value={housename || studentData.housename}
+            value={housename || ''}
             onChange={(e) => {
               setHousename(e.target.value);
               validateHouseName(e.target.value);
@@ -603,7 +622,7 @@ function PersonalInfoForm({ onNext }) {
             name="postoffice"
             label="Post Office"
             fullWidth
-            value={postoffice || studentData.postoffice}
+            value={postoffice || ''}
             onChange={(e) => {
               setPostoffice(e.target.value);
               validatePostOffice(e.target.value);
@@ -618,7 +637,7 @@ function PersonalInfoForm({ onNext }) {
             name="city"
             label="City"
             fullWidth
-            value={city || studentData.city}
+            value={city || ''}
             onChange={(e) => {
               setCity(e.target.value);
               validateCity(e.target.value);
@@ -636,7 +655,7 @@ function PersonalInfoForm({ onNext }) {
             label="State"
             type="calender"
             fullWidth
-            value={state || studentData.state}
+            value={state || ''}
             onChange={(e) => {
               setState(e.target.value);
               validateState(e.target.value);
@@ -651,7 +670,7 @@ function PersonalInfoForm({ onNext }) {
             name="pincode"
             label="Pincode"
             fullWidth
-            value={pincode || studentData.pincode}
+            value={pincode || ''}
             onChange={(e) => {
               setPincode(e.target.value);
               validatePincode(e.target.value);
@@ -666,7 +685,7 @@ function PersonalInfoForm({ onNext }) {
             name="nationality"
             label="Nationality"
             fullWidth
-            value={nationality || studentData.nationality}
+            value={nationality || ''}
             onChange={(e) => {
               setNationality(e.target.value);
               validateNationality(e.target.value);

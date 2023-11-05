@@ -19,6 +19,7 @@ const departmentRouter = require("./Routes/departmentRouter");
 const studentDetailsRoutes = require("./Routes/studentDetailsRoutes");
 
 const getDetailsRoute = require("./Routes/getDetailsRoute")
+const getUserDataRoutes = require("./Routes/getUserDataRoutes");
 
 const otpStore = {};
 
@@ -177,6 +178,10 @@ app.get("/notes/download/:id", async (req, res) => {
 
 app.use("/get-education-details/:email" ,getDetailsRoute)
 app.use("/get-skills-details/:email",getDetailsRoute)
+
+app.use("/get-personal-details",getUserDataRoutes);
+app.use("/get-education-details" ,getUserDataRoutes);
+app.use("/get-skills-details" ,getUserDataRoutes);
 
 app.listen(PORT, () => {
   console.log("\x1b[44m\x1b[33m%s\x1b[0m", `Server is running on port ${PORT}`);

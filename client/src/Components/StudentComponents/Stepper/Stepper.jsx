@@ -5,11 +5,13 @@ import axios from "axios";
 import PersonalInfoForm from "../PersonalInfoForm/PersonalInfoForm";
 import EducationForm from "../EducationForm/EducationForm";
 import SkillsForm from "../SkillsForm/SkillsForm";
+import DeclarationForm from "../DeclarationForm/DeclarationForm";
 
 const steps = [
   "Step 1: Personal Information",
   "Step 2: Education Records",
   "Step 3: Skills",
+  "Step 4: Declaration"
 ];
 
 function ProfileUpdateStepper() {
@@ -26,7 +28,7 @@ function ProfileUpdateStepper() {
   const handleStepSubmit = () => {
     window.scrollTo(0, 0);
     if (activeStep === steps.length - 1) {
-    
+      // Handle final step submission logic here
     } else {
       handleNext();
     }
@@ -34,12 +36,19 @@ function ProfileUpdateStepper() {
 
   const isLastStep = activeStep === steps.length - 1;
 
+  // Function to handle clicking on a step label
+  const handleStepLabelClick = (stepIndex) => {
+    setActiveStep(stepIndex);
+  };
+
   return (
     <div className="" style={{ marginTop: "70px" }}>
       <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label) => (
+        {steps.map((label, index) => (
           <Step key={label}>
-            <StepLabel>{label}</StepLabel>
+            <StepLabel onClick={() => handleStepLabelClick(index)}>
+              {label}
+            </StepLabel>
           </Step>
         ))}
       </Stepper>
@@ -69,8 +78,8 @@ function ProfileUpdateStepper() {
             {activeStep === 2 && (
               <SkillsForm onNext={handleStepSubmit} onBack={handleBack} />
             )}
-
-            {/* {isLastStep && (
+            {activeStep === 3 && <DeclarationForm />}
+            {isLastStep && (
               <Button
                 variant="contained"
                 color="primary"
@@ -79,7 +88,7 @@ function ProfileUpdateStepper() {
               >
                 Submit
               </Button>
-            )} */}
+            )}
           </div>
         )}
       </div>

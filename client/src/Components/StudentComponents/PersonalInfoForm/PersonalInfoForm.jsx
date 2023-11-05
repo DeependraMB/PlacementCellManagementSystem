@@ -55,7 +55,6 @@ function PersonalInfoForm({ onNext }) {
   const [nationalityError, setNationalityError] = useState("");
 
   const [isFormValid, setIsFormValid] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const validateFirstname = (value) => {
     if (!value) {
@@ -63,7 +62,7 @@ function PersonalInfoForm({ onNext }) {
     } else if (!/^[A-Za-z]+$/.test(value)) {
       setFirstnameError("First name should only contain letters");
     } else {
-      setFirstnameError("");
+      setFirstnameError(""); // Reset the error state
     }
   };
 
@@ -292,44 +291,9 @@ function PersonalInfoForm({ onNext }) {
     }
   };
 
-  useEffect(() => {
-    setEmail(studentData.email || "");
-    setFirstname(studentData.firstname || "");
-    setLastname(studentData.lastname || "");
-    setMobno(studentData.mobno || "");
-    setGender(studentData.gender || "");
-    setUniregno(studentData.uniregno || "");
-  }, [
-    studentData.email,
-    studentData.firstname,
-    studentData.lastname,
-    studentData.mobno,
-    studentData.gender,
-    studentData.uniregno,
-  ]);
-
-  const personalData = {
-    dob: dob,
-    personalemail: personalemail,
-    email: email, // Corrected field name
-    fathername: fathername,
-    mothername: mothername,
-    housename: housename, // Assuming this is correct
-    postoffice: postoffice,
-    city: city,
-    state: state,
-    pincode: pincode,
-    nationality: nationality,
-  };
-
   const validateForm = () => {
     setIsFormValid(
-      !firstnameError &&
-        !lastnameError &&
-        !uniregnoError &&
-        !genderError &&
-        !mobnoError &&
-        !dobError &&
+      !dobError &&
         !personalemailError &&
         !emailError &&
         !fathernameError &&
@@ -343,14 +307,54 @@ function PersonalInfoForm({ onNext }) {
     );
   };
 
+  console.log(studentData);
+  useEffect(() => {
+    setEmail(studentData.email || "");
+    setFirstname(studentData.firstname || "");
+    setLastname(studentData.lastname || "");
+    setMobno(studentData.mobno || "");
+    setGender(studentData.gender || "");
+    setUniregno(studentData.uniregno || "");
+    setDob(studentData.dob || "");
+    setPersonalemail(studentData.personalemail || "");
+    setFathername(studentData.fathername || "");
+    setMothername(studentData.mothername || "");
+    setHousename(studentData.housename || "");
+    setPostoffice(studentData.postoffice || "");
+    setCity(studentData.city || "");
+    setState(studentData.state || "");
+    setPincode(studentData.pincode || "");
+    setNationality(studentData.nationality || "");
+  }, [studentData]);
+
+  const personalData = {
+    dob: dob,
+    personalemail: personalemail,
+    email: email,
+    fathername: fathername,
+    mothername: mothername,
+    housename: housename,
+    postoffice: postoffice,
+    city: city,
+    state: state,
+    pincode: pincode,
+    nationality: nationality,
+  };
+
+  const userData = {
+    email: email,
+    firstname: firstname,
+    lastname: lastname,
+    gender: gender,
+    mobno: mobno,
+    uniregno: uniregno,
+  };
+
   console.log(personalData);
+  console.log(userData);
+
   async function onSubmit(event) {
     event.preventDefault();
-    validateFirstname(firstname);
-    validateLastname(lastname);
-    validateUniregno(uniregno);
-    validateGender(gender);
-    validatePhoneNumber(mobno);
     validateDob(dob);
     validatePersonalEmail(personalemail);
     validateCollegeEmail(email);
@@ -365,17 +369,17 @@ function PersonalInfoForm({ onNext }) {
 
     validateForm();
 
-    if (formSubmitted) {
-      return;
-    }
-
     if (isFormValid) {
       try {
         const res = await axios.post(
           "http://localhost:5000/studentdetails/personaldetails",
           personalData
         );
-        setFormSubmitted(true);
+
+        const res1 = await axios.post(
+          "http://localhost:5000/studentdetails/userdetails",
+          userData
+        );
         onNext();
       } catch (error) {
         console.log(error);
@@ -385,16 +389,34 @@ function PersonalInfoForm({ onNext }) {
 
   useEffect(() => {
     const studentId = auth._id;
+    const studentEmail = auth.email;
 
-    axios
-      .get(`http://localhost:5000/get-user-byid/${studentId}`)
-      .then((response) => {
-        setStudentData(response.data);
-        console.log(response);
-      })
-      .catch((error) => {
+    const fetchData = async () => {
+      try {
+        // First API call
+        const userByIdResponse = await axios.get(
+          `http://localhost:5000/get-user-byid/${studentId}`
+        );
+        setStudentData(userByIdResponse.data);
+
+        // Second API call
+        const userByEmailResponse = await axios.get(
+          `http://localhost:5000/get-user-by-email/${studentEmail}`
+        );
+
+        // Merge data from both responses
+        const updatedData = {
+          ...userByIdResponse.data,
+          ...userByEmailResponse.data,
+        };
+
+        setStudentData(updatedData);
+      } catch (error) {
         console.error(error);
-      });
+      }
+    };
+
+    fetchData(); // Call the fetchData function to start the data fetching process
   }, []);
 
   return (
@@ -441,7 +463,7 @@ function PersonalInfoForm({ onNext }) {
             name="uniregno"
             label="Uni. Reg. Number"
             fullWidth
-            value={uniregno || studentData.userId}
+            value={uniregno || studentData.uniregno}
             onChange={(e) => {
               setUniregno(e.target.value);
               validateUniregno(e.target.value);
@@ -457,7 +479,7 @@ function PersonalInfoForm({ onNext }) {
             <InputLabel htmlFor="gender">Gender</InputLabel>
             <Select
               name="gender"
-              value={gender}
+              value={gender || studentData.gender}
               onChange={(e) => {
                 setGender(e.target.value);
                 validateGender(e.target.value);
@@ -470,13 +492,13 @@ function PersonalInfoForm({ onNext }) {
             {genderError && <span style={{ color: "red" }}>{genderError}</span>}
           </FormControl>
         </Grid>
-        {/* Add the same InputProps to other text fields */}
+
         <Grid item xs={12} sm={6}>
           <TextField
             name="mobno"
             label="Phone Number"
             fullWidth
-            value={mobno || studentData.phno}
+            value={mobno || studentData.mobno}
             onChange={(e) => {
               setMobno(e.target.value);
               validatePhoneNumber(e.target.value);
@@ -491,7 +513,7 @@ function PersonalInfoForm({ onNext }) {
             name="dob"
             label="Date of Birth"
             fullWidth
-            value={dob}
+            value={dob || studentData.dob}
             onChange={(e) => {
               setDob(e.target.value);
               validateDob(e.target.value);
@@ -506,7 +528,7 @@ function PersonalInfoForm({ onNext }) {
             name="personalemail"
             label="Personal Email ID"
             fullWidth
-            value={personalemail}
+            value={personalemail || studentData.personalemail}
             onChange={(e) => {
               setPersonalemail(e.target.value);
               validatePersonalEmail(e.target.value);
@@ -536,7 +558,7 @@ function PersonalInfoForm({ onNext }) {
             name="fathername"
             label="Father Name"
             fullWidth
-            value={fathername}
+            value={fathername || studentData.fathername}
             onChange={(e) => {
               setFathername(e.target.value);
               validateFatherName(e.target.value);
@@ -551,7 +573,7 @@ function PersonalInfoForm({ onNext }) {
             name="mothername"
             label="Mother Name"
             fullWidth
-            value={mothername}
+            value={mothername || studentData.mothername}
             onChange={(e) => {
               setMothername(e.target.value);
               validateMotherName(e.target.value);
@@ -566,7 +588,7 @@ function PersonalInfoForm({ onNext }) {
             name="housename"
             label="House Name"
             fullWidth
-            value={housename}
+            value={housename || studentData.housename}
             onChange={(e) => {
               setHousename(e.target.value);
               validateHouseName(e.target.value);
@@ -581,7 +603,7 @@ function PersonalInfoForm({ onNext }) {
             name="postoffice"
             label="Post Office"
             fullWidth
-            value={postoffice}
+            value={postoffice || studentData.postoffice}
             onChange={(e) => {
               setPostoffice(e.target.value);
               validatePostOffice(e.target.value);
@@ -596,7 +618,7 @@ function PersonalInfoForm({ onNext }) {
             name="city"
             label="City"
             fullWidth
-            value={city}
+            value={city || studentData.city}
             onChange={(e) => {
               setCity(e.target.value);
               validateCity(e.target.value);
@@ -614,7 +636,7 @@ function PersonalInfoForm({ onNext }) {
             label="State"
             type="calender"
             fullWidth
-            value={state}
+            value={state || studentData.state}
             onChange={(e) => {
               setState(e.target.value);
               validateState(e.target.value);
@@ -629,7 +651,7 @@ function PersonalInfoForm({ onNext }) {
             name="pincode"
             label="Pincode"
             fullWidth
-            value={pincode}
+            value={pincode || studentData.pincode}
             onChange={(e) => {
               setPincode(e.target.value);
               validatePincode(e.target.value);
@@ -644,7 +666,7 @@ function PersonalInfoForm({ onNext }) {
             name="nationality"
             label="Nationality"
             fullWidth
-            value={nationality}
+            value={nationality || studentData.nationality}
             onChange={(e) => {
               setNationality(e.target.value);
               validateNationality(e.target.value);
@@ -670,7 +692,6 @@ function PersonalInfoForm({ onNext }) {
           color="primary"
           style={{ paddingLeft: "40px", paddingRight: "40px" }}
           type="submit"
-          disabled={formSubmitted}
         >
           Next
         </Button>

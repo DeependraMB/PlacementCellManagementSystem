@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Grid, Button } from "@mui/material";
 import axios from "axios";
 import { useAuth } from "../../../Context/AuthContext";
@@ -31,6 +31,7 @@ function SkillsForm({ onNext, onBack }) {
   const [resumeError, setResumeError] = useState("");
 
   const [isSkillsFormValid, setIsSkillsFormValid] = useState(false);
+  const [studentData, setStudentData] = useState("");
 
   const validateTechnicalSkills = (value) => {
     if (!value) {
@@ -99,6 +100,18 @@ function SkillsForm({ onNext, onBack }) {
         !resumeError
     );
   };
+
+  
+  useEffect(() => {
+    setTechnicalskills(studentData.technicalskills || "");
+    setProjects(studentData.projects || "");
+    setGithublink(studentData.githublink || "");
+    setLinkedinlink(studentData.linkedinlink || "");
+    setLanguagesknown(studentData.languagesknown || "");
+    setProfilephoto(studentData.profilephoto || "");
+    setResume(studentData.resume || "");
+  }, [studentData]);
+
   console.log(auth.email);
   const skillsData = {
     email: auth.email,
@@ -110,11 +123,11 @@ function SkillsForm({ onNext, onBack }) {
     profilephoto: profilephoto,
     resume: resume,
   };
-  console.log(skillsData)
+  console.log(skillsData);
 
   async function onSkillsSubmit(event) {
     event.preventDefault();
-  
+
     // Validate all form fields
     validateTechnicalSkills(technicalskills);
     validateProjects(projects);
@@ -125,7 +138,7 @@ function SkillsForm({ onNext, onBack }) {
     validateResume(resume);
 
     validateSkillsForm();
-  
+
     // Check if the form is valid
     if (
       !technicalskillsError &&
@@ -139,28 +152,42 @@ function SkillsForm({ onNext, onBack }) {
       try {
         const res = await axios.post(
           "http://localhost:5000/studentdetails/skillsdetails",
-          skillsData
+          skillsData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
-        if (res.status === 200) {
-          // Successful response
-          navigate("/studenthome");
-          onNext();
-          toast.success(res.data.message);
-        } else {
-          // Handle other cases (e.g., validation errors from the server)
-          console.log("Server response not as expected:", res);
-        }
+        onNext();
       } catch (error) {
         // Handle network errors
         console.error("Error submitting the form:", error);
+        console.log("Mundalil");
       }
     }
   }
-  
+
+  useEffect(() => {
+    const studentEmail = auth.email;
+
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:5000/get-skills-details/get-skills-details/get/${studentEmail}`
+        );
+        console.log(res);
+        setStudentData(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <form
-      onSubmit={onSkillsSubmit}
       style={{ marginLeft: "80px", marginRight: "80px", marginTop: "50px" }}
     >
       <Grid container spacing={3}>
@@ -243,34 +270,24 @@ function SkillsForm({ onNext, onBack }) {
         </Grid>
 
         <Grid item xs={12}>
-          <TextField
-            name="profilephoto"
-            label="Profile Photo"
-            fullWidth
-            style={textFieldStyle}
-            value={profilephoto}
+          <input
+            type="file"
+            accept="image/*"
             onChange={(e) => {
-              setProfilephoto(e.target.value);
-              validateProfilePhoto(e.target.value);
+              setProfilephoto(e.target.files[0]);
             }}
-            error={!!profilephotoError}
-            helperText={profilephotoError}
           />
+          {profilephoto && <p>Selected Profile Photo: {profilephoto.name}</p>}
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            name="resume"
-            label="Resume"
-            fullWidth
-            style={textFieldStyle}
-            value={resume}
+          <input
+            type="file"
+            accept=".pdf"
             onChange={(e) => {
-              setResume(e.target.value);
-              validateResume(e.target.value);
+              setResume(e.target.files[0]);
             }}
-            error={!!resumeError}
-            helperText={resumeError}
           />
+          {resume && <p>Selected Resume: {resume.name}</p>}
         </Grid>
       </Grid>
       <div
@@ -292,8 +309,7 @@ function SkillsForm({ onNext, onBack }) {
           variant="contained"
           color="primary"
           style={{ paddingLeft: "40px", paddingRight: "40px" }}
-          onClick={onNext}
-          type="submit"
+          onClick={onSkillsSubmit}
         >
           Next
         </Button>

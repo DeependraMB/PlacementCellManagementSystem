@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
  
-  userId: {
+  uniregno: {
     type: String,
    // required: true,
   },
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     enum: ["Male", "Female", "Other"],
    // required: true,
   },
-  phno: {
+  mobno: {
     type: String,
    // required: true,
   },

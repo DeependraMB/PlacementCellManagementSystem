@@ -27,11 +27,11 @@ const skillsSchema = new mongoose.Schema({
   },
   profilephoto: {
     type: String,
-    required: true,
+    
   },
   resume: {
     type: String,
-    required: true,
+   
   },
 });
 

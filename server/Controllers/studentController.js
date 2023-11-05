@@ -52,11 +52,11 @@ const studentRegController = async (req, res) => {
 
     const newStudent = new User({
       
-      userId: formData.uniregno,
+      uniregno: formData.uniregno,
       firstname: formData.firstName,
       lastname: formData.lastName,
       gender: formData.gender,
-      phno: formData.mobno,
+      mobno: formData.mobno,
       departmentId: formData.department,
       batch: formData.batch,
       graduationYear: formData.graduationyear,

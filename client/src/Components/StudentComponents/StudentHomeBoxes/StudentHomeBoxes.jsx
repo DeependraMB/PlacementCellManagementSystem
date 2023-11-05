@@ -12,11 +12,13 @@ import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
 import './StudentHomeBoxes.css'
+import ProfileUpdateMessage from './ProfileUpdateMessage';
 
 function StudentHomeBoxes() {
   const { auth, setAuth } = useAuth();
   return (
     <div className="h-100" style={{ backgroundColor: '#f0ffff', padding: '20px 30px 0px' }}>
+       <ProfileUpdateMessage />
       <div className="py-3" style={{ textAlign: "start"}}>
         <Typography
           variant="h5"

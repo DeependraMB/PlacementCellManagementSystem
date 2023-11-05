@@ -41,7 +41,7 @@ const teacherRegController = async (req, res) => {
           gender : formData.gender,
           departmentId : formData.department,
           batch : formData.batch,
-          phno : formData.mobno,
+          mobno : formData.mobno,
           email : formData.email,
           password : hashedPassword,
           role : formData.role

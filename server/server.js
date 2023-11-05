@@ -13,9 +13,12 @@ const verifyEmailRoutes = require("../server/Routes/verifyEmailRoutes");
 const User = require("./Models/userModel");
 const Department = require("./Models/departmentModel");
 const Document = require("./Models/documentModel");
+const Personal = require("./Models/studentDetailsModel")
 
 const departmentRouter = require("./Routes/departmentRouter");
 const studentDetailsRoutes = require("./Routes/studentDetailsRoutes");
+
+const getDetailsRoute = require("./Routes/getDetailsRoute")
 
 const otpStore = {};
 
@@ -74,6 +77,17 @@ app.get("/get-user-byid/:id", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get('/get-user-by-email/:email', async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await Personal.findOne({ email }); 
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
   }
 });
 
@@ -160,6 +174,9 @@ app.get("/notes/download/:id", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+app.use("/get-education-details/:email" ,getDetailsRoute)
+app.use("/get-skills-details/:email",getDetailsRoute)
 
 app.listen(PORT, () => {
   console.log("\x1b[44m\x1b[33m%s\x1b[0m", `Server is running on port ${PORT}`);

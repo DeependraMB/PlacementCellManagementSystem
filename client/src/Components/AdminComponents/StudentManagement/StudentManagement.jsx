@@ -10,6 +10,7 @@ import { TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Dialog, DialogContent, Button } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 
 const useStyles = makeStyles((theme) => ({
   filterTextField: {
@@ -46,7 +47,7 @@ const columns = [
     field: "serialNumber",
     headerName: "Serial No",
     editable: true,
-    checkboxSelection: true, // Add this line for checkboxes
+    // checkboxSelection: true,
     valueGetter: (params) => params.row.serialNumber || "-",
   },
   {
@@ -173,110 +174,110 @@ const columns = [
     field: "tenthschoolname",
     headerName: "10th School Name",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.tenthschoolname || "-",
   },
   {
     field: "twelthpercentage",
     headerName: "12th Percentage",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.twelthpercentage || "-",
   },
   {
     field: "twelthCGPA",
     headerName: "12th CGPA",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.twelthCGPA || "-",
   },
   {
     field: "twelthboard",
     headerName: "12th Board",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.twelthboard || "-",
   },
   {
     field: "twelthschoolname",
     headerName: "12th School Name",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.twelthschoolname || "-",
   },
   {
     field: "ugcoursename",
     headerName: "Undergraduate Course Name",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.ugcoursename || "-",
   },
   {
     field: "ugpercentage",
     headerName: "Undergraduate Percentage",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.ugpercentage || "-",
   },
   {
     field: "ugCGPA",
     headerName: "Undergraduate CGPA",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.ugCGPA || "-",
   },
   {
     field: "ugyearofgraduation",
     headerName: "Undergraduate Year of Graduation",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.ugyearofgraduation || "-",
   },
   {
     field: "ugcollegename",
     headerName: "Undergraduate College Name",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.ugcollegename || "-",
   },
   {
     field: "uguniversity",
     headerName: "Undergraduate University",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.uguniversity || "-",
   },
   {
     field: "mcaaggregateCGPA",
     headerName: "MCA Aggregate CGPA",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.mcaaggregateCGPA || "-",
   },
   { field: "activearrears", headerName: "Active Arrears", rowLength: 30000 },
   {
     field: "historyofarrears",
     headerName: "History of Arrears",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.historyofarrears || "-",
   },
   {
     field: "technicalskills",
     headerName: "Technical Skills",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.technicalskills || "-",
   },
   {
     field: "projects",
     headerName: "Projects",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.projects || "-",
   },
   {
     field: "githublink",
     headerName: "GitHub Link",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.githublink || "-",
   },
   {
     field: "linkedinlink",
     headerName: "LinkedIn Link",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.linkedinlink || "-",
   },
   {
     field: "languagesknown",
     headerName: "Languages Known",
     rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
+    valueGetter: (params) => params.row.languagesknown || "-",
   },
   // Add more fields as needed
 ];
@@ -291,6 +292,10 @@ export default function StudentManagement() {
   const [filter, setFilter] = useState({});
   const classes = useStyles();
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
+  const [sendDialogOpen, setSendDialogOpen] = useState(false);
+  const [filteredEmails, setFilteredEmails] = useState([]);
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
 
   const fetchDepartmentName = async (departmentId) => {
     try {
@@ -379,74 +384,9 @@ export default function StudentManagement() {
         return {
           ...user,
           serialNumber: index + 1,
-          // dob: personalData[index] ? personalData[index].dob : "-",
-          // personalemail: personalData[index]
-          //   ? personalData[index].personalemail
-          //   : "-",
-          // fathername: personalData[index] ? personalData[index].fathername : "-",
-          // mothername: personalData[index] ? personalData[index].mothername : "-",
-          // housename: personalData[index] ? personalData[index].housename : "-",
-          // postoffice: personalData[index] ? personalData[index].postoffice : "-",
-          // city: personalData[index] ? personalData[index].city : "-",
-          // state: personalData[index] ? personalData[index].state : "-",
-          // pincode: personalData[index] ? personalData[index].pincode : "-",
-          // nationality: personalData[index] ? personalData[index].nationality : "-",
-          // tenthpercentage: educationData[index]
-          //   ? educationData[index].tenthpercentage
-          //   : "-",
-          // tenthCGPA: educationData[index] ? educationData[index].tenthCGPA : "-",
-          // tenthboard: educationData[index] ? educationData[index].tenthboard : "-",
-          // tenthschoolname: educationData[index]
-          //   ? educationData[index].tenthschoolname
-          //   : "-",
-          // twelthpercentage: educationData[index]
-          //   ? educationData[index].twelthpercentage
-          //   : "-",
-          // twelthCGPA: educationData[index] ? educationData[index].twelthCGPA : "-",
-          // twelthboard: educationData[index]
-          //   ? educationData[index].twelthboard
-          //   : "-",
-          // twelthschoolname: educationData[index]
-          //   ? educationData[index].twelthschoolname
-          //   : "-",
-          // ugcoursename: educationData[index]
-          //   ? educationData[index].ugcoursename
-          //   : "-",
-          // ugpercentage: educationData[index]
-          //   ? educationData[index].ugpercentage
-          //   : "-",
-          // ugCGPA: educationData[index] ? educationData[index].ugCGPA : "-",
-          // ugyearofgraduation: educationData[index]
-          //   ? educationData[index].ugyearofgraduation
-          //   : "-",
-          // ugcollegename: educationData[index]
-          //   ? educationData[index].ugcollegename
-          //   : "-",
-          // uguniversity: educationData[index]
-          //   ? educationData[index].uguniversity
-          //   : "-",
-          // mcaaggregateCGPA: educationData[index]
-          //   ? educationData[index].mcaaggregateCGPA
-          //   : "-",
-          // activearrears: educationData[index]
-          //   ? educationData[index].activearrears
-          //   : "-",
-          // historyofarrears: educationData[index]
-          //   ? educationData[index].historyofarrears
-          //   : "-",
-          // technicalskills: skillsData[index]
-          //   ? skillsData[index].technicalskills
-          //   : "-",
-          // projects: skillsData[index] ? skillsData[index].projects : "-",
-          // githublink: skillsData[index] ? skillsData[index].githublink : "-",
-          // linkedinlink: skillsData[index] ? skillsData[index].linkedinlink : "-",
-          // languagesknown: skillsData[index]
-          //   ? skillsData[index].languagesknown
-          //   : "-",
           ...userEducationData,
           ...userPersonalData,
           ...userSkillsData,
-          // Add more properties from skills, education, and personal data as needed
         };
       });
 
@@ -466,11 +406,7 @@ export default function StudentManagement() {
   console.log(users);
 
   useEffect(() => {
-    // Fetch all data sources
     fetchUserAndCombineData();
-    // fetchPersonalData();
-    // fetchEducationData();
-    // fetchSkillsData();
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -491,8 +427,15 @@ export default function StudentManagement() {
     setFilterDialogOpen(true);
   };
 
+  const openSendDialog = () => {
+    setSendDialogOpen(true);
+  };
+
   const closeFilterDialog = () => {
     setFilterDialogOpen(false);
+  };
+  const closeSendDialog = () => {
+    setSendDialogOpen(false);
   };
 
   const CustomToolbar = () => {
@@ -541,8 +484,116 @@ export default function StudentManagement() {
     });
   });
 
+  console.log(filteredData);
+
+  useEffect(() => {
+    const filteredEmails = filteredData.map((userObj) => userObj.email);
+
+    setFilteredEmails(filteredEmails);
+  }, [filter]);
+
+  const emailsData = {
+    email: filteredEmails,
+  };
+
+  console.log(emailsData);
+  const emailsJSON = JSON.stringify(emailsData);
+
+  const handleSendNotification = () => {
+    const notificationData = {
+      subject,
+      message,
+    };
+
+    sendEmailsToBackend({
+      email: filteredEmails,
+      ...notificationData,
+    });
+
+    closeSendDialog();
+  };
+
+  const sendEmailsToBackend = async (emailsData) => {
+    try {
+      const dataToSend = {
+        ...emailsData,
+        subject,
+        message,
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/send-notification/send-notification",
+        dataToSend,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      console.log("Emails sent to the backend:", response.data);
+    } catch (error) {
+      console.error("Error sending emails to the backend:", error);
+    }
+  };
+
   return (
     <div className="my-5 mx-5">
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={openSendDialog}
+        startIcon={<FilterListIcon />}
+      >
+        Send Notification
+      </Button>
+      <Dialog open={sendDialogOpen} onClose={closeSendDialog}>
+        <DialogContent className={classes.dialogContent}>
+          <TextField
+            name="subject"
+            className={classes.filterTextField}
+            label="Subject"
+            value={subject}
+            onChange={(e) => {
+              setSubject(e.target.value);
+            }}
+          />
+          <br /> {/* Add a line break here */}
+          <TextareaAutosize
+            className="my-5"
+            name="message"
+            minRows={4} // Adjust the number of rows as needed
+            placeholder="Message"
+            value={message}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              onClick={closeSendDialog}
+              variant="contained"
+              color="primary"
+              className={classes.button}
+            >
+              Close
+            </Button>
+            <Button
+              onClick={handleSendNotification}
+              variant="contained"
+              color="primary"
+              className={classes.button}
+            >
+              Send Notification
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={filterDialogOpen} onClose={closeFilterDialog}>
         <DialogContent className={classes.dialogContent}>
           <TextField
@@ -616,10 +667,13 @@ export default function StudentManagement() {
           </Button>
         </DialogContent>
       </Dialog>
+      {/* <Button variant="outlined" color="primary" onClick={sendEmailsToBackend}>
+        Send Notification
+      </Button> */}
       {filteredData.length > 0 ? (
         <DataGrid
           sx={{ color: "black" }}
-          checkboxSelection
+          // checkboxSelection
           rows={filteredData}
           columns={columns}
           page={page}
@@ -630,7 +684,7 @@ export default function StudentManagement() {
             Toolbar: CustomToolbar,
           }}
           getRowHeight={(params) => 60}
-          style={{ height: "500px", width: "100%" }}
+          style={{ height: "700px", width: "100%" }}
           rowKeyField="email"
           getRowId={(row) => row.email}
         />

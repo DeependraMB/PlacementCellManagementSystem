@@ -20,12 +20,15 @@ import { toast } from "react-toastify";
 // import { validationSchema } from "../../../Helpers/ValidationSchema";
 import * as yup from "yup";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../Context/AuthContext";
 
 export default function TeacherAddForm() {
+  const { auth } = useAuth();
   const [gender, setGender] = useState("");
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartmentId] = useState(""); // Fix this variable name
   const [email, setEmail] = useState("");
+  const [teacher, setTeacher] = useState("");
   const navigate = useNavigate();
 
   const validationSchema = yup.object({
@@ -98,10 +101,35 @@ export default function TeacherAddForm() {
     }
 
     fetchDepartments();
-  }, []); // Empty dependency array ensures it only runs once
+
+    console.log("Mundalil");
+    console.log(auth._id);
+    async function fetchTeacherDetails() {
+      try {
+        const response = await axios.get(
+            `http://localhost:5000/get-teacher/${auth._id}`
+          );
+          
+          setTeacher(response.data);
+          
+      } catch (error) {}
+    }
+
+    fetchTeacherDetails()
+  }, []); 
+
+  useEffect(() => {
+   
+    
+  }, []); 
+
+ 
+
+  
 
   async function onSubmit(data) {
     data.department = selectedDepartment;
+    console.log(data.department);
     data.role = "teacher";
     console.log(data); // Check the data before sending the request
     try {
@@ -114,7 +142,8 @@ export default function TeacherAddForm() {
         toast.error(response.data.message);
       } else if (response.data && response.data.success === true) {
         toast.success(response.data.message);
-        navigate("/teacher-management");
+        navigate("/teacher-list");
+        console.log(response);
       }
     } catch (error) {
       console.log(error);
@@ -273,6 +302,7 @@ export default function TeacherAddForm() {
                     name="email"
                     control={control}
                     defaultValue=""
+
                     render={({ field }) => (
                       <div className="d-flex">
                         <TextField
@@ -280,7 +310,7 @@ export default function TeacherAddForm() {
                           fullWidth
                           id="email"
                           label="Email Address"
-                          value={email}
+                          value={email || teacher.email}
                           autoComplete="email"
                           onBlur={() => trigger("email")}
                           onChange={(e) => {
@@ -350,7 +380,7 @@ export default function TeacherAddForm() {
                             field.onChange(e);
                             trigger("batch");
                           }}
-                          error={!!errors.gender}
+                          error={!!errors.batch}
                           fullWidth
                           label="Batch"
                           select
@@ -361,7 +391,7 @@ export default function TeacherAddForm() {
                         </Select>
                       )}
                     />
-                    {errors.gender && (
+                    {errors.batch && (
                       <Typography variant="caption" color="error">
                         {errors.batch.message}
                       </Typography>

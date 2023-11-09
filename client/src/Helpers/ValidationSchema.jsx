@@ -11,12 +11,12 @@ export const validationSchema = yup.object().shape({
     .required("Last name is required")
     .matches(/^[A-Za-z\s]+$/, "Last name should only contain letters")
     .matches(/^\D*$/, "Numbers are not allowed in last name"),
-  uniregno: yup
+    uniregno: yup
     .string()
     .required("University Registration Number is required")
     .matches(
-      /^[A-Z0-9]+$/,
-      "Uni. Reg. No should contain only capital letters and numbers"
+      /^(AJC)(22|20)([A-Z]+)([0-9]{4})$/,
+      "Uni. Reg. No should follow the format AJCXX(BTECH/MCA)YYYY"
     ),
   gender: yup.string().required("Gender is required"),
 
@@ -44,12 +44,13 @@ export const validationSchema = yup.object().shape({
 
 
   email: yup
-    .string()
-    .required("Email address is required")
-    .matches(
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Invalid email address"
-    ),
+  .string()
+  .required("Email address is required")
+  .matches(
+    /(^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$)|\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-z]{2,}\.[a-z]{2,}$/,
+    "Invalid email address. Please follow the format username@department.ajce.in"
+  ),
+
   password: yup
     .string()
     .required("Password is required")

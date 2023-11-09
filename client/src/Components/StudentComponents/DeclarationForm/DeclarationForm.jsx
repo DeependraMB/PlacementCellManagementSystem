@@ -5,9 +5,15 @@ import { useAuth } from "../../../Context/AuthContext"; // Import your authentic
 
 function DeclarationForm({ onBack, formData }) {
   const [viewProfile, setViewProfile] = useState(false);
+  const [declarationChecked, setDeclarationChecked] = useState(false);
   const { auth } = useAuth(); // Access the user's email from the authentication context
 
   const generatePdf = () => {
+    if (!declarationChecked) {
+      alert("Please check the declaration box before proceeding.");
+      return;
+    }
+
     // Make a GET request to the /generate-userdata-pdf/:email endpoint
     axios
       .get(`http://localhost:5000/generate-userdata-pdf/generate-userdata-pdf/${auth.email}`, {
@@ -33,7 +39,21 @@ function DeclarationForm({ onBack, formData }) {
   return (
     <form style={{ marginLeft: "80px", marginRight: "80px", marginTop: "50px" }}>
       <div>
+        <p>
+          I hereby declare that the information provided in this form is true and accurate
+          to the best of my knowledge.
+        </p>
+        <label>
+          <input
+            type="checkbox"
+            checked={declarationChecked}
+            onChange={() => setDeclarationChecked(!declarationChecked)}
+          />
+          I acknowledge and agree to the declaration above.
+        </label>
+        <br></br>
         <Button
+          className="my-5"
           variant="contained"
           color="primary"
           style={{ paddingLeft: "40px", paddingRight: "40px" }}

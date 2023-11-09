@@ -51,7 +51,7 @@ function StudentHomeBoxes() {
               <NotificationsIcon className="icon1" />
               </div>
               <div className="right">
-                <h4>9382</h4>
+                <h4>0</h4>
                 <p>Notifications</p>
               </div>
             </div>
@@ -62,7 +62,7 @@ function StudentHomeBoxes() {
               <SmsOutlinedIcon className="icon2" />
               </div>
               <div className="right">
-                <h4>74</h4>
+                <h4>0</h4>
                 <p>Messages</p>
               </div>
             </div>
@@ -73,7 +73,7 @@ function StudentHomeBoxes() {
               <PersonIcon className="icon3" />
               </div>
               <div className="right">
-                <h4>32</h4>
+                
                 <p>Profile</p>
               </div>
             </div>

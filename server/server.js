@@ -21,6 +21,8 @@ const studentDetailsRoutes = require("./Routes/studentDetailsRoutes");
 const getDetailsRoute = require("./Routes/getDetailsRoute")
 const getUserDataRoutes = require("./Routes/getUserDataRoutes");
 const generateUserDataPDF = require("./Routes/generateUserDataPDF")
+const sendNotificationRoute = require("./Routes/sendNotificationRoute");
+const changePasswordRoute = require("./Routes/changePasswordRoute")
 
 const otpStore = {};
 
@@ -68,6 +70,17 @@ app.get("/get-teachers", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+app.get("/get-teacher/:id",async(req,res)=>{
+  const teacherid = req.params.id;
+  try {
+    const teacher = await User.find({ _id : teacherid });
+    res.json(teacher);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+})
 
 app.get("/get-user-byid/:id", async (req, res) => {
   const userId = req.params.id;
@@ -185,6 +198,10 @@ app.use("/get-education-details" ,getUserDataRoutes);
 app.use("/get-skills-details" ,getUserDataRoutes);
 
 app.use("/generate-userdata-pdf", generateUserDataPDF)
+
+app.use("/send-notification", sendNotificationRoute)
+
+app.use("/teacher-change-password/:email",changePasswordRoute)
 
 app.listen(PORT, () => {
   console.log("\x1b[44m\x1b[33m%s\x1b[0m", `Server is running on port ${PORT}`);

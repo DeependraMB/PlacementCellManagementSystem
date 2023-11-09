@@ -97,147 +97,242 @@ function EducationForm({ onNext, onBack }) {
   const validateTenthPercentage = (value) => {
     if (!value) {
       setTenthpercentageError("10th Percentage is required");
+    } else if (isNaN(value) || /\s/.test(value)) {
+      setTenthpercentageError("10th Percentage must be a number without spaces");
     } else {
-      setTenthpercentageError("");
+      const percentageValue = parseFloat(value);
+      
+      if (percentageValue < 0 || percentageValue > 100) {
+        setTenthpercentageError("10th Percentage must be between 0 and 100");
+      } else {
+        setTenthpercentageError("");
+      }
     }
   };
+  
+  
+  
 
   const validateTenthCGPA = (value) => {
     if (!value) {
       setTenthCGPAError("10th CGPA is required");
     } else {
-      setTenthCGPAError("");
+      const cgpaValue = parseFloat(value);
+  
+      if (isNaN(cgpaValue)) {
+        setTenthCGPAError("10th CGPA must be a number");
+      } else if (cgpaValue < 0 || cgpaValue > 10) {
+        setTenthCGPAError("10th CGPA must be between 0 and 10");
+      } else {
+        setTenthCGPAError("");
+      }
     }
   };
+  
 
   const validateTenthBoard = (value) => {
     if (!value) {
       setTenthboardError("10th Board is required");
+    } else if (/[^A-Za-z\s]/.test(value)) {
+      setTenthboardError("10th Board should not contain special characters or numbers");
     } else {
       setTenthboardError("");
     }
   };
+  
 
   const validateTenthSchoolName = (value) => {
     if (!value) {
       setTenthschoolnameError("10th School Name is required");
+    } else if (/[^A-Za-z\s]/.test(value)) {
+      setTenthschoolnameError("10th School Name should not contain special characters or numbers");
     } else {
       setTenthschoolnameError("");
     }
   };
+  
 
   const validateTwelthPercentage = (value) => {
     if (!value) {
       setTwelthpercentageError("12th Percentage is required");
+    } else if (isNaN(value) || /\s/.test(value)) {
+      setTwelthpercentageError("12th Percentage must be a number without spaces");
     } else {
-      setTwelthpercentageError("");
+      const percentageValue = parseFloat(value);
+      
+      if (percentageValue < 0 || percentageValue > 100) {
+        setTwelthpercentageError("12th Percentage must be between 0 and 100");
+      } else {
+        setTwelthpercentageError("");
+      }
     }
   };
+  
+  
 
   const validateTwelthCGPA = (value) => {
     if (!value) {
       setTwelthCGPAError("12th CGPA is required");
     } else {
-      setTwelthCGPAError("");
+      const cgpaValue = parseFloat(value);
+  
+      if (isNaN(cgpaValue)) {
+        setTwelthCGPAError("12th CGPA must be a number");
+      } else if (cgpaValue < 0 || cgpaValue > 10) {
+        setTwelthCGPAError("12th CGPA must be between 0 and 10");
+      } else {
+        setTwelthCGPAError("");
+      }
     }
   };
+  
 
   const validateTwelthBoard = (value) => {
     if (!value) {
       setTwelthboardError("12th Board is required");
+    } else if (/[^A-Za-z\s]/.test(value)) {
+      setTwelthboardError("12th Board should not contain special characters or numbers");
     } else {
       setTwelthboardError("");
     }
   };
-
+  
   const validateTwelthSchoolName = (value) => {
     if (!value) {
       setTwelthschoolnameError("12th School Name is required");
+    } else if (/[^A-Za-z\s]/.test(value)) {
+      setTwelthschoolnameError("12th School Name should not contain special characters or numbers");
     } else {
       setTwelthschoolnameError("");
     }
   };
+  
 
   const validateUgCourseName = (value) => {
     if (!value) {
       setUgcoursenameError("Name of UG Course is required");
+    } else if (/[^A-Za-z\s]/.test(value)) {
+      setUgcoursenameError("Name of UG Course should not contain special characters or numbers");
     } else {
       setUgcoursenameError("");
     }
   };
+  
 
   const validateUgPercentage = (value) => {
     if (!value) {
       setUgpercentageError("UG Percentage is required");
+    } else if (isNaN(value) || /\s/.test(value)) {
+      setUgpercentageError("UG Percentage must be a number without spaces");
     } else {
-      setUgpercentageError("");
+      const percentageValue = parseFloat(value);
+      
+      if (percentageValue < 0 || percentageValue > 100) {
+        setUgpercentageError("UG Percentage must be between 0 and 100");
+      } else {
+        setUgpercentageError("");
+      }
     }
   };
-
+  
+  
   const validateUgCGPA = (value) => {
     if (!value) {
       setUgCGPAError("UG CGPA is required");
     } else {
-      setUgCGPAError("");
+      const cgpaValue = parseFloat(value);
+  
+      if (isNaN(cgpaValue)) {
+        setUgCGPAError("UG CGPA must be a number");
+      } else if (cgpaValue < 0 || cgpaValue > 10) {
+        setUgCGPAError("UG CGPA must be between 0 and 10");
+      } else {
+        setUgCGPAError("");
+      }
     }
   };
+  
 
   const validateUgYearOfGraduation = (value) => {
     if (!value) {
       setUgyearofgraduationError("Year of Graduation (UG) is required");
+    } else if (!/^\d+$/.test(value)) {
+      setUgyearofgraduationError("Year of Graduation (UG) should contain only numbers");
     } else {
       setUgyearofgraduationError("");
     }
   };
+  
 
   const validateUgCollegeName = (value) => {
     if (!value) {
       setUgCollegenameError("College Name is required");
+    } else if (/[^A-Za-z\s]/.test(value)) {
+      setUgCollegenameError("College Name should not contain special characters or numbers");
     } else {
       setUgCollegenameError("");
     }
   };
-
+  
   const validateUgUniversity = (value) => {
     if (!value) {
       setUguniversityError("University of UG is required");
+    } else if (/[^A-Za-z\s]/.test(value)) {
+      setUguniversityError("University of UG should not contain special characters or numbers");
     } else {
       setUguniversityError("");
     }
   };
+  
 
   const validateMcaAggregateCGPA = (value) => {
     if (!value) {
       setMcaaggregateCGPAError("MCA Aggregate CGPA is required");
     } else {
-      setMcaaggregateCGPAError("");
+      const cgpaValue = parseFloat(value);
+  
+      if (isNaN(cgpaValue)) {
+        setMcaaggregateCGPAError("MCA Aggregate CGPA must be a number");
+      } else if (cgpaValue < 0 || cgpaValue > 10) {
+        setMcaaggregateCGPAError("MCA Aggregate CGPA must be between 0 and 10");
+      } else {
+        setMcaaggregateCGPAError("");
+      }
     }
   };
-
+  
   const validateActiveArrears = (value) => {
     if (!value) {
       setActivearrearsError("Active Arrears is required");
+    } else if (!/^\d+$/.test(value)) {
+      setActivearrearsError("Active Arrears should contain only whole numbers (integers)");
     } else {
       setActivearrearsError("");
     }
   };
+  
 
   const validateHistoryOfArrears = (value) => {
     if (!value) {
       setHistoryofarrearsError("History of Arrears is required");
+    } else if (!/^\d+$/.test(value)) {
+      setHistoryofarrearsError("History of Arrears should contain only whole numbers (integers)");
     } else {
       setHistoryofarrearsError("");
     }
   };
+  
 
   const validateUniversity = (value) => {
     if (!value) {
       setUniversityError("University is required");
+    } else if (/[^A-Za-z\s]/.test(value)) {
+      setUniversityError("University should not contain special characters or numbers");
     } else {
       setUniversityError("");
     }
   };
-
+  
 
   console.log(studentData);
   const validateEducationForm = () => {
@@ -267,9 +362,9 @@ function EducationForm({ onNext, onBack }) {
   };
 
   useEffect(() => {
-    setDepartment(studentData.department || "");
+    setDepartment(studentData.departmentName || "");
     setBatch(studentData.batch || "");
-    setGraduationyear(studentData.graduationyear || "");
+    setGraduationyear(studentData.graduationYear || "");
     setTenthpercentage(studentData.tenthpercentage || "");
     setTenthCGPA(studentData.tenthCGPA || "");
     setTenthboard(studentData.tenthboard || "");
@@ -289,6 +384,8 @@ function EducationForm({ onNext, onBack }) {
     setHistoryofarrears(studentData.historyofarrears || "");
     setUniversity(studentData.university || "");
   }, [studentData]);
+
+  
   
   
   const educationData = {
@@ -366,12 +463,14 @@ function EducationForm({ onNext, onBack }) {
       );
       console.log(response);
       const departmentId = response.data.departmentId;
+      console.log(departmentId);
   
       // Fetch department name
       const departmentResponse = await axios.get(
         `http://localhost:5000/get-department-name/${departmentId}`
       );
       const departmentName = departmentResponse.data.departmentName;
+      console.log(departmentName);
   
       // Fetch education details
       const educationResponse = await axios.get(
@@ -390,12 +489,14 @@ function EducationForm({ onNext, onBack }) {
       console.error("Error fetching student data:", error);
     }
   };
+
   
   // Call the fetchStudentData function inside a useEffect to ensure it's called after the component is mounted.
   useEffect(() => {
     fetchStudentData();
   }, []); // The empty dependency array ensures that this effect runs once after the component is mounted.
   
+  console.log(studentData);
 
   return (
     <form
@@ -551,7 +652,7 @@ function EducationForm({ onNext, onBack }) {
                 name="department"
                 label="Department"
                 fullWidth
-                value={department || studentData.departmentName}
+                value={department || studentData.department}
                 onChange={(e) => {
                   setDepartment(e.target.value);
                   validateDepartment(e.target.value);
@@ -568,7 +669,7 @@ function EducationForm({ onNext, onBack }) {
                 name="batch"
                 label="Batch"
                 fullWidth
-                value={batch || studentData.batch}
+                value={batch}
                 onChange={(e) => {
                   setBatch(e.target.value);
                   validateBatch(e.target.value);
@@ -582,7 +683,7 @@ function EducationForm({ onNext, onBack }) {
             <Grid item xs={12} sm={6}>
               <TextField
                 name="graduationyear"
-                // label="Graduation Year"
+                label="Graduation Year"
                 fullWidth
                 value={graduationyear || studentData.graduationYear}
                 onChange={(e) => {
@@ -892,7 +993,7 @@ function EducationForm({ onNext, onBack }) {
                 name="department"
                 label="Department"
                 fullWidth
-                value={department || studentData.departmentName}
+                value={department}
                 onChange={(e) => {
                   setDepartment(e.target.value);
                   validateDepartment(e.target.value);
@@ -923,7 +1024,7 @@ function EducationForm({ onNext, onBack }) {
             <Grid item xs={12} sm={6}>
               <TextField
                 name="graduationyear"
-                // label="Graduation Year"
+                label="Graduation Year"
                 fullWidth
                 value={graduationyear || studentData.graduationYear}
                 onChange={(e) => {

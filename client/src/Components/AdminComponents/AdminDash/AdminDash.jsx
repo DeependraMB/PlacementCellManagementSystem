@@ -35,6 +35,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ForumIcon from "@mui/icons-material/Forum";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import SchoolIcon from '@mui/icons-material/School';
 
 const drawerWidth = 240;
 
@@ -234,15 +235,18 @@ export default function AdminDash(props) {
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
             </ListItemButton>
-            <ListItemButton component={Link} href="/student-management">
-              <ListItemIcon>
-                <BookIcon />
-              </ListItemIcon>
-              <ListItemText
+           
+            <NavLink to="/student-management" className="nav-link">
+              <ListItemButton>
+                <ListItemIcon>
+                <SchoolIcon />
+                </ListItemIcon>
+                <ListItemText
                 primary="Student Manage"
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
-            </ListItemButton>
+              </ListItemButton>
+            </NavLink>
             <ListItemButton component={Link} href="/teacher-management">
               <ListItemIcon>
                 <BookIcon />
@@ -252,6 +256,17 @@ export default function AdminDash(props) {
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
             </ListItemButton>
+            <NavLink to="/add-teacher" className="nav-link">
+              <ListItemButton>
+                <ListItemIcon>
+                <SchoolIcon />
+                </ListItemIcon>
+                <ListItemText
+                primary="Add Teacher"
+                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+              />
+              </ListItemButton>
+            </NavLink>
             <NavLink to="/notes-management" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>

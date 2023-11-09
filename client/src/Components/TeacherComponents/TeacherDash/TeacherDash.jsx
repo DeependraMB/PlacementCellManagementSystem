@@ -32,6 +32,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import WorkIcon from "@mui/icons-material/Work";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import LockOutlined from "@mui/icons-material/LockOutlined";
 
 const drawerWidth = 280;
 
@@ -124,7 +125,7 @@ export default function TeacherDash(props) {
             </IconButton>
             <Logo />
             <div className="" style={{ paddingLeft: "162px" }}>
-              <List
+              {/* <List
                 sx={{
                   display: "flex",
                   flexDirection: "row",
@@ -150,7 +151,7 @@ export default function TeacherDash(props) {
                 <ListItem button component={Link} href="/">
                   <ListItemText primary="Contact" />
                 </ListItem>
-              </List>
+              </List> */}
             </div>
             {/* <div>
               <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
@@ -159,7 +160,7 @@ export default function TeacherDash(props) {
               style={{
                 display: "flex",
                 alignItems: "center",
-                marginLeft: "45px",
+                marginLeft: "525px",
                 justifyContent: "space-between",
               }}
             >
@@ -178,9 +179,9 @@ export default function TeacherDash(props) {
                 className="avatar-menu"
                 style={{ marginRight: "5px", marginLeft: "5px" }}
               >
-                <Avatar className="avatar">{auth.name.slice(0, 1)}</Avatar>
+                {auth.name ? (<Avatar className="avatar">{auth.name.slice(0, 1)}</Avatar>) : ("")}
               </div>
-              {auth.name ? <Logout varient="primary" /> : ""}
+              {auth._id ? <Logout varient="primary" /> : ""}
             </div>
           </Box>
         </Toolbar>
@@ -203,6 +204,17 @@ export default function TeacherDash(props) {
         <Divider />
         <Scrollbar style={{ height: "90vh", overflowX: "hidden" }}>
           <List component="nav">
+
+          <NavLink to="/teacherhome" className="nav-link">
+              <ListItemButton>
+                <ListItemIcon>
+                <DashboardIcon />
+                  {/* You can use the appropriate Material-UI icon */}
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItemButton>
+            </NavLink>
+
             <NavLink to="/student-assistance" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
@@ -216,20 +228,32 @@ export default function TeacherDash(props) {
             <NavLink to="/mock-aptitude-conduct" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
-                  <RecordVoiceOverIcon /> {/* Use the appropriate icon */}
+                <SchoolIcon />
+                  {/* Use the appropriate icon */}
                 </ListItemIcon>
                 <ListItemText primary="Mock Aptitude Conduct" />
               </ListItemButton>
             </NavLink>
 
-            {/* <NavLink to="/support-and-training" className="nav-link">
+            <NavLink to="/teacher-view-profile" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
-                  <SchoolIcon />
+                <RecordVoiceOverIcon /> 
                 </ListItemIcon>
-                <ListItemText primary="Support and Training" />
+                <ListItemText primary="Profile Setting" />
               </ListItemButton>
-            </NavLink> */}
+            </NavLink>
+            
+            <NavLink to="/teacher-change-password" className="nav-link">
+              <ListItemButton>
+                <ListItemIcon>
+                <LockOutlined /> 
+                </ListItemIcon>
+                <ListItemText primary="Change Password" />
+              </ListItemButton>
+            </NavLink>
+
+
 
             <NavLink to="/review-aptitude-tests" className="nav-link">
               <ListItemButton>

@@ -16,7 +16,7 @@ const columns = [
   { id: "department", label: "Department", minWidth: 100 },
   { id: "gender", label: "Gender", minWidth: 50 },
   { id: "email", label: "Email", minWidth: 150 },
-  { id: "phno", label: "Mobile No", minWidth: 100 },
+  { id: "mobno", label: "Mobile No", minWidth: 100 },
 ];
 
 export default function TeacherManagement() {

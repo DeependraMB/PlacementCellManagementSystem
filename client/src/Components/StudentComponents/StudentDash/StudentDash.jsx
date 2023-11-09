@@ -126,7 +126,7 @@ export default function StudentDash(props) {
             </IconButton>
             <Logo />
             <div className="" style={{ paddingLeft: "162px" }}>
-              <List
+              {/* <List
                 sx={{
                   display: "flex",
                   flexDirection: "row",
@@ -152,7 +152,7 @@ export default function StudentDash(props) {
                 <ListItem button component={Link} href="/">
                   <ListItemText primary="Contact" />
                 </ListItem>
-              </List>
+              </List> */}
             </div>
             {/* <div>
               <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
@@ -161,7 +161,7 @@ export default function StudentDash(props) {
               style={{
                 display: "flex",
                 alignItems: "center",
-                marginLeft: "45px",
+                marginLeft: "540px",
                 justifyContent: "space-between",
               }}
             >

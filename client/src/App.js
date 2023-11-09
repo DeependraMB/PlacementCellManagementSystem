@@ -24,6 +24,9 @@ import NotesShare from "./Pages/TeacherPages/NotesShare";
 import NotesShareForm from './Pages/TeacherPages/NotesShareForm'
 import NotesMaterial from "./Components/StudentComponents/NotesMaterial/NotesMaterial";
 import NotesMaterialPage from "./Pages/StudentPages/NotesMaterialPage";
+import UpdateTeacherProfile from "./Pages/TeacherPages/UpdateTeacherProfile";
+import ViewProfilePage from "./Pages/TeacherPages/ViewProfilePage";
+import ChangePasswordPage from "./Pages/TeacherPages/ChangePasswordPage";
 
 
 function App() {
@@ -121,6 +124,18 @@ function App() {
            <Route
             path="/notes-material"
             element={auth.token ? <NotesMaterialPage /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/teacher-update-profile"
+            element={auth.token ? <UpdateTeacherProfile /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/teacher-view-profile"
+            element={auth.token ? <ViewProfilePage /> : <Navigate to="/signin" />}
+          />
+           <Route
+            path="/teacher-change-password"
+            element={auth.token ? <ChangePasswordPage /> : <Navigate to="/signin" />}
           />
         </Routes>
       </Router>

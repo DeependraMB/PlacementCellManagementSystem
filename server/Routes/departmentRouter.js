@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Department = require("../Models/departmentModel"); 
+const { hashPassword, comparePassword } = require('../Helpers/registerHelper');
+
 
 // Route to fetch all departments
 router.get("/departments", async (req, res) => {

@@ -9,6 +9,9 @@ import "react-toastify/dist/ReactToastify.css";
 const textFieldStyle = {
   borderBottom: "2px solid #1976D2", // Replace with your primary color
 };
+const blueBorder = {
+  borderBottom: "2px solid #2196F3", // Replace with your preferred blue color
+};
 
 function SkillsForm({ onNext, onBack }) {
   const { auth, setAuth } = useAuth();
@@ -41,9 +44,13 @@ function SkillsForm({ onNext, onBack }) {
     }
   };
 
+  const maxCharacterLimit = 100; 
+
   const validateProjects = (value) => {
     if (!value) {
       setProjectsError("Projects is required");
+    } else if (value.length > maxCharacterLimit) {
+      setProjectsError(`Projects must be ${maxCharacterLimit} characters or less`);
     } else {
       setProjectsError("");
     }
@@ -195,13 +202,14 @@ function SkillsForm({ onNext, onBack }) {
           <TextField
             name="technicalskills"
             label="Technical Skills"
-            style={textFieldStyle}
+            //style={textFieldStyle}
             fullWidth
             value={technicalskills}
             onChange={(e) => {
               setTechnicalskills(e.target.value);
               validateTechnicalSkills(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!technicalskillsError}
             helperText={technicalskillsError}
           />
@@ -211,13 +219,14 @@ function SkillsForm({ onNext, onBack }) {
           <TextField
             name="projects"
             label="Projects"
-            style={textFieldStyle}
+            //style={textFieldStyle}
             fullWidth
             value={projects}
             onChange={(e) => {
               setProjects(e.target.value);
               validateProjects(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!projectsError}
             helperText={projectsError}
           />
@@ -226,13 +235,14 @@ function SkillsForm({ onNext, onBack }) {
           <TextField
             name="githublink"
             label="GitHub Link"
-            style={textFieldStyle}
+            //style={textFieldStyle}
             fullWidth
             value={githublink}
             onChange={(e) => {
               setGithublink(e.target.value);
               validateGitHubLink(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!githublinkError}
             helperText={githublinkError}
           />
@@ -241,13 +251,14 @@ function SkillsForm({ onNext, onBack }) {
           <TextField
             name="linkedinlink"
             label="LinkedIn Link"
-            style={textFieldStyle}
+            
             fullWidth
             value={linkedinlink}
             onChange={(e) => {
               setLinkedinlink(e.target.value);
               validateLinkedInLink(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!linkedinlinkError}
             helperText={linkedinlinkError}
           />
@@ -257,13 +268,14 @@ function SkillsForm({ onNext, onBack }) {
           <TextField
             name="languagesknown"
             label="Languages Known"
-            style={textFieldStyle}
+            
             fullWidth
             value={languagesknown}
             onChange={(e) => {
               setLanguagesknown(e.target.value);
               validateLanguagesKnown(e.target.value);
             }}
+            InputProps={{ style: blueBorder }}
             error={!!languagesknownError}
             helperText={languagesknownError}
           />

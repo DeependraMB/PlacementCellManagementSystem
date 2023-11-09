@@ -10,6 +10,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import SchoolIcon from "@mui/icons-material/School";
 import CheckIcon from "@mui/icons-material/Check";
 import NoteIcon from "@mui/icons-material/Note";
+import axios from "axios";
 
 function AdminHomeBoxes() {
   const { auth, setAuth } = useAuth();
@@ -18,14 +19,35 @@ function AdminHomeBoxes() {
   const [placedStudentsCount, setPlacedStudentsCount] = useState(0);
   const [totalNotes, setTotalNotes] = useState(0);
 
-  // Fetch data from your project's backend or data source
   useEffect(() => {
-    // Simulate fetching data (replace with actual API calls)
-    setStudentCount(150);
-    setTeacherCount(10);
-    setPlacedStudentsCount(75);
-    setTotalNotes(500);
+    axios.get("http://localhost:5000/get-students")
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          const count = response.data.length; // Get the count from the array's length
+          setStudentCount(count); // Set the student count in the state variable
+        } else {
+          console.error("Response data is not an array:", response.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching student data:", error);
+      });
+
+
+      axios.get("http://localhost:5000/get-teachers")
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          const count = response.data.length; // Get the count from the array's length
+          setTeacherCount(count); // Set the student count in the state variable
+        } else {
+          console.error("Response data is not an array:", response.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching student data:", error);
+      });
   }, []);
+  
 
   return (
     <div>
@@ -33,8 +55,13 @@ function AdminHomeBoxes() {
         <div className="col-lg-3 col-sm-6">
           <div className="card bg-primary text-high-emphasis-inverse mb-4">
             <div className="card-body pb-0 d-flex justify-content-between">
-              <div className="text-center"> {/* Center text */}
-                <div className="fs-3 fw-semibold" style={{paddingTop:"40px"}}>
+              <div className="text-center">
+                {" "}
+                {/* Center text */}
+                <div
+                  className="fs-3 fw-semibold"
+                  style={{ paddingTop: "40px" }}
+                >
                   {studentCount}
                   <span className="fs-6 fw-normal"></span>
                 </div>
@@ -61,8 +88,13 @@ function AdminHomeBoxes() {
         <div className="col-lg-3 col-sm-6">
           <div className="card bg-info text-high-emphasis-inverse mb-4">
             <div className="card-body pb-0 d-flex justify-content-between align-items-start justify-content-center">
-              <div className="text-center"> {/* Center text */}
-                <div className="fs-3 fw-semibold" style={{paddingTop:"40px"}}>
+              <div className="text-center">
+                {" "}
+                {/* Center text */}
+                <div
+                  className="fs-3 fw-semibold"
+                  style={{ paddingTop: "40px" }}
+                >
                   {teacherCount}
                   <span className="fs-6 fw-normal"></span>
                 </div>
@@ -93,8 +125,13 @@ function AdminHomeBoxes() {
         <div className="col-lg-3 col-sm-6">
           <div className="card bg-warning text-high-emphasis-inverse mb-4">
             <div className="card-body pb-0 d-flex justify-content-between align-items-start justify-content-center">
-              <div className="text-center"> {/* Center text */}
-                <div className="fs-3 fw-semibold" style={{paddingTop:"40px"}}>
+              <div className="text-center">
+                {" "}
+                {/* Center text */}
+                <div
+                  className="fs-3 fw-semibold"
+                  style={{ paddingTop: "40px" }}
+                >
                   {placedStudentsCount}
                   <span className="fs-6 fw-normal"></span>
                 </div>
@@ -121,10 +158,15 @@ function AdminHomeBoxes() {
         <div className="col-lg-3 col-sm-6">
           <div className="card bg-danger text-high-emphasis-inverse mb-4">
             <div className="card-body pb-0 d-flex justify-content-between align-items-start justify-content-center">
-              <div className="text-center"> {/* Center text */}
-                <div className="fs-4 fw-semibold" style={{paddingTop:"40px"}}>
+              <div className="text-center">
+                {" "}
+                {/* Center text */}
+                <div
+                  className="fs-4 fw-semibold"
+                  style={{ paddingTop: "40px" }}
+                >
                   {totalNotes}
-                  <span className="fs-6 fw-normal" ></span>
+                  <span className="fs-6 fw-normal"></span>
                 </div>
                 <div>Total Notes</div>
               </div>

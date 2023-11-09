@@ -11,14 +11,14 @@ import axios from "axios";
 import { useAuth } from "../../../Context/AuthContext";
 
 const columns = [
-  { id: "serialNumber", label: "Serial No", minWidth: 20 },
+  // { id: "serialNumber", label: "Serial No", minWidth: 20 },
   { id: "firstname", label: "First Name", minWidth: 100 },
   { id: "lastname", label: "Last Name", minWidth: 100 },
-  { id: "department", label: "Department", minWidth: 100 },
+  // { id: "department", label: "Department", minWidth: 100 },
   { id: "gender", label: "Gender", minWidth: 50 },
   { id: "graduationYear", label: "Passout Year", minWidth: 80 },
   { id: "email", label: "Email", minWidth: 150 },
-  { id: "phno", label: "Mobile No", minWidth: 100 },
+  { id: "mobno", label: "Mobile No", minWidth: 100 },
 ];
 
 export default function StudentAssistance() {

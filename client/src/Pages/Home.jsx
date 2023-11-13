@@ -4,6 +4,7 @@ import Recruitersrow from '../Components/RecruitersRow/RecruitersRow';
 import Features from "../Components/Features/Features";
 import PlacementCellInfo from "../Components/PlacementCellInfo/PlacementCellInfo";
 import FrontPage from "../Components/FrontPage/FrontPage";
+import Footer from "../Components/Footer/Footer";
 
 
 
@@ -15,6 +16,7 @@ function Home() {
       <Features/>
       <Recruitersrow/>
       <PlacementCellInfo/>
+      <Footer/>
     </div>
   );
 }

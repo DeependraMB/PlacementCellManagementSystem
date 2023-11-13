@@ -6,16 +6,43 @@ import {
   GridToolbarContainer,
   GridToolbarExport,
 } from "@mui/x-data-grid";
-import { TextField } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Dialog, DialogContent, Button } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
+import SendNotificationDialog from "./SendNotificationDialog";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
 const useStyles = makeStyles((theme) => ({
-  filterTextField: {
-    marginRight: "8px",
-    marginBottom: "20px", // Adjust the margin as needed
+  dialogContent: {
+    width: "1000px", // Adjust the width as needed
+    height: "500px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  textField: {
+    width: "100%",
+  },
+  textArea: {
+    width: "100%",
+    flexGrow: 1, // Fill remaining space
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "20px",
+  },
+  button: {
+    margin: "8px",
+  },
+
+  heading: {
+    paddingLeft: "450px",
+    marginTop: "36px",
+    color: "blue",
+    fontWeight: "bold",
   },
   customToolbar: {
     display: "flex",
@@ -29,14 +56,13 @@ const useStyles = makeStyles((theme) => ({
       marginRight: "8px", // Add some space between the icon and text
     },
   },
-  dialogContent: {
-    marginLeft: "50px",
+  customHeader: {
+    backgroundColor: "#ebeae8",
+    fontFamily: "bold",
+    fontSize: "14px",
     alignItems: "center",
   },
-  filterTextField: {
-    marginBottom: "20px",
-    marginLeft: "10px",
-  },
+
   button: {
     marginLeft: "140px",
   },
@@ -46,27 +72,32 @@ const columns = [
   {
     field: "serialNumber",
     headerName: "Serial No",
+    headerClassName: "custom-header",
     editable: true,
-    // checkboxSelection: true,
+    checkboxSelection: true,
     valueGetter: (params) => params.row.serialNumber || "-",
+    width: 80,
   },
   {
     field: "firstname",
     headerName: "First Name",
     rowLength: 30000,
     valueGetter: (params) => params.row.firstname || "-",
+    width: 140,
   },
   {
     field: "lastname",
     headerName: "Last Name",
     rowLength: 30000,
     valueGetter: (params) => params.row.lastname || "-",
+    width: 100,
   },
   {
     field: "department",
     headerName: "Department",
     rowLength: 30000,
     valueGetter: (params) => params.row.department || "-",
+    width: 140,
   },
   {
     field: "gender",
@@ -85,24 +116,28 @@ const columns = [
     headerName: "Email",
     rowLength: 30000,
     valueGetter: (params) => params.row.email || "-",
+    width: 180,
   },
   {
     field: "mobno",
     headerName: "Mobile No",
     rowLength: 30000,
     valueGetter: (params) => params.row.mobno || "-",
+    width: 120,
   },
   {
     field: "dob",
     headerName: "Date of Birth",
     rowLength: 30000,
     valueGetter: (params) => params.row.dob || "-",
+    width: 120,
   },
   {
     field: "personalemail",
     headerName: "Personal Email",
     rowLength: 30000,
     valueGetter: (params) => params.row.personalemail || "-",
+    width: 160,
   },
   {
     field: "fathername",
@@ -296,6 +331,9 @@ export default function StudentManagement() {
   const [filteredEmails, setFilteredEmails] = useState([]);
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [selectedEmails, setSelectedEmails] = useState([]);
+
+  //Fetching
 
   const fetchDepartmentName = async (departmentId) => {
     try {
@@ -419,9 +457,7 @@ export default function StudentManagement() {
   };
   const getRowId = (row) => row.email;
 
-  console.log("users:", users);
-  console.log("page:", page);
-  console.log("rowsPerPage:", rowsPerPage);
+  //Dialog CLOSE AND OPEN
 
   const openFilterDialog = () => {
     setFilterDialogOpen(true);
@@ -450,6 +486,14 @@ export default function StudentManagement() {
         >
           Filters
         </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={openSendDialog}
+          startIcon={<NotificationsIcon />}
+        >
+          Send Notifications
+        </Button>
       </GridToolbarContainer>
     );
   };
@@ -461,8 +505,6 @@ export default function StudentManagement() {
       [event.target.name]: event.target.value,
     });
   };
-
-  console.log(filter);
 
   const filteredData = users.filter((userObj) => {
     return Object.keys(filter)?.every((key) => {
@@ -486,34 +528,38 @@ export default function StudentManagement() {
 
   console.log(filteredData);
 
-  useEffect(() => {
-    const filteredEmails = filteredData.map((userObj) => userObj.email);
+  // useEffect(() => {
+  //   const filteredEmails = filteredData.map((userObj) => userObj.email);
 
-    setFilteredEmails(filteredEmails);
-  }, [filter]);
+  //   setFilteredEmails(filteredEmails);
+  // }, [filter]);
 
   const emailsData = {
-    email: filteredEmails,
+    email: selectedEmails,
   };
 
   console.log(emailsData);
   const emailsJSON = JSON.stringify(emailsData);
 
   const handleSendNotification = () => {
+    console.log("Subject:", subject);
+    console.log("Message:", message);
+    console.log("Selected Emails:", selectedEmails);
+
     const notificationData = {
       subject,
       message,
     };
 
     sendEmailsToBackend({
-      email: filteredEmails,
+      email: selectedEmails,
       ...notificationData,
     });
 
     closeSendDialog();
   };
 
-  const sendEmailsToBackend = async (emailsData) => {
+  const sendEmailsToBackend = async (emailsData, notificationDataa) => {
     try {
       const dataToSend = {
         ...emailsData,
@@ -521,6 +567,7 @@ export default function StudentManagement() {
         message,
       };
 
+      console.log(dataToSend);
       const response = await axios.post(
         "http://localhost:5000/send-notification/send-notification",
         dataToSend,
@@ -535,47 +582,64 @@ export default function StudentManagement() {
     }
   };
 
+  const handleSelectionModelChange = (selectionModel) => {
+    console.log("Selection Model:", selectionModel);
+
+    const selectedEmails = selectionModel.map((selectedEmail, index) => {
+      const userIndex = filteredData.findIndex(
+        (user) => user.email === selectedEmail
+      );
+
+      console.log(
+        `Selected Index ${selectedEmail} (Data Index ${index}${selectedEmail}):`,
+        filteredData[userIndex]
+      );
+
+      return filteredData[userIndex]?.email;
+    });
+
+    console.log("Selected Emails:", selectedEmails);
+
+    setSelectedEmails(selectedEmails);
+    console.log("Updated Selected Emails in State:", selectedEmails);
+  };
+
+  console.log(selectedEmails);
   return (
     <div className="my-5 mx-5">
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={openSendDialog}
-        startIcon={<FilterListIcon />}
-      >
-        Send Notification
-      </Button>
-      <Dialog open={sendDialogOpen} onClose={closeSendDialog}>
+      <Dialog maxWidth="xl" open={sendDialogOpen}  onClose={closeSendDialog}>
+        <Typography
+          className="mt-3 justify-content-center"
+          sx={{ marginLeft: "450px", fontWeight: "bold", fontFamily: "NUNITO" }}
+        >
+          SEND NOTIFICATION
+        </Typography>
         <DialogContent className={classes.dialogContent}>
+          {/* <InputLabel htmlFor="subject" className={object.label}>
+          Subject
+        </InputLabel> */}
           <TextField
             name="subject"
-            className={classes.filterTextField}
             label="Subject"
             value={subject}
-            onChange={(e) => {
-              setSubject(e.target.value);
-            }}
+            onChange={(e) => setSubject(e.target.value)}
+            className={classes.textField}
           />
-          <br /> {/* Add a line break here */}
+          <br />
+          {/* <InputLabel htmlFor="message" className={object.label}>
+          Message
+        </InputLabel> */}
           <TextareaAutosize
-            className="my-5"
+            className={`${classes.textArea}`}
             name="message"
-            minRows={4} // Adjust the number of rows as needed
+            minRows={4}
             placeholder="Message"
             value={message}
-            onChange={(e) => {
-              setMessage(e.target.value);
-            }}
+            onChange={(e) => setMessage(e.target.value)}
           />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+          <div className={classes.buttonContainer}>
             <Button
-              onClick={closeSendDialog}
+             onClick={closeSendDialog}
               variant="contained"
               color="primary"
               className={classes.button}
@@ -672,10 +736,14 @@ export default function StudentManagement() {
       </Button> */}
       {filteredData.length > 0 ? (
         <DataGrid
-          sx={{ color: "black" }}
-          // checkboxSelection
+          columns={columns.map((column) => ({
+            ...column,
+            headerClassName: classes.customHeader,
+          }))}
+          sx={{ color: "black", fontFamily: "Nunito" }}
+          checkboxSelection
           rows={filteredData}
-          columns={columns}
+          // columns={columns}
           page={page}
           pageSize={rowsPerPage}
           onPageChange={handleChangePage}
@@ -687,6 +755,10 @@ export default function StudentManagement() {
           style={{ height: "700px", width: "100%" }}
           rowKeyField="email"
           getRowId={(row) => row.email}
+          onRowSelectionModelChange={handleSelectionModelChange}
+          selectionModel={selectedEmails.map((email) =>
+            filteredData.findIndex((user) => user.email === email)
+          )}
         />
       ) : (
         <p>Loading data...</p>

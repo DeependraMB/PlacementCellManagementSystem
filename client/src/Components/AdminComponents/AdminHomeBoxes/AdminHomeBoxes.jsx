@@ -5,12 +5,13 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "../../../Context/AuthContext";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Card, Paper, Stack } from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
 import SchoolIcon from "@mui/icons-material/School";
 import CheckIcon from "@mui/icons-material/Check";
 import NoteIcon from "@mui/icons-material/Note";
 import axios from "axios";
+import AppWidgetSummary from "./AppWidgetSummary";
 
 function AdminHomeBoxes() {
   const { auth, setAuth } = useAuth();
@@ -20,7 +21,8 @@ function AdminHomeBoxes() {
   const [totalNotes, setTotalNotes] = useState(0);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/get-students")
+    axios
+      .get("http://localhost:5000/get-students")
       .then((response) => {
         if (Array.isArray(response.data)) {
           const count = response.data.length; // Get the count from the array's length
@@ -33,8 +35,8 @@ function AdminHomeBoxes() {
         console.error("Error fetching student data:", error);
       });
 
-
-      axios.get("http://localhost:5000/get-teachers")
+    axios
+      .get("http://localhost:5000/get-teachers")
       .then((response) => {
         if (Array.isArray(response.data)) {
           const count = response.data.length; // Get the count from the array's length
@@ -47,7 +49,6 @@ function AdminHomeBoxes() {
         console.error("Error fetching student data:", error);
       });
   }, []);
-  
 
   return (
     <div>
@@ -189,6 +190,53 @@ function AdminHomeBoxes() {
           </div>
         </div>
       </div>
+
+      <Grid container spacing={3} justifyContent="center" >
+        <Grid xs={12} sm={5} item >
+          <Card
+            component={Stack}
+            
+            direction="row"
+            sx={{
+              px: 3,
+              py: 5,
+              borderRadius: 2,
+              
+            }}
+            
+          >
+            <Stack spacing={0.5}>
+              <Typography variant="h4">{studentCount}</Typography>
+
+              <Typography variant="subtitle2" sx={{ color: "text.disabled" }}>
+                Student Count
+              </Typography>
+            </Stack>
+          </Card>
+        </Grid>
+        <Grid xs={12} sm={5}  item>
+          <Card
+            component={Stack}
+            
+            direction="row"
+            sx={{
+              px: 3,
+              py: 5,
+              borderRadius: 2,
+              
+            }}
+            
+          >
+            <Stack spacing={0.5}>
+              <Typography variant="h4">{studentCount}</Typography>
+
+              <Typography variant="subtitle2" sx={{ color: "text.disabled" }}>
+                Student Count
+              </Typography>
+            </Stack>
+          </Card>
+        </Grid>
+      </Grid>
     </div>
   );
 }

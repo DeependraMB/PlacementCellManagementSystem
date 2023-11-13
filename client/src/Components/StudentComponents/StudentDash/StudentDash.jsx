@@ -34,6 +34,9 @@ import HelpIcon from "@mui/icons-material/Help";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ForumIcon from "@mui/icons-material/Forum";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { useTheme } from "@mui/material/styles";
+import { Grid } from "@mui/material";
+import { deepOrange } from "@mui/material/colors";
 
 const drawerWidth = 280;
 
@@ -82,6 +85,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function StudentDash(props) {
+  const theme = useTheme();
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
   const [open, setOpen] = React.useState(false);
@@ -106,85 +110,57 @@ export default function StudentDash(props) {
         <Toolbar
           sx={{
             pr: "24px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
-              edge="start"
-              color="dark"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: "36px",
-                ...(open && { display: "none" }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Logo />
-            <div className="" style={{ paddingLeft: "162px" }}>
-              {/* <List
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <IconButton
+                  edge="start"
+                  color="dark"
+                  aria-label="open drawer"
+                  onClick={toggleDrawer}
+                  sx={{
+                    marginRight: "36px",
+                    ...(open && { display: "none" }),
+                  }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Logo />
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
-                  marginLeft: "5px",
-                  color: "black",
-                }}
-              >
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="Home" />
-                </ListItem>
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="Recruiters" />
-                </ListItem>
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="Facilities" />
-                </ListItem>
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="Announcements" />
-                </ListItem>
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="About" />
-                </ListItem>
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="Contact" />
-                </ListItem>
-              </List> */}
-            </div>
-            {/* <div>
-              <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
-            </div> */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginLeft: "540px",
-                justifyContent: "space-between",
-              }}
-            >
-              <NotificationsIcon
-                sx={{
-                  color: "black",
-                  width: 35,
-                  height: 35,
-                  "& .css-110b6rr-MuiSvgIcon-root": {
-                    fontSize: "30 ",
-                    justifyContent: "space-around",
+                  alignItems: "center",
+                  [theme.breakpoints.down("md")]: {
+                    marginLeft: "auto", // Move to the right when screen size is below medium
                   },
                 }}
-              />
-              <div
-                className="avatar-menu"
-                style={{ marginRight: "5px", marginLeft: "5px" }}
               >
-                <Avatar className="avatar">{auth.name.slice(0, 1)}</Avatar>
-              </div>
-              {auth.name ? <Logout varient="primary" /> : ""}
-            </div>
-          </Box>
+                <NotificationsIcon
+                  sx={{
+                    color: "black",
+                    width: 35,
+                    height: 35,
+                    "& .css-110b6rr-MuiSvgIcon-root": {
+                      fontSize: "30 ",
+                      justifyContent: "space-around",
+                    },
+                  }}
+                />
+                <div
+                  className="avatar-menu"
+                  style={{ marginRight: "5px", marginLeft: "5px" }}
+                >
+                  <Avatar sx={{ bgcolor: deepOrange[500]}} className="avatar">{auth.name.slice(0, 1)}</Avatar>
+                </div>
+                {auth.name ? <Logout varient="primary" /> : ""}
+              </Box>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
 

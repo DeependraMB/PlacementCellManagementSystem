@@ -37,8 +37,51 @@ console.log("Message:", message);
           from: emailUser,
           to: email,
           subject: subject,
-          html: message,
-        };
+          html: `
+          <html>
+            <head>
+              <style>
+                body {
+                  font-family: 'Nunito', sans-serif;
+                  background-color: #f4f4f4;
+                }
+                .email-container {
+                  max-width: 600px;
+                  margin: auto;
+                  padding: 20px;
+                  background-color: #ebeae8;
+                  border-radius: 8px;
+                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+                .greeting {
+                  font-size: 18px;
+                  color: #333;
+                  margin-bottom: 15px;
+                }
+                .message {
+                  font-size: 16px;
+                  color: #555;
+                  line-height: 1.5;
+                }
+                .signature {
+                  font-size: 14px;
+                  color: #888;
+                  margin-top: 20px;
+                }
+              </style>
+            </head>
+            <body>
+              <div class="email-container">
+                <p class="greeting">Greetings from Your Organization!</p>
+                <p class="message">${message}</p>
+                <p class="message">Thank you for your attention.</p>
+                <!-- Add more content here as needed -->
+                <p class="signature">Best Regards,<br>Your Name</p>
+              </div>
+            </body>
+          </html>
+        `,
+      };
   
         // Send the email
         transporter.sendMail(mailOptions, (error, info) => {

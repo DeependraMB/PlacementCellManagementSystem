@@ -35,8 +35,17 @@ import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ForumIcon from "@mui/icons-material/Forum";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useTheme } from "@mui/material/styles";
-import { Grid } from "@mui/material";
+import { Button, Grid, Popover, Tooltip } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
+import axios from "axios";
+import Popper from "@mui/material/Popper";
+import Paper from "@mui/material/Paper";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
+import Typography from "@mui/material/Typography";
+import Badge from "@mui/material/Badge";
+import ExitToApp from "@mui/icons-material/ExitToApp";
 
 const drawerWidth = 280;
 
@@ -89,6 +98,48 @@ export default function StudentDash(props) {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
   const [open, setOpen] = React.useState(false);
+  const [notifications, setNotifications] = React.useState([]);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  useEffect(() => {
+    // Fetch notifications when the component mounts
+    fetchNotifications();
+  }, []);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/send-notification/receive-notifications/${auth.email}`
+      ); // Replace with your actual API endpoint
+      setNotifications(response.data);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
+
+  const handleNotificationClick = async (notificationId) => {
+    try {
+      await axios.put(
+        `http://localhost:5000/send-notification/notifications/${notificationId}`
+      );
+
+      // Update the UI to mark the notification as read and remove it from the list
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((notification) =>
+          notification._id === notificationId
+            ? { ...notification, isRead: true }
+            : notification
+        )
+      );
+
+      // Close the notification bar immediately
+      setAnchorEl(null);
+      fetchNotifications();
+    } catch (error) {
+      console.error("Error marking notification as read:", error);
+    }
+  };
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -100,9 +151,21 @@ export default function StudentDash(props) {
     }
   }, [auth.token, navigate, setAuth]);
 
-  return (
-    //<ThemeProvider theme={theme}>
+  const handleNotificationIconClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
+  const openPopover = Boolean(anchorEl);
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const unreadNotificationsCount = notifications.filter(
+    (notification) => !notification.isRead
+  ).length;
+
+  return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
 
@@ -140,22 +203,119 @@ export default function StudentDash(props) {
                   },
                 }}
               >
-                <NotificationsIcon
+                <IconButton onClick={handleNotificationIconClick}>
+                  <Badge
+                    badgeContent={unreadNotificationsCount}
+                    color="error"
+                    size="large"
+                  >
+                    <NotificationsIcon
+                      sx={{
+                        color: "black",
+                        width: 35,
+                        height: 35,
+                        "& .css-110b6rr-MuiSvgIcon-root": {
+                          fontSize: "30 ",
+                          justifyContent: "space-around",
+                        },
+                      }}
+                    />
+                  </Badge>
+                </IconButton>
+                <Popover
+                  open={openPopover}
+                  anchorEl={anchorEl}
+                  onClose={handlePopoverClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
                   sx={{
-                    color: "black",
-                    width: 35,
-                    height: 35,
-                    "& .css-110b6rr-MuiSvgIcon-root": {
-                      fontSize: "30 ",
-                      justifyContent: "space-around",
+                    "& .MuiPaper-root": {
+                      width: 600,
+                      padding: "15px 15px 15px 15px",
                     },
                   }}
-                />
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      textAlign: "center",
+                      marginBottom: 2,
+                      fontWeight: "bold",
+                      fontFamily: "Nunito",
+                    }}
+                  >
+                    Notifications
+                  </Typography>
+                  <Divider sx={{ borderTop: "1px solid #000" }} />
+                  <div>
+                    <List>
+                      {notifications.map((notification) => (
+                        <React.Fragment key={notification._id}>
+                          <ListItem
+                            button
+                            onClick={() =>
+                              handleNotificationClick(notification._id)
+                            }
+                            style={{
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <ListItemIcon>
+                              <NotificationsIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={
+                                <Typography
+                                  component="span"
+                                  variant="body1"
+                                  sx={{
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}
+                                >
+                                  <strong>{notification.subject}</strong>
+                                  <br />
+                                  {notification.message}
+                                </Typography>
+                              }
+                            />
+                          </ListItem>
+                          <Divider sx={{ borderTop: "1px solid #000" }} />
+                        </React.Fragment>
+                      ))}
+                    </List>
+
+                    <Button
+                      component={Link}
+                      to="/student-notifications" // Update with the correct path
+                      variant="outlined"
+                      sx={{
+                        width: "100%",
+                        marginTop: 2,
+                        border: "none",
+                      }}
+                    >
+                      View All
+                    </Button>
+                  </div>
+                </Popover>
+
                 <div
                   className="avatar-menu"
-                  style={{ marginRight: "5px", marginLeft: "5px" }}
+                  style={{ marginRight: "5px", marginLeft: "30px" }}
                 >
-                  <Avatar sx={{ bgcolor: deepOrange[500]}} className="avatar">{auth.name.slice(0, 1)}</Avatar>
+                  <Avatar sx={{ bgcolor: deepOrange[500] }} className="avatar">
+                    {auth.name.slice(0, 1)}
+                  </Avatar>
                 </div>
                 {auth.name ? <Logout varient="primary" /> : ""}
               </Box>
@@ -181,50 +341,62 @@ export default function StudentDash(props) {
         <Divider />
         <Scrollbar style={{ height: "90vh", overflowX: "hidden" }}>
           <List component="nav">
-            <NavLink to="/studenthome">
-              <ListItemButton>
-                <ListItemIcon>
-                  <DashboardIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Dashboard"
-                  sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-                />
-              </ListItemButton>
+            <NavLink to="/studenthome" className="nav-link">
+              <Tooltip title="Dashboard" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <DashboardIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Dashboard"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
             </NavLink>
 
-            <NavLink to="/stud-update-profile">
-              <ListItemButton>
-                <ListItemIcon>
-                  <PersonIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Profile Settings"
-                  sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-                />
-              </ListItemButton>
+            <NavLink to="/stud-update-profile" className="nav-link">
+              <Tooltip title="Profile Settings" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Profile Settings"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
             </NavLink>
 
-            <ListItemButton>
-              <ListItemIcon>
-                <NotificationsActiveIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Notifications"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <NavLink to="/notes-material">
-              <ListItemButton>
-                <ListItemIcon>
-                  <BookIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Career Resources"
-                  sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-                />
-              </ListItemButton>
+            <NavLink to="/student-notifications" className="nav-link">
+              <Tooltip title="Notifications" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NotificationsActiveIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Notifications"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
             </NavLink>
+
+            <NavLink to="/notes-material" className="nav-link">
+              <Tooltip title="Career Resources" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <BookIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Career Resources"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
             <ListItemButton>
               <ListItemIcon>
                 <FeedbackIcon />
@@ -261,15 +433,20 @@ export default function StudentDash(props) {
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
             </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Logout"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
+            
+            <NavLink to="" className="nav-link">
+              <Tooltip title="Log Out" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ExitToApp />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Logout"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
 
             <Divider />
           </List>
@@ -291,6 +468,5 @@ export default function StudentDash(props) {
         {props.children}
       </Box>
     </Box>
-    //</ThemeProvider>
   );
 }

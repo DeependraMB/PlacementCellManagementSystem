@@ -20,6 +20,7 @@ function ProfileUpdateStepper() {
   const [activeStep, setActiveStep] = useState(0);
   const [formState, setFormState] = useState({});
   const history = useNavigate();
+  const [success, setSuccess] = useState(true)
 
 
   const handleNext = () => {
@@ -34,7 +35,8 @@ function ProfileUpdateStepper() {
     window.scrollTo(0, 0);
     if (activeStep === steps.length - 1) {
       // Handle final step submission logic here
-       
+      setSuccess(false); 
+      localStorage.setItem('profileUpdateSuccess', 'false'); 
       history("/studenthome");
       toast.success("Update Profile Successfully!!!");
     } else {

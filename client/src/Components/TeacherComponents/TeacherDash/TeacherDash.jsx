@@ -179,7 +179,11 @@ export default function TeacherDash(props) {
                 className="avatar-menu"
                 style={{ marginRight: "5px", marginLeft: "5px" }}
               >
-                {auth.name ? (<Avatar className="avatar">{auth.name.slice(0, 1)}</Avatar>) : ("")}
+                {auth.name ? (
+                  <Avatar className="avatar">{auth.name.slice(0, 1)}</Avatar>
+                ) : (
+                  ""
+                )}
               </div>
               {auth._id ? <Logout varient="primary" /> : ""}
             </div>
@@ -204,11 +208,10 @@ export default function TeacherDash(props) {
         <Divider />
         <Scrollbar style={{ height: "90vh", overflowX: "hidden" }}>
           <List component="nav">
-
-          <NavLink to="/teacherhome" className="nav-link">
+            <NavLink to="/teacherhome" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
-                <DashboardIcon />
+                  <DashboardIcon />
                   {/* You can use the appropriate Material-UI icon */}
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
@@ -228,7 +231,7 @@ export default function TeacherDash(props) {
             <NavLink to="/mock-aptitude-conduct" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
-                <SchoolIcon />
+                  <SchoolIcon />
                   {/* Use the appropriate icon */}
                 </ListItemIcon>
                 <ListItemText primary="Mock Aptitude Conduct" />
@@ -238,22 +241,20 @@ export default function TeacherDash(props) {
             <NavLink to="/teacher-view-profile" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
-                <RecordVoiceOverIcon /> 
+                  <RecordVoiceOverIcon />
                 </ListItemIcon>
                 <ListItemText primary="Profile Setting" />
               </ListItemButton>
             </NavLink>
-            
+
             <NavLink to="/teacher-change-password" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
-                <LockOutlined /> 
+                  <LockOutlined />
                 </ListItemIcon>
                 <ListItemText primary="Change Password" />
               </ListItemButton>
             </NavLink>
-
-
 
             <NavLink to="/review-aptitude-tests" className="nav-link">
               <ListItemButton>

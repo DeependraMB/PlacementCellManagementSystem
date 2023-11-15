@@ -15,7 +15,7 @@ function Home() {
       <FrontPage />
       <Features/>
       <Recruitersrow/>
-      <PlacementCellInfo/>
+      {/* <PlacementCellInfo/> */}
       <Footer/>
     </div>
   );

@@ -27,6 +27,7 @@ import NotesMaterialPage from "./Pages/StudentPages/NotesMaterialPage";
 import UpdateTeacherProfile from "./Pages/TeacherPages/UpdateTeacherProfile";
 import ViewProfilePage from "./Pages/TeacherPages/ViewProfilePage";
 import ChangePasswordPage from "./Pages/TeacherPages/ChangePasswordPage";
+import StudentNotificationPage from "./Pages/StudentPages/StudentNotificationPage";
 
 
 function App() {
@@ -136,6 +137,10 @@ function App() {
            <Route
             path="/teacher-change-password"
             element={auth.token ? <ChangePasswordPage /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/student-notifications"
+            element={auth.token ? <StudentNotificationPage /> : <Navigate to="/signin" />}
           />
         </Routes>
       </Router>

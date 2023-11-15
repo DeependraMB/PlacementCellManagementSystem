@@ -23,6 +23,7 @@ const getUserDataRoutes = require("./Routes/getUserDataRoutes");
 const generateUserDataPDF = require("./Routes/generateUserDataPDF")
 const sendNotificationRoute = require("./Routes/sendNotificationRoute");
 const changePasswordRoute = require("./Routes/changePasswordRoute")
+const AuthMiddleware = require("./Middleware/AuthMiddleware")
 
 const otpStore = {};
 
@@ -199,7 +200,7 @@ app.use("/get-skills-details" ,getUserDataRoutes);
 
 app.use("/generate-userdata-pdf", generateUserDataPDF)
 
-app.use("/send-notification", sendNotificationRoute)
+app.use("/send-notification", sendNotificationRoute, AuthMiddleware)
 
 app.use("/teacher-change-password/:email",changePasswordRoute)
 

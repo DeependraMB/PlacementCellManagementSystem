@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from "react";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -11,6 +11,9 @@ export default function ProfileUpdateMessage() {
   const [open, setOpen] = React.useState(true);
   const history = useNavigate();
 
+  const storedSuccess = localStorage.getItem('profileUpdateSuccess');
+  const showProfileUpdateMessage = storedSuccess !== 'false';
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -22,29 +25,31 @@ export default function ProfileUpdateMessage() {
 
   return (
     <React.Fragment>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="profile-update-dialog-title"
-        aria-describedby="profile-update-dialog-description"
-      >
-        <DialogTitle id="profile-update-dialog-title">
-          Update Your Profile
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="profile-update-dialog-description">
-            It's important to keep your profile information up to date. Please update your profile now.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-          <Button onClick={handleUpdateProfile} color="primary">
-            Update Profile
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {showProfileUpdateMessage && (
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="profile-update-dialog-title"
+          aria-describedby="profile-update-dialog-description"
+        >
+          <DialogTitle id="profile-update-dialog-title">
+            Update Your Profile
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="profile-update-dialog-description">
+              It's important to keep your profile information up to date. Please update your profile now.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Close
+            </Button>
+            <Button onClick={handleUpdateProfile} color="primary">
+              Update Profile
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </React.Fragment>
   );
 }

@@ -24,6 +24,7 @@ const generateUserDataPDF = require("./Routes/generateUserDataPDF")
 const sendNotificationRoute = require("./Routes/sendNotificationRoute");
 const changePasswordRoute = require("./Routes/changePasswordRoute")
 const AuthMiddleware = require("./Middleware/AuthMiddleware")
+const statusRoute = require("./Routes/statusRoute");
 
 const otpStore = {};
 
@@ -198,11 +199,13 @@ app.use("/get-personal-details",getUserDataRoutes);
 app.use("/get-education-details" ,getUserDataRoutes);
 app.use("/get-skills-details" ,getUserDataRoutes);
 
-app.use("/generate-userdata-pdf", generateUserDataPDF)
+app.use("/generate-userdata-pdf", generateUserDataPDF);
 
-app.use("/send-notification", sendNotificationRoute, AuthMiddleware)
+app.use("/send-notification", sendNotificationRoute, AuthMiddleware);
 
-app.use("/teacher-change-password/:email",changePasswordRoute)
+app.use("/teacher-change-password/:email",changePasswordRoute);
+
+app.use("/update-student-status", statusRoute);
 
 app.listen(PORT, () => {
   console.log("\x1b[44m\x1b[33m%s\x1b[0m", `Server is running on port ${PORT}`);

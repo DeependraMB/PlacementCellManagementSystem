@@ -17,6 +17,13 @@ const loginController = async (req, res) => {
           success: false,
           message: "Invalid Email or Password" });
       }
+
+      if (user.status === "Blocked") {
+        return res.status(200).json({ 
+          success: false,
+          message: "Your account is blocked. Please contact support." 
+        });
+      }
   
       const isPasswordValid = await comparePassword(password, user.password);
       if (!isPasswordValid) {

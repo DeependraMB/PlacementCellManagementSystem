@@ -13,6 +13,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import SendNotificationDialog from "./SendNotificationDialog";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import StatusButton from "./StatusButton";
 
 const useStyles = makeStyles((theme) => ({
   dialogContent: {
@@ -68,256 +69,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const columns = [
-  {
-    field: "serialNumber",
-    headerName: "Serial No",
-    headerClassName: "custom-header",
-    editable: true,
-    checkboxSelection: true,
-    valueGetter: (params) => params.row.serialNumber || "-",
-    width: 80,
-  },
-  {
-    field: "firstname",
-    headerName: "First Name",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.firstname || "-",
-    width: 140,
-  },
-  {
-    field: "lastname",
-    headerName: "Last Name",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.lastname || "-",
-    width: 100,
-  },
-  {
-    field: "department",
-    headerName: "Department",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.department || "-",
-    width: 140,
-  },
-  {
-    field: "gender",
-    headerName: "Gender",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.gender || "-",
-  },
-  {
-    field: "graduationYear",
-    headerName: "Passout Year",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.graduationYear || "-",
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.email || "-",
-    width: 180,
-  },
-  {
-    field: "mobno",
-    headerName: "Mobile No",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.mobno || "-",
-    width: 120,
-  },
-  {
-    field: "dob",
-    headerName: "Date of Birth",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.dob || "-",
-    width: 120,
-  },
-  {
-    field: "personalemail",
-    headerName: "Personal Email",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.personalemail || "-",
-    width: 160,
-  },
-  {
-    field: "fathername",
-    headerName: "Father's Name",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.fathername || "-",
-  },
-  {
-    field: "mothername",
-    headerName: "Mother's Name",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.mothername || "-",
-  },
-  {
-    field: "housename",
-    headerName: "House Name",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.housename || "-",
-  },
-  {
-    field: "postoffice",
-    headerName: "Post Office",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.postoffice || "-",
-  },
-  {
-    field: "city",
-    headerName: "City",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.city || "-",
-  },
-  {
-    field: "state",
-    headerName: "State",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.state || "-",
-  },
-  {
-    field: "pincode",
-    headerName: "Pincode",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.pincode || "-",
-  },
-  {
-    field: "nationality",
-    headerName: "Nationality",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.nationality || "-",
-  },
-  {
-    field: "tenthpercentage",
-    headerName: "10th Percentage",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.tenthpercentage || "-",
-  },
-  {
-    field: "tenthCGPA",
-    headerName: "10th CGPA",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.tenthCGPA || "-",
-  },
-  {
-    field: "tenthboard",
-    headerName: "10th Board",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.tenthboard || "-",
-  },
-  {
-    field: "tenthschoolname",
-    headerName: "10th School Name",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.tenthschoolname || "-",
-  },
-  {
-    field: "twelthpercentage",
-    headerName: "12th Percentage",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.twelthpercentage || "-",
-  },
-  {
-    field: "twelthCGPA",
-    headerName: "12th CGPA",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.twelthCGPA || "-",
-  },
-  {
-    field: "twelthboard",
-    headerName: "12th Board",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.twelthboard || "-",
-  },
-  {
-    field: "twelthschoolname",
-    headerName: "12th School Name",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.twelthschoolname || "-",
-  },
-  {
-    field: "ugcoursename",
-    headerName: "Undergraduate Course Name",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.ugcoursename || "-",
-  },
-  {
-    field: "ugpercentage",
-    headerName: "Undergraduate Percentage",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.ugpercentage || "-",
-  },
-  {
-    field: "ugCGPA",
-    headerName: "Undergraduate CGPA",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.ugCGPA || "-",
-  },
-  {
-    field: "ugyearofgraduation",
-    headerName: "Undergraduate Year of Graduation",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.ugyearofgraduation || "-",
-  },
-  {
-    field: "ugcollegename",
-    headerName: "Undergraduate College Name",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.ugcollegename || "-",
-  },
-  {
-    field: "uguniversity",
-    headerName: "Undergraduate University",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.uguniversity || "-",
-  },
-  {
-    field: "mcaaggregateCGPA",
-    headerName: "MCA Aggregate CGPA",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.mcaaggregateCGPA || "-",
-  },
-  { field: "activearrears", headerName: "Active Arrears", rowLength: 30000 },
-  {
-    field: "historyofarrears",
-    headerName: "History of Arrears",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.historyofarrears || "-",
-  },
-  {
-    field: "technicalskills",
-    headerName: "Technical Skills",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.technicalskills || "-",
-  },
-  {
-    field: "projects",
-    headerName: "Projects",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.projects || "-",
-  },
-  {
-    field: "githublink",
-    headerName: "GitHub Link",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.githublink || "-",
-  },
-  {
-    field: "linkedinlink",
-    headerName: "LinkedIn Link",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.linkedinlink || "-",
-  },
-  {
-    field: "languagesknown",
-    headerName: "Languages Known",
-    rowLength: 30000,
-    valueGetter: (params) => params.row.languagesknown || "-",
-  },
-  // Add more fields as needed
-];
 
-export default function StudentManagement() {
+
+
+export default function StudentManagement({onChange}) {
   const [users, setUsers] = useState([]);
   const [personal, setPersonal] = useState([]);
   const [education, setEducation] = useState([]);
@@ -332,6 +87,266 @@ export default function StudentManagement() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [selectedEmails, setSelectedEmails] = useState([]);
+
+  const columns = [
+    {
+      field: "serialNumber",
+      headerName: "Serial No",
+      headerClassName: "custom-header",
+      editable: true,
+      checkboxSelection: true,
+      valueGetter: (params) => params.row.serialNumber || "-",
+      width: 80,
+    },
+    {
+      field: "firstname",
+      headerName: "First Name",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.firstname || "-",
+      width: 140,
+    },
+    {
+      field: "lastname",
+      headerName: "Last Name",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.lastname || "-",
+      width: 100,
+    },
+    {
+      field: "department",
+      headerName: "Department",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.department || "-",
+      width: 165,
+    },
+    {
+      field: "gender",
+      headerName: "Gender",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.gender || "-",
+    },
+    {
+      field: "graduationYear",
+      headerName: "Passout Year",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.graduationYear || "-",
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.email || "-",
+      width: 200,
+    },
+    {
+      field: "mobno",
+      headerName: "Mobile No",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.mobno || "-",
+      width: 120,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+      renderCell: (params) => (
+        <StatusButton
+          status={params.row.status}
+          onChange={(status) => handleStatusChange(params.row.email, status)}
+        />
+      ),
+    },
+    {
+      field: "dob",
+      headerName: "Date of Birth",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.dob || "-",
+      width: 120,
+    },
+    {
+      field: "personalemail",
+      headerName: "Personal Email",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.personalemail || "-",
+      width: 160,
+    },
+    {
+      field: "fathername",
+      headerName: "Father's Name",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.fathername || "-",
+    },
+    {
+      field: "mothername",
+      headerName: "Mother's Name",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.mothername || "-",
+    },
+    {
+      field: "housename",
+      headerName: "House Name",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.housename || "-",
+    },
+    {
+      field: "postoffice",
+      headerName: "Post Office",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.postoffice || "-",
+    },
+    {
+      field: "city",
+      headerName: "City",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.city || "-",
+    },
+    {
+      field: "state",
+      headerName: "State",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.state || "-",
+    },
+    {
+      field: "pincode",
+      headerName: "Pincode",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.pincode || "-",
+    },
+    {
+      field: "nationality",
+      headerName: "Nationality",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.nationality || "-",
+    },
+    {
+      field: "tenthpercentage",
+      headerName: "10th Percentage",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.tenthpercentage || "-",
+    },
+    {
+      field: "tenthCGPA",
+      headerName: "10th CGPA",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.tenthCGPA || "-",
+    },
+    {
+      field: "tenthboard",
+      headerName: "10th Board",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.tenthboard || "-",
+    },
+    {
+      field: "tenthschoolname",
+      headerName: "10th School Name",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.tenthschoolname || "-",
+    },
+    {
+      field: "twelthpercentage",
+      headerName: "12th Percentage",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.twelthpercentage || "-",
+    },
+    {
+      field: "twelthCGPA",
+      headerName: "12th CGPA",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.twelthCGPA || "-",
+    },
+    {
+      field: "twelthboard",
+      headerName: "12th Board",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.twelthboard || "-",
+    },
+    {
+      field: "twelthschoolname",
+      headerName: "12th School Name",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.twelthschoolname || "-",
+    },
+    {
+      field: "ugcoursename",
+      headerName: "Undergraduate Course Name",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.ugcoursename || "-",
+    },
+    {
+      field: "ugpercentage",
+      headerName: "Undergraduate Percentage",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.ugpercentage || "-",
+    },
+    {
+      field: "ugCGPA",
+      headerName: "Undergraduate CGPA",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.ugCGPA || "-",
+    },
+    {
+      field: "ugyearofgraduation",
+      headerName: "Undergraduate Year of Graduation",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.ugyearofgraduation || "-",
+    },
+    {
+      field: "ugcollegename",
+      headerName: "Undergraduate College Name",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.ugcollegename || "-",
+    },
+    {
+      field: "uguniversity",
+      headerName: "Undergraduate University",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.uguniversity || "-",
+    },
+    {
+      field: "mcaaggregateCGPA",
+      headerName: "MCA Aggregate CGPA",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.mcaaggregateCGPA || "-",
+    },
+    { field: "activearrears", headerName: "Active Arrears", rowLength: 30000 },
+    {
+      field: "historyofarrears",
+      headerName: "History of Arrears",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.historyofarrears || "-",
+    },
+    {
+      field: "technicalskills",
+      headerName: "Technical Skills",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.technicalskills || "-",
+    },
+    {
+      field: "projects",
+      headerName: "Projects",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.projects || "-",
+    },
+    {
+      field: "githublink",
+      headerName: "GitHub Link",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.githublink || "-",
+    },
+    {
+      field: "linkedinlink",
+      headerName: "LinkedIn Link",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.linkedinlink || "-",
+    },
+    {
+      field: "languagesknown",
+      headerName: "Languages Known",
+      rowLength: 30000,
+      valueGetter: (params) => params.row.languagesknown || "-",
+    },
+    // Add more fields as needed
+  ];
 
   //Fetching
 
@@ -446,6 +461,28 @@ export default function StudentManagement() {
   useEffect(() => {
     fetchUserAndCombineData();
   }, []);
+
+  const handleStatusChange = async (email, newStatus) => {
+    console.log("Updating status for email:", email, "to", newStatus);
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/update-student-status/update-student-status",
+        {
+          email,
+          newStatus,
+        }
+      );
+  
+      
+      fetchUserAndCombineData();
+      console.log(`Status updated successfully for user with ID`);
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+  
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -605,9 +642,10 @@ export default function StudentManagement() {
   };
 
   console.log(selectedEmails);
+
   return (
     <div className="my-5 mx-5">
-      <Dialog maxWidth="xl" open={sendDialogOpen}  onClose={closeSendDialog}>
+      <Dialog maxWidth="xl" open={sendDialogOpen} onClose={closeSendDialog}>
         <Typography
           className="mt-3 justify-content-center"
           sx={{ marginLeft: "450px", fontWeight: "bold", fontFamily: "NUNITO" }}
@@ -639,7 +677,7 @@ export default function StudentManagement() {
           />
           <div className={classes.buttonContainer}>
             <Button
-             onClick={closeSendDialog}
+              onClick={closeSendDialog}
               variant="contained"
               color="primary"
               className={classes.button}
@@ -758,6 +796,13 @@ export default function StudentManagement() {
           onRowSelectionModelChange={handleSelectionModelChange}
           selectionModel={selectedEmails.map((email) =>
             filteredData.findIndex((user) => user.email === email)
+          )}
+          renderCell={(params) => (
+            <StatusButton
+            status={params.row.status}
+            email={params.row.email}
+            onChange={(status) => handleStatusChange(params.row.email, status)}
+          />
           )}
         />
       ) : (

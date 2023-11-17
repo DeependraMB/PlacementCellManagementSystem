@@ -54,6 +54,11 @@ const userSchema = new mongoose.Schema({
   otpemail: {
     type: String,
   },
+  status: {
+    type: String,
+    enum: ["Active", "Placed", "Blocked", "Inactive"],
+    default: "Active",
+  },
  
 
 });

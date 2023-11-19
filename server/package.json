@@ -15,6 +15,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "chart.js": "^4.4.0",
     "concurrently": "^8.2.1",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
@@ -29,6 +30,7 @@
     "nodemon": "^3.0.1",
     "passport": "^0.6.0",
     "pdfkit": "^0.13.0",
+    "react-chartjs-2": "^5.2.0",
     "react-hook-form": "^7.46.2",
     "react-perfect-scrollbar": "^1.5.8",
     "react-slick": "^0.29.0",

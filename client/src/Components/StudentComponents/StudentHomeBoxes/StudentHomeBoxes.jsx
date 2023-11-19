@@ -1,23 +1,70 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Icon from '@mui/material/Icon';
 import Typography from "@mui/material/Typography";
 import { useAuth } from "../../../Context/AuthContext";
-import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import ChatIcon from '@mui/icons-material/Chat';
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
 import './StudentHomeBoxes.css'
 import ProfileUpdateMessage from './ProfileUpdateMessage';
+import PlacementStatistics from "../../Charts/PlacementStatistics";
+import ProfileBox from "../../ProfileBox/ProfileBox";
+import axios from "axios";
 
 function StudentHomeBoxes() {
-  const { auth, setAuth } = useAuth();
+  const { auth } = useAuth();
+  const [student,setStudent]= useState("");
+  const [skills,setSkillDetails]= useState("");
+
+  useEffect(() => {
+    // Fetch both teacher data and department name
+    axios
+      .get(
+        `http://localhost:5000/get-user-byid/get-user-byid/get-user-byid/${auth._id}`
+      )
+      .then((response) => {
+        setStudent({
+          ...response.data,
+        });
+
+        return axios.get(
+          `http://localhost:5000/get-department-name/get-department-name/get-department-name/${response.data.departmentId}`
+        );
+      })
+      .then((response) => {
+        console.log(response.data);
+
+        setStudent((prevData) => ({
+          ...prevData,
+          ...response.data,
+        }));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+      
+
+    
+  }, [auth._id]);
+  console.log(student);
+
+  useEffect(() => {
+    // Replace "user@example.com" with the actual user's email or get it from your authentication context
+   
+
+    axios.get(`http://localhost:5000/get-skills-details/get-skills-details/get-skills-details/${auth.email}`)
+      .then(response => {
+        setSkillDetails(response.data);
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching skill details:", error);
+      });
+  }, []);
+
   return (
-    <div className="h-100" style={{ backgroundColor: '#f0ffff', padding: '20px 30px 0px' }}>
+    <div className="h-300" style={{ backgroundColor: '#f0ffff', padding: '20px 30px 0px' }}>
        <ProfileUpdateMessage />
       <div className="py-3" style={{ textAlign: "start"}}>
         <Typography
@@ -157,6 +204,15 @@ function StudentHomeBoxes() {
           </Grid>
         </Grid> */}
       </Box>
+      <ProfileBox
+        name={auth.name}
+        lastname={student.lastname}
+        email={auth.email}
+        department={auth.role}
+        role={student.departmentName}
+        profilephoto={skills.profilephoto}
+      />
+      <PlacementStatistics/>
     </div>
   );
 }

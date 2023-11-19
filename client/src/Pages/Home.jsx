@@ -5,6 +5,7 @@ import Features from "../Components/Features/Features";
 import PlacementCellInfo from "../Components/PlacementCellInfo/PlacementCellInfo";
 import FrontPage from "../Components/FrontPage/FrontPage";
 import Footer from "../Components/Footer/Footer";
+import PlacementStatistics from "../Components/Charts/PlacementStatistics";
 
 
 
@@ -16,6 +17,7 @@ function Home() {
       <Features/>
       <Recruitersrow/>
       {/* <PlacementCellInfo/> */}
+      <PlacementStatistics/>
       <Footer/>
     </div>
   );

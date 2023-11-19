@@ -406,18 +406,19 @@ function PersonalInfoForm({ onNext }) {
   useEffect(() => {
     const studentId = auth._id;
     const studentEmail = auth.email;
+    console.log(studentEmail);
 
     const fetchData = async () => {
       try {
         // First API call
         const userByIdResponse = await axios.get(
-          `http://localhost:5000/get-user-byid/${studentId}`
+          `http://localhost:5000/get-user-byid/get-user-byid/get-user-byid/${studentId}`
         );
         setStudentData(userByIdResponse.data);
 
         // Second API call
         const userByEmailResponse = await axios.get(
-          `http://localhost:5000/get-user-by-email/${studentEmail}`
+          `http://localhost:5000/get-user-by-email/get-user-by-email/${studentEmail}`
         );
 
         // Merge data from both responses
@@ -425,6 +426,8 @@ function PersonalInfoForm({ onNext }) {
           ...userByIdResponse.data,
           ...userByEmailResponse.data,
         };
+
+       
 
         setStudentData(updatedData);
       } catch (error) {

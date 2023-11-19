@@ -1,21 +1,75 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import PersonIcon from "@mui/icons-material/Person";
 import NotesIcon from "@mui/icons-material/Notes";
 import "./TeacherHomeBoxes.css"; // Add your CSS class for styling
-import { Avatar, Grid } from "@mui/material";
 import { useAuth } from "../../../Context/AuthContext";
+import ProfileBox from "../../ProfileBox/ProfileBox";
+import axios from "axios";
 
 function TeacherHomeBoxes() {
   const { auth, setAuth } = useAuth();
+  const [teacher, setTeacher] = useState("");
+  const [skillDetails, setSkillDetails] = useState(null);
+
+  useEffect(() => {
+    // Fetch both teacher data and department name
+    axios
+      .get(
+        `http://localhost:5000/get-user-byid/get-user-byid/get-user-byid/${auth._id}`
+      )
+      .then((response) => {
+        setTeacher({
+          ...response.data,
+        });
+
+        return axios.get(
+          `http://localhost:5000/get-department-name/get-department-name/get-department-name/${response.data.departmentId}`
+        );
+      })
+      .then((response) => {
+        console.log(response.data);
+
+        setTeacher((prevData) => ({
+          ...prevData,
+          ...response.data,
+        }));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+      
+
+    
+  }, [auth._id]);
+  console.log(teacher);
+
+  useEffect(() => {
+    // Replace "user@example.com" with the actual user's email or get it from your authentication context
+    const userEmail = "user@example.com";
+
+    axios.get(`http://localhost:5000/get-skills-details/get-skills-details/get-skills-details/${auth.email}`)
+      .then(response => {
+        setSkillDetails(response.data);
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching skill details:", error);
+      });
+  }, []);
+
+
   return (
     <div
       className=""
-      style={{ backgroundColor: "#f0ffff", padding: "20px 30px 0px",height: "130vh" }}
+      style={{
+        backgroundColor: "#f0ffff",
+        padding: "20px 30px 0px",
+        height: "130vh",
+      }}
     >
       <div className="py-3" style={{ textAlign: "start" }}>
         <Typography
@@ -78,34 +132,13 @@ function TeacherHomeBoxes() {
           </div>
         </div>
       </Box>
-      <Box sx={{marginBottom: "100px"}}>
-        <Grid
-          item
-          xs={3}
-          sx={{
-            backgroundColor: "#ffff",
-            
-            height: "60vh",
-            borderRadius: "10px",
-            boxShadow: "1px 1px 1px 1px",
-          }}
-        >
-          <div className="py-3">
-            <Avatar sx={{ width: "250px", height: "250px", margin: "auto",fontSize:"90px" }}>
-            {auth.name.slice(0, 1)}
-            </Avatar>
-            <Typography variant="h4" component="h2">
-              Name: {auth.name}
-            </Typography>
-            <Typography variant="h5" component="h3">
-              Email: {auth.email}
-            </Typography>
-            <Typography variant="h5" component="h3">
-              Role: {auth.role}
-            </Typography>
-          </div>
-        </Grid>
-      </Box>
+      <ProfileBox
+        name={auth.name}
+        lastname={teacher.lastname}
+        email={auth.email}
+        department={auth.role}
+        role={teacher.departmentName}
+      />
     </div>
   );
 }

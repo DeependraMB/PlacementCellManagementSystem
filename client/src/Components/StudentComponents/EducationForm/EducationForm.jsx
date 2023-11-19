@@ -459,7 +459,7 @@ function EducationForm({ onNext, onBack }) {
   
       // Fetch student data
       const response = await axios.get(
-        `http://localhost:5000/get-user-byid/${studentId}`
+        `http://localhost:5000/get-user-byid/get-user-byid/get-user-byid/${studentId}`
       );
       console.log(response);
       const departmentId = response.data.departmentId;
@@ -467,14 +467,14 @@ function EducationForm({ onNext, onBack }) {
   
       // Fetch department name
       const departmentResponse = await axios.get(
-        `http://localhost:5000/get-department-name/${departmentId}`
+        `http://localhost:5000/get-department-name/get-department-name/get-department-name/${departmentId}`
       );
       const departmentName = departmentResponse.data.departmentName;
       console.log(departmentName);
   
       // Fetch education details
       const educationResponse = await axios.get(
-        `http://localhost:5000/get-education-details/get-education-details/${studentEmail}`
+        `http://localhost:5000/get-education-details/get-education-details/get-education-details/${studentEmail}`
       );
   
       console.log(educationResponse);
@@ -685,7 +685,7 @@ function EducationForm({ onNext, onBack }) {
                 name="graduationyear"
                 label="Graduation Year"
                 fullWidth
-                value={graduationyear || studentData.graduationYear}
+                value={graduationyear}
                 onChange={(e) => {
                   setGraduationyear(e.target.value);
                   validateGraduationYear(e.target.value);

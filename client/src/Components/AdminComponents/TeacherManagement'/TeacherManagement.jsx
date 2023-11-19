@@ -37,7 +37,7 @@ export default function TeacherManagement() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/get-teachers");
+        const response = await axios.get("http://localhost:5000/get-teachers/get-teachers");
         const teacherData = response.data.map((teacher, index) => ({
           ...teacher,
           serialNumber: index + 1,

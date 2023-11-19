@@ -181,7 +181,7 @@ function SkillsForm({ onNext, onBack }) {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/get-skills-details/get-skills-details/get/${studentEmail}`
+          `http://localhost:5000/get-skills-details/get-skills-details/get-skills-details/${studentEmail}`
         );
         console.log(res);
         setStudentData(res.data);

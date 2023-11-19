@@ -14,10 +14,8 @@ const User = require("./Models/userModel");
 const Department = require("./Models/departmentModel");
 const Document = require("./Models/documentModel");
 const Personal = require("./Models/studentDetailsModel")
-
 const departmentRouter = require("./Routes/departmentRouter");
 const studentDetailsRoutes = require("./Routes/studentDetailsRoutes");
-
 const getDetailsRoute = require("./Routes/getDetailsRoute")
 const getUserDataRoutes = require("./Routes/getUserDataRoutes");
 const generateUserDataPDF = require("./Routes/generateUserDataPDF")
@@ -25,6 +23,7 @@ const sendNotificationRoute = require("./Routes/sendNotificationRoute");
 const changePasswordRoute = require("./Routes/changePasswordRoute")
 const AuthMiddleware = require("./Middleware/AuthMiddleware")
 const statusRoute = require("./Routes/statusRoute");
+const chartsRoute = require("./Routes/chartsRoute");
 
 const otpStore = {};
 
@@ -40,90 +39,43 @@ app.use(bodyParser.json());
 
 // Routers
 app.use("/student/register", studentRoutes);
-
 app.use("/teacher/register", teacherRoutes);
 
 app.use("/user/login", loginRoutes);
 
 app.use("/user/reset-password", resetpasswordRoutes);
-
 app.use("/verify-email", verifyEmailRoutes);
 
 app.use("/departments", departmentRouter);
 
 app.use("/studentdetails", studentDetailsRoutes);
 
-app.get("/get-students", async (req, res) => {
-  try {
-    const students = await User.find({ role: "student" });
-    res.json(students);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+app.use("/get-students", getDetailsRoute);
+app.use("/get-teachers", getDetailsRoute);
+app.use("/get-teacher/:id",getDetailsRoute);
+app.use("/get-user-byid/:id",getDetailsRoute);
+app.use("/get-user-by-email",getDetailsRoute);
+app.use("/get-department-name/:departmentId",getDetailsRoute);
+app.use("/get-education-details/:email" ,getDetailsRoute)
+app.use("/get-skills-details/:email",getDetailsRoute)
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/get-profile-photo/:filename", getDetailsRoute);
 
-app.get("/get-teachers", async (req, res) => {
-  try {
-    const teachers = await User.find({ role: "teacher" });
-    res.json(teachers);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+app.use("/get-personal-details",getUserDataRoutes);
+app.use("/get-education-details" ,getUserDataRoutes);
+app.use("/get-skills-details" ,getUserDataRoutes);
 
-app.get("/get-teacher/:id",async(req,res)=>{
-  const teacherid = req.params.id;
-  try {
-    const teacher = await User.find({ _id : teacherid });
-    res.json(teacher);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-})
+app.use("/generate-userdata-pdf", generateUserDataPDF);
 
-app.get("/get-user-byid/:id", async (req, res) => {
-  const userId = req.params.id;
+app.use("/send-notification", sendNotificationRoute, AuthMiddleware);
 
-  try {
-    const users = await User.findById(userId);
+app.use("/teacher-change-password/:email",changePasswordRoute);
 
-    res.json(users);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+app.use("/update-student-status", statusRoute);
 
-app.get('/get-user-by-email/:email', async (req, res) => {
-  try {
-    const email = req.params.email;
-    const user = await Personal.findOne({ email }); 
-    res.status(200).json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server Error' });
-  }
-});
+app.use("/placed-students", chartsRoute);
 
-app.get("/get-department-name/:departmentId", async (req, res) => {
-  try {
-    const departmentId = req.params.departmentId;
 
-    const department = await Department.findOne({ departmentId });
-
-    if (!department) {
-      return res.status(404).json({ message: "Department not found" });
-    }
-
-    res.json({ departmentName: department.name });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -162,7 +114,6 @@ app.post("/notesshare/notesshare", upload.single("file"), (req, res) => {
   }
 });
 
-// Endpoint for fetching all documents
 app.get("/get-pdfs", async (req, res) => {
   try {
     const documents = await Document.find(); // Fetch only specific fields
@@ -191,21 +142,6 @@ app.get("/notes/download/:id", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
-app.use("/get-education-details/:email" ,getDetailsRoute)
-app.use("/get-skills-details/:email",getDetailsRoute)
-
-app.use("/get-personal-details",getUserDataRoutes);
-app.use("/get-education-details" ,getUserDataRoutes);
-app.use("/get-skills-details" ,getUserDataRoutes);
-
-app.use("/generate-userdata-pdf", generateUserDataPDF);
-
-app.use("/send-notification", sendNotificationRoute, AuthMiddleware);
-
-app.use("/teacher-change-password/:email",changePasswordRoute);
-
-app.use("/update-student-status", statusRoute);
 
 app.listen(PORT, () => {
   console.log("\x1b[44m\x1b[33m%s\x1b[0m", `Server is running on port ${PORT}`);

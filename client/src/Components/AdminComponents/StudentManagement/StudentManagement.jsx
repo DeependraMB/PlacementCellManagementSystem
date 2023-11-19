@@ -4,14 +4,13 @@ import {
   DataGrid,
   GridToolbar,
   GridToolbarContainer,
-  GridToolbarExport,
+  
 } from "@mui/x-data-grid";
 import { TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Dialog, DialogContent, Button } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
-import SendNotificationDialog from "./SendNotificationDialog";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import StatusButton from "./StatusButton";
 
@@ -353,7 +352,7 @@ export default function StudentManagement({onChange}) {
   const fetchDepartmentName = async (departmentId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/get-department-name/${departmentId}`
+        `http://localhost:5000/get-department-name/get-department-name/get-department-name/${departmentId}`
       );
       return response.data.departmentName;
     } catch (error) {
@@ -425,7 +424,7 @@ export default function StudentManagement({onChange}) {
       const skillsData = skillsResponse.data;
 
       // Fetch users and combine data
-      const response = await axios.get("http://localhost:5000/get-students");
+      const response = await axios.get("http://localhost:5000/get-students/get-students");
       const usersData = response.data.map((user, index) => {
         const userEducationData =
           educationData.find((education) => education.email === user.email) ||

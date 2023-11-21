@@ -21,14 +21,15 @@ import TeacherHome from "../src/Pages/TeacherPages/TeacherHome";
 import StudentAssistancePage from "../src/Pages/TeacherPages/StudentAssistancePage";
 import NotesManagementPage from "./Pages/AdminPages/NotesManagementPage";
 import NotesShare from "./Pages/TeacherPages/NotesShare";
-import NotesShareForm from './Pages/TeacherPages/NotesShareForm'
+import NotesShareForm from "./Pages/TeacherPages/NotesShareForm";
 import NotesMaterial from "./Components/StudentComponents/NotesMaterial/NotesMaterial";
 import NotesMaterialPage from "./Pages/StudentPages/NotesMaterialPage";
 import UpdateTeacherProfile from "./Pages/TeacherPages/UpdateTeacherProfile";
 import ViewProfilePage from "./Pages/TeacherPages/ViewProfilePage";
 import ChangePasswordPage from "./Pages/TeacherPages/ChangePasswordPage";
 import StudentNotificationPage from "./Pages/StudentPages/StudentNotificationPage";
-
+import ExamListPage from "./Pages/TeacherPages/ExamListPage";
+import CreateExamPage from "./Pages/TeacherPages/CreateExamPage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -115,32 +116,57 @@ function App() {
           />
           <Route
             path="/notes-share"
-            element={auth.token ? <NotesShare/> : <Navigate to="/signin" />}
+            element={auth.token ? <NotesShare /> : <Navigate to="/signin" />}
           />
 
           <Route
             path="/notes-share-form"
-            element={auth.token ? <NotesShareForm /> : <Navigate to="/signin" />}
+            element={
+              auth.token ? <NotesShareForm /> : <Navigate to="/signin" />
+            }
           />
-           <Route
+          <Route
             path="/notes-material"
-            element={auth.token ? <NotesMaterialPage /> : <Navigate to="/signin" />}
+            element={
+              auth.token ? <NotesMaterialPage /> : <Navigate to="/signin" />
+            }
           />
           <Route
             path="/teacher-update-profile"
-            element={auth.token ? <UpdateTeacherProfile /> : <Navigate to="/signin" />}
+            element={
+              auth.token ? <UpdateTeacherProfile /> : <Navigate to="/signin" />
+            }
           />
           <Route
             path="/teacher-view-profile"
-            element={auth.token ? <ViewProfilePage /> : <Navigate to="/signin" />}
+            element={
+              auth.token ? <ViewProfilePage /> : <Navigate to="/signin" />
+            }
           />
-           <Route
+          <Route
             path="/teacher-change-password"
-            element={auth.token ? <ChangePasswordPage /> : <Navigate to="/signin" />}
+            element={
+              auth.token ? <ChangePasswordPage /> : <Navigate to="/signin" />
+            }
           />
           <Route
             path="/student-notifications"
-            element={auth.token ? <StudentNotificationPage /> : <Navigate to="/signin" />}
+            element={
+              auth.token ? (
+                <StudentNotificationPage />
+              ) : (
+                <Navigate to="/signin" />
+              )
+            }
+          />
+
+          <Route
+            path="/teacher-exam-list"
+            element={auth.token ? <ExamListPage /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/create-exam"
+            element={auth.token ? <CreateExamPage /> : <Navigate to="/signin" />}
           />
         </Routes>
       </Router>

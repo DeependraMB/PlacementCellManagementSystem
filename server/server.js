@@ -24,6 +24,7 @@ const changePasswordRoute = require("./Routes/changePasswordRoute")
 const AuthMiddleware = require("./Middleware/AuthMiddleware")
 const statusRoute = require("./Routes/statusRoute");
 const chartsRoute = require("./Routes/chartsRoute");
+const examRoute = require("./Routes/examRoute");
 
 const otpStore = {};
 
@@ -74,6 +75,8 @@ app.use("/teacher-change-password/:email",changePasswordRoute);
 app.use("/update-student-status", statusRoute);
 
 app.use("/placed-students", chartsRoute);
+
+app.use("/exams", examRoute);
 
 
 

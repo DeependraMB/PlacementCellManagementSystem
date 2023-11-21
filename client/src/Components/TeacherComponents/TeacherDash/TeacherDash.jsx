@@ -33,6 +33,9 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 import WorkIcon from "@mui/icons-material/Work";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import LockOutlined from "@mui/icons-material/LockOutlined";
+import { deepPurple } from "@mui/material/colors";
+import { Grid } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 const drawerWidth = 280;
 
@@ -84,6 +87,8 @@ export default function TeacherDash(props) {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
   const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -105,89 +110,57 @@ export default function TeacherDash(props) {
         <Toolbar
           sx={{
             pr: "24px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
-              edge="start"
-              color="dark"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: "36px",
-                ...(open && { display: "none" }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Logo />
-            <div className="" style={{ paddingLeft: "162px" }}>
-              {/* <List
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <IconButton
+                  edge="start"
+                  color="dark"
+                  aria-label="open drawer"
+                  onClick={toggleDrawer}
+                  sx={{
+                    marginRight: "36px",
+                    ...(open && { display: "none" }),
+                  }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Logo />
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
-                  marginLeft: "5px",
-                  color: "black",
+                  alignItems: "center",
+                  // [theme.breakpoints.down("md")]: {
+                  //   marginLeft: "auto", // Move to the right when screen size is below medium
+                  // },
                 }}
               >
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="Home" />
-                </ListItem>
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="Recruiters" />
-                </ListItem>
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="Facilities" />
-                </ListItem>
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="Announcements" />
-                </ListItem>
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="About" />
-                </ListItem>
-                <ListItem button component={Link} href="/">
-                  <ListItemText primary="Contact" />
-                </ListItem>
-              </List> */}
-            </div>
-            {/* <div>
-              <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
-            </div> */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginLeft: "525px",
-                justifyContent: "space-between",
-              }}
-            >
-              <NotificationsIcon
-                sx={{
-                  color: "black",
-                  width: 35,
-                  height: 35,
-                  "& .css-110b6rr-MuiSvgIcon-root": {
-                    fontSize: "30 ",
-                    justifyContent: "space-around",
-                  },
-                }}
-              />
-              <div
-                className="avatar-menu"
-                style={{ marginRight: "5px", marginLeft: "5px" }}
-              >
-                {auth.name ? (
-                  <Avatar className="avatar">{auth.name.slice(0, 1)}</Avatar>
-                ) : (
-                  ""
-                )}
-              </div>
-              {auth._id ? <Logout varient="primary" /> : ""}
-            </div>
-          </Box>
+                <NotificationsIcon
+                  sx={{
+                    color: "black",
+                    width: 35,
+                    height: 35,
+                    "& .css-110b6rr-MuiSvgIcon-root": {
+                      fontSize: "30 ",
+                      justifyContent: "space-around",
+                    },
+                  }}
+                />
+                <div
+                  className="avatar-menu"
+                  style={{ marginRight: "5px", marginLeft: "5px" }}
+                >
+                  <Avatar sx={{ bgcolor: deepPurple[500]}} className="avatar">{auth.name}</Avatar>
+                </div>
+                {auth.name ? <Logout varient="dark" /> : ""}
+              </Box>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
 
@@ -228,7 +201,7 @@ export default function TeacherDash(props) {
               </ListItemButton>
             </NavLink>
 
-            <NavLink to="/mock-aptitude-conduct" className="nav-link">
+            <NavLink to="/teacher-exam-list" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
                   <SchoolIcon />

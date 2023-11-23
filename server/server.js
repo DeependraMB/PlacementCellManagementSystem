@@ -54,6 +54,7 @@ app.use("/studentdetails", studentDetailsRoutes);
 app.use("/get-students", getDetailsRoute);
 app.use("/get-teachers", getDetailsRoute);
 app.use("/get-teacher/:id",getDetailsRoute);
+app.use("/get-teacher/:departmentId/:batch",getDetailsRoute);
 app.use("/get-user-byid/:id",getDetailsRoute);
 app.use("/get-user-by-email",getDetailsRoute);
 app.use("/get-department-name/:departmentId",getDetailsRoute);

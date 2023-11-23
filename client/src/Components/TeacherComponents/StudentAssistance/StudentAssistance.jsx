@@ -32,7 +32,7 @@ export default function StudentAssistance() {
     const userId = auth._id;
 
     axios
-      .get(`http://localhost:5000/get-user-byid/${userId}`)
+      .get(`http://localhost:5000/get-user-byid/get-user-byid/get-user-byid/${userId}`)
       .then((response) => {
         setTeacherData(response.data);
         console.log(response.data);
@@ -42,7 +42,7 @@ export default function StudentAssistance() {
       });
 
     axios
-      .get("http://localhost:5000/get-students")
+      .get("http://localhost:5000/get-students//get-students")
       .then((response) => {
         // Filter students based on your criteria (e.g., department and batch)
         

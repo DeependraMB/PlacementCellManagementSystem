@@ -46,6 +46,7 @@ import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
 import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
 import ExitToApp from "@mui/icons-material/ExitToApp";
+import QuizIcon from '@mui/icons-material/Quiz';
 
 const drawerWidth = 280;
 
@@ -397,6 +398,20 @@ export default function StudentDash(props) {
               </Tooltip>
             </NavLink>
 
+            <NavLink to="/student-exam-list" className="nav-link">
+              <Tooltip title="Aptitude Exam" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <QuizIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Aptitude Exam"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
             <ListItemButton>
               <ListItemIcon>
                 <FeedbackIcon />
@@ -433,7 +448,7 @@ export default function StudentDash(props) {
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
             </ListItemButton>
-            
+
             <NavLink to="" className="nav-link">
               <Tooltip title="Log Out" arrow placement="right">
                 <ListItemButton>

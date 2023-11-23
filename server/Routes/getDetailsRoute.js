@@ -28,6 +28,23 @@ router.get("/get-teachers", async (req, res) => {
   }
 });
 
+router.get('/get-teacher/:departmentId/:batch', async (req, res) => {
+  try {
+    const { departmentId, batch } = req.params;
+
+    const teacher = await User.findOne({ departmentId, batch, role: 'teacher'  });
+    console.log(teacher)
+    if (!teacher) {
+      return res.status(404).json({ message: 'Teacher not found' });
+    }
+
+    res.status(200).json(teacher);
+  } catch (error) {
+    console.error('Error fetching teacher details:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.get("/get-teacher/:id",async(req,res)=>{
   const teacherid = req.params.id;
   try {

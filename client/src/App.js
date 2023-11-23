@@ -30,6 +30,9 @@ import ChangePasswordPage from "./Pages/TeacherPages/ChangePasswordPage";
 import StudentNotificationPage from "./Pages/StudentPages/StudentNotificationPage";
 import ExamListPage from "./Pages/TeacherPages/ExamListPage";
 import CreateExamPage from "./Pages/TeacherPages/CreateExamPage";
+import StudentExamListPage from "./Pages/StudentPages/ExamListPage";
+import ConductExamPage from "./Pages/StudentPages/ConductExamPage";
+import StudentExamResultPage from "./Pages/StudentPages/StudentExamResultPage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -166,7 +169,29 @@ function App() {
           />
           <Route
             path="/create-exam"
-            element={auth.token ? <CreateExamPage /> : <Navigate to="/signin" />}
+            element={
+              auth.token ? <CreateExamPage /> : <Navigate to="/signin" />
+            }
+          />
+
+          <Route
+            path="/student-exam-list"
+            element={
+              auth.token ? <StudentExamListPage /> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/conduct-exam/:examId"
+            element={
+              auth.token ? <ConductExamPage /> : <Navigate to="/signin" />
+            }
+          />
+
+          <Route
+            path="/result/:examId"
+            element={
+              auth.token ? <StudentExamResultPage /> : <Navigate to="/signin" />
+            }
           />
         </Routes>
       </Router>

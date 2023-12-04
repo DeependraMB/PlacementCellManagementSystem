@@ -370,7 +370,7 @@ export default function StudentDash(props) {
               </Tooltip>
             </NavLink>
 
-            <NavLink to="/student-notifications" className="nav-link">
+            <NavLink to="/student-notifications" className="nav-link"  >
               <Tooltip title="Notifications" arrow placement="right">
                 <ListItemButton>
                   <ListItemIcon>
@@ -384,7 +384,7 @@ export default function StudentDash(props) {
               </Tooltip>
             </NavLink>
 
-            <NavLink to="/notes-material" className="nav-link">
+            <NavLink to="/notes-material" className="nav-link" name="nav-link-materials" >
               <Tooltip title="Career Resources" arrow placement="right">
                 <ListItemButton>
                   <ListItemIcon>

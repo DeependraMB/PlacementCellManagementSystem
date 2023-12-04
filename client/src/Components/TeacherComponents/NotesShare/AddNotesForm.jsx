@@ -67,11 +67,9 @@ function AddNotesForm({ onNext }) {
     if (formSubmitted) {
       return;
     }
-    
+
     if (isFormValid) {
       try {
-        
-
         const res = await axios.post(
           "http://localhost:5000/notesshare/notesshare",
           formData,
@@ -142,6 +140,7 @@ function AddNotesForm({ onNext }) {
         }}
       >
         <Button
+          name="uploadButton"
           variant="contained"
           color="primary"
           style={{ paddingLeft: "40px", paddingRight: "40px" }}

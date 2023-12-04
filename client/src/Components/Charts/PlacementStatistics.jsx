@@ -1,16 +1,28 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import {CategoryScale} from 'chart.js'; 
+import { CategoryScale } from 'chart.js';
 import Chart from 'chart.js/auto';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/system';
+import { Typography } from '@mui/material';
 Chart.register(CategoryScale);
+
+// Styling the Paper component
+const StyledPaper = styled(Paper)({
+  marginLeft: '240px',
+  height: '495px', // Set the desired height
+  width: '800px', // Set the desired width
+  padding: '16px', // Optional: Add padding for better appearance
+  marginBottom: '20px',
+});
 
 function PlacementStatistics() {
   const [placementData, setPlacementData] = useState({
-    labels: [],
+    labels: ['2020', '2021', '2022', '2023', '2024'],
     datasets: [
       {
         label: 'Students Placed',
-        data: [],
+        data: [200, 177, 357, 170, 9],
         backgroundColor: 'rgba(75,192,192,0.2)',
         borderColor: 'rgba(75,192,192,1)',
         borderWidth: 1,
@@ -18,44 +30,12 @@ function PlacementStatistics() {
     ],
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/placed-students/placed-students');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-
-        const labels = data.map(item => item.name);
-        const values = data.map(item => item.count);
-
-        setPlacementData({
-          labels,
-          datasets: [
-            {
-              label: 'Students Placed',
-              data: values,
-              backgroundColor: 'rgba(75,192,192,0.2)',
-              borderColor: 'rgba(75,192,192,1)',
-              borderWidth: 1,
-            },
-          ],
-        });
-      } catch (error) {
-        console.error('Error fetching placement statistics:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
-    <div>
-      <h2>Placement Statistics</h2>
-      <Bar data={placementData} />
-    </div>
+    <>
+    <StyledPaper elevation={3}>
+      <Bar data={placementData} options={{ maintainAspectRatio: false }} />
+    </StyledPaper>
+    </>
   );
 }
 

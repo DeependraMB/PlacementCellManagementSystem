@@ -71,7 +71,7 @@ function Navbar() {
               <span style={linkStyles}>Announcements</span>
             </Link>
             <Link
-              to="/"
+              to="/aboutus"
               className="nav-item nav-link l fw-bold"
               style={linkStyles}
             >

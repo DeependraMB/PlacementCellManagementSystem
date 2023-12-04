@@ -12,6 +12,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import NoteIcon from "@mui/icons-material/Note";
 import axios from "axios";
 import AppWidgetSummary from "./AppWidgetSummary";
+import { useNavigate } from "react-router-dom";
+
 
 function AdminHomeBoxes() {
   const { auth, setAuth } = useAuth();
@@ -19,10 +21,12 @@ function AdminHomeBoxes() {
   const [teacherCount, setTeacherCount] = useState(0);
   const [placedStudentsCount, setPlacedStudentsCount] = useState(0);
   const [totalNotes, setTotalNotes] = useState(0);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/get-students")
+      .get("http://localhost:5000/get-students/get-students")
       .then((response) => {
         if (Array.isArray(response.data)) {
           const count = response.data.length; // Get the count from the array's length
@@ -36,7 +40,7 @@ function AdminHomeBoxes() {
       });
 
     axios
-      .get("http://localhost:5000/get-teachers")
+      .get("http://localhost:5000/get-teachers/get-teachers")
       .then((response) => {
         if (Array.isArray(response.data)) {
           const count = response.data.length; // Get the count from the array's length
@@ -48,7 +52,32 @@ function AdminHomeBoxes() {
       .catch((error) => {
         console.error("Error fetching student data:", error);
       });
+
+      // const notesResponse =  axios.get("http://localhost:5000/get-pdfs");
+      // setTotalNotes(notesResponse.data.length)
+
+      axios
+      .get("http://localhost:5000/get-pdfs")
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          const count = response.data.length; // Get the count from the array's length
+          setTotalNotes(count); // Set the student count in the state variable
+        } else {
+          console.error("Response data is not an array:", response.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching student data:", error);
+      });
   }, []);
+
+  const handleClickOnAddTeacher=()=>{
+    navigate("/add-teacher");
+  }
+
+  const handleClickOnStudentManagement=()=>{
+    navigate("/student-management")
+  }
 
   return (
     <div>
@@ -203,13 +232,14 @@ function AdminHomeBoxes() {
               borderRadius: 2,
               
             }}
+            onClick={handleClickOnAddTeacher}
             
           >
             <Stack spacing={0.5}>
-              <Typography variant="h4">{studentCount}</Typography>
+              <Typography variant="h4"></Typography>
 
               <Typography variant="subtitle2" sx={{ color: "text.disabled" }}>
-                Student Count
+                Add Teacher
               </Typography>
             </Stack>
           </Card>
@@ -225,13 +255,13 @@ function AdminHomeBoxes() {
               borderRadius: 2,
               
             }}
-            
+            onClick={handleClickOnStudentManagement}
           >
             <Stack spacing={0.5}>
-              <Typography variant="h4">{studentCount}</Typography>
+              
 
               <Typography variant="subtitle2" sx={{ color: "text.disabled" }}>
-                Student Count
+                Student Management
               </Typography>
             </Stack>
           </Card>

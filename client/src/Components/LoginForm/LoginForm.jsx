@@ -170,6 +170,7 @@ function LoginForm() {
                 onClick={() => handleSubmit(onSubmit)()}
                 fullWidth
                 variant="contained"
+                className="button1"
                 sx={{ mt: 3, mb: 2 }}
               >
                 Sign In

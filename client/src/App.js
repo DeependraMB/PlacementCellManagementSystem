@@ -33,6 +33,7 @@ import CreateExamPage from "./Pages/TeacherPages/CreateExamPage";
 import StudentExamListPage from "./Pages/StudentPages/ExamListPage";
 import ConductExamPage from "./Pages/StudentPages/ConductExamPage";
 import StudentExamResultPage from "./Pages/StudentPages/StudentExamResultPage";
+import AboutUsPage from "./Pages/AboutUsPage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -43,6 +44,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/signin" element={<LoginPage />} />
+          <Route path="/aboutus" element={<AboutUsPage />} />
           <Route
             path="/studenthome"
             element={

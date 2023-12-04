@@ -28,9 +28,10 @@ function Logout({ varient }) {
     <div className="container mt-7">
       <div className="mt-7">
         <button
-          className={`btn btn-outline-${varient} my-2 my-sm-0`}
+          className={`logOut btn btn-outline-${varient} my-2 my-sm-0`}
           type="button"
           onClick={handleLogout}
+          
         >
           Logout
         </button>

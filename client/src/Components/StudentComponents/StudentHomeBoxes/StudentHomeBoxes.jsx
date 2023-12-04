@@ -2,23 +2,27 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "../../../Context/AuthContext";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import NotesIcon from '@mui/icons-material/Notes';
-import PersonIcon from '@mui/icons-material/Person';
-import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
-import './StudentHomeBoxes.css'
-import ProfileUpdateMessage from './ProfileUpdateMessage';
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import NotesIcon from "@mui/icons-material/Notes";
+import PersonIcon from "@mui/icons-material/Person";
+import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
+import "./StudentHomeBoxes.css";
+import ProfileUpdateMessage from "./ProfileUpdateMessage";
 import PlacementStatistics from "../../Charts/PlacementStatistics";
 import ProfileBox from "../../ProfileBox/ProfileBox";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Grid } from "@mui/material";
 
 function StudentHomeBoxes() {
   const { auth } = useAuth();
-  const [student,setStudent]= useState("");
-  const [skills,setSkillDetails]= useState("");
+  const [student, setStudent] = useState("");
+  const [skills, setSkillDetails] = useState("");
+  const [notes, setNotes] = useState("");
+  const [notification, setNotifications] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch both teacher data and department name
     axios
       .get(
         `http://localhost:5000/get-user-byid/get-user-byid/get-user-byid/${auth._id}`
@@ -43,30 +47,54 @@ function StudentHomeBoxes() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-      
-
-    
   }, [auth._id]);
   console.log(student);
 
   useEffect(() => {
     // Replace "user@example.com" with the actual user's email or get it from your authentication context
-   
 
-    axios.get(`http://localhost:5000/get-skills-details/get-skills-details/get-skills-details/${auth.email}`)
-      .then(response => {
+    axios
+      .get(
+        `http://localhost:5000/get-skills-details/get-skills-details/get-skills-details/${auth.email}`
+      )
+      .then((response) => {
         setSkillDetails(response.data);
         console.log(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching skill details:", error);
       });
+
+    fetchNotifications();
   }, []);
 
+  const fetchNotifications = async () => {
+    try {
+      const response = await axios.get(
+        // Replace with your actual API endpoint
+        `http://localhost:5000/send-notification/received-notifications/${auth.email}`
+      );
+      setNotifications(response.data.length);
+
+      const notesResponse = await axios.get("http://localhost:5000/get-pdfs");
+      setNotes(notesResponse.data.length);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
+
+  const handleClick = () => {
+    // Redirect to "/stud-update-profile" when the component is clicked
+    navigate("/stud-update-profile");
+  };
+
   return (
-    <div className="h-300" style={{ backgroundColor: '#f0ffff', padding: '20px 30px 0px' }}>
-       <ProfileUpdateMessage />
-      <div className="py-3" style={{ textAlign: "start"}}>
+    <div
+      className="h-300"
+      style={{ backgroundColor: "#f0ffff", padding: "20px 30px 0px" }}
+    >
+      {/* <ProfileUpdateMessage /> */}
+      <div className="py-3" style={{ textAlign: "start" }}>
         <Typography
           variant="h5"
           component="h7"
@@ -81,24 +109,13 @@ function StudentHomeBoxes() {
       </div>
       <Box sx={{ width: "100%", marginTop: "20px" }}>
         <div className="row justify-content-center">
-          {/* <div className="ui-block col-xl-2 col-lg-4 col-md-6 col-sm-12 bg-white mx-3 py-5 rounded-3">
-            <div className="ui-item ui-blue">
-              <div className="left">
-              <WorkOutlineIcon />
-              </div>
-              <div className="right">
-                <h4>22</h4>
-                <p>Applications</p>
-              </div>
-            </div>
-          </div> */}
           <div className="ui-block col-xl-3 col-lg-4 col-md-6 col-sm-12">
             <div className="ui-item ui-red">
               <div className="left">
-              <NotificationsIcon className="icon1" />
+                <NotificationsIcon className="icon1" />
               </div>
               <div className="right">
-                <h4>0</h4>
+                <h4>{notification}</h4>
                 <p>Notifications</p>
               </div>
             </div>
@@ -106,7 +123,7 @@ function StudentHomeBoxes() {
           <div className="ui-block col-xl-3 col-lg-4 col-md-6 col-sm-12 ">
             <div className="ui-item ui-yellow">
               <div className="left">
-              <SmsOutlinedIcon className="icon2" />
+                <SmsOutlinedIcon className="icon2" />
               </div>
               <div className="right">
                 <h4>0</h4>
@@ -114,13 +131,15 @@ function StudentHomeBoxes() {
               </div>
             </div>
           </div>
-          <div className="ui-block col-xl-3 col-lg-4 col-md-6 col-sm-12">
+          <div
+            className="ui-block col-xl-3 col-lg-4 col-md-6 col-sm-12"
+            onClick={handleClick}
+          >
             <div className="ui-item ui-green">
               <div className="left">
-              <PersonIcon className="icon3" />
+                <PersonIcon className="icon3" />
               </div>
               <div className="right">
-                
                 <p>Profile</p>
               </div>
             </div>
@@ -128,91 +147,27 @@ function StudentHomeBoxes() {
           <div className="ui-block col-xl-3 col-lg-4 col-md-6 col-sm-12">
             <div className="ui-item ui-blue">
               <div className="left">
-              <NotesIcon className="icon4" />
+                <NotesIcon className="icon4" />
               </div>
               <div className="right">
-                <h4>32</h4>
+                <h4>{notes}</h4>
                 <p>Notes</p>
               </div>
             </div>
           </div>
         </div>
-
-        {/* <Grid
-          container
-          rowSpacing={1}
-          columnSpacing={{ xs: 1, sm: 2, md: 2 }}
-          sx={{ marginTop: "40px" }}
-        >
-          <Grid
-            item
-            xs={3}
-            sx={{
-              backgroundColor: "#ffff",
-              marginLeft: "35px",
-              height: "80vh",
-              borderRadius: "10px",
-            }}
-          >
-            <div className="py-3">
-              <Avatar sx={{ width: "250px", height: "250px", margin: "auto" }}>
-                H
-              </Avatar>
-              <Typography variant="h4" component="h2">
-                {auth.name}
-              </Typography>
-              <Typography variant="h5" component="h3">
-                {auth.email}
-              </Typography>
-            </div>
-          </Grid>
-
-          <Grid
-            item
-            xs={4}
-            sx={{
-              backgroundColor: "#ffff",
-              height: "34vh",
-              marginLeft: "25px",
-              float: "left",
-              flexBasis: "100%", // Set flexBasis to 100% for full width
-              borderRadius: "20px",
-            }}
-          >
-            <div style={{ paddingTop: "80px", fontWeight: "bold" }}>
-              Unread Messages
-            </div>
-          </Grid>
-          <Grid
-            item
-            xs={4}
-            sx={{
-              backgroundColor: "#ffff",
-              height: "34vh",
-              marginLeft: "20px",
-              float: "left",
-              flexBasis: "100%", // Set flexBasis to 100% for full width
-              borderRadius: "20px",
-            }}
-          >
-            <div
-              className=""
-              style={{ paddingTop: "80px", fontWeight: "bold" }}
-            >
-              Notifications
-            </div>
-          </Grid>
-        </Grid> */}
       </Box>
-      <ProfileBox
-        name={auth.name}
-        lastname={student.lastname}
-        email={auth.email}
-        department={auth.role}
-        role={student.departmentName}
-        profilephoto={skills.profilephoto}
-      />
-      <PlacementStatistics/>
+      <Box sx={{ backgroundColor: "", display: "flex" }}>
+        <ProfileBox
+          name={auth.name}
+          lastname={student.lastname}
+          email={auth.email}
+          department={auth.role}
+          role={student.departmentName}
+          profilephoto={skills.profilephoto}
+        />
+        {/* <PlacementStatistics /> */}
+      </Box>
     </div>
   );
 }

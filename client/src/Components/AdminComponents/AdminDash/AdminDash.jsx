@@ -35,8 +35,8 @@ import HelpIcon from "@mui/icons-material/Help";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ForumIcon from "@mui/icons-material/Forum";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import SchoolIcon from '@mui/icons-material/School';
-import { Grid } from "@mui/material";
+import SchoolIcon from "@mui/icons-material/School";
+import { Grid, Tooltip } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 
 const drawerWidth = 240;
@@ -157,7 +157,9 @@ export default function AdminDash(props) {
                   className="avatar-menu"
                   style={{ marginRight: "5px", marginLeft: "5px" }}
                 >
-                  <Avatar sx={{ bgcolor: deepPurple[500]}} className="avatar">{auth.name.slice(0, 1)}</Avatar>
+                  <Avatar sx={{ bgcolor: deepPurple[500] }} className="avatar">
+                    {auth.name.slice(0, 1)}
+                  </Avatar>
                 </div>
                 {auth.name ? <Logout varient="dark" /> : ""}
               </Box>
@@ -183,16 +185,25 @@ export default function AdminDash(props) {
         <Divider />
         <Scrollbar style={{ height: "90vh", overflowX: "hidden" }}>
           <List component="nav">
-            <ListItemButton component={Link} href="/adminhome">
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Dashboard"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <ListItemButton>
+            <NavLink
+              to="/adminhome"
+              className="nav-link"
+              name="nav-link-dashboard"
+            >
+              <Tooltip title="Dashboard" arrow placement="right">
+                <ListItemButton component={Link} href="/adminhome">
+                  <ListItemIcon>
+                    <DashboardIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Dashboard"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
+            {/* <ListItemButton>
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
@@ -200,59 +211,97 @@ export default function AdminDash(props) {
                 primary="Profile Settings"
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <NotificationsActiveIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Notifications Send"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-           
-            <NavLink to="/student-management" className="nav-link">
-              <ListItemButton>
-                <ListItemIcon>
-                <SchoolIcon />
-                </ListItemIcon>
-                <ListItemText
-                primary="Student Manage"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-              </ListItemButton>
+            </ListItemButton> */}
+            <NavLink
+              to="/notifications"
+              className="nav-link"
+              name="nav-link-notifications"
+            >
+              <Tooltip title="Notifications Send" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NotificationsActiveIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Notifications Send"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
             </NavLink>
-            <ListItemButton component={Link} href="/teacher-management">
-              <ListItemIcon>
-                <BookIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Teachers Manage"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
-            <NavLink to="/add-teacher" className="nav-link">
-              <ListItemButton>
-                <ListItemIcon>
-                <SchoolIcon />
-                </ListItemIcon>
-                <ListItemText
-                primary="Add Teacher"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-              </ListItemButton>
+
+            <NavLink
+              to="/student-management"
+              className="nav-link"
+              name="nav-link-student-management"
+            >
+              <Tooltip title="Student Management" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <SchoolIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Student Management"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
             </NavLink>
-            <NavLink to="/notes-management" className="nav-link">
-              <ListItemButton>
-                <ListItemIcon>
-                  <FeedbackIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Notes Manage"
-                  sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-                />
-              </ListItemButton>
+
+            <NavLink
+              to="/teacher-management"
+              className="nav-link"
+              name="nav-link-teacher-management"
+            >
+              <Tooltip title="Teachers Management" arrow placement="right">
+                <ListItemButton component={Link} href="/teacher-management">
+                  <ListItemIcon>
+                    <BookIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Teachers Management"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
             </NavLink>
+
+            <NavLink
+              to="/add-teacher"
+              className="nav-link"
+              name="nav-link-add-teacher"
+            >
+              <Tooltip title="Add Teacher" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <SchoolIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Add Teacher"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
+            <NavLink
+              to="/notes-management"
+              className="nav-link"
+              name="nav-link-notes-management"
+            >
+              <Tooltip title="Notes Management" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <FeedbackIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Notes Management"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
             <ListItemButton>
               <ListItemIcon>
                 <HelpIcon />

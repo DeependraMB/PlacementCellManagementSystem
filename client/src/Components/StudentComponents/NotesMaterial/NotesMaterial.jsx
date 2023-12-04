@@ -144,8 +144,8 @@ export default function NotesMaterial() {
                       <TableCell>{row.description}</TableCell>
                       <TableCell>{row.author}</TableCell>
                       <TableCell>
-                        
                         <Button
+                          className="download-button"
                           variant="contained"
                           color="primary"
                           component={Link}

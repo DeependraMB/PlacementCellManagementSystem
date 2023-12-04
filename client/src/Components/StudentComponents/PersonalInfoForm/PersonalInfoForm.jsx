@@ -57,270 +57,379 @@ function PersonalInfoForm({ onNext }) {
   const [isFormValid, setIsFormValid] = useState(false);
 
   const validateFirstname = (value) => {
+    let isValid = true;
+
+    const namePattern = /^[A-Za-z]+$/;
+
     if (!value) {
       setFirstnameError("First name is required");
-    } else if (!/^[A-Za-z]+$/.test(value)) {
+      isValid = false;
+    } else if (!namePattern.test(value)) {
       setFirstnameError("First name should only contain letters");
+      isValid = false;
     } else {
-      setFirstnameError(""); // Reset the error state
+      setFirstnameError("");
+      
     }
+console.log(isValid);
+    return isValid;
+
   };
 
   const validateLastname = (value) => {
+    let isValid = true;
+
+    // Define your validation rules for the last name here
+    // For example, you can check if it contains only letters and spaces
+    const namePattern = /^[A-Za-z\s]+$/;
+
     if (!value) {
       setLastnameError("Last name is required");
-    } else if (!/^[A-Za-z\s]+$/.test(value)) {
+    isValid = false;
+    } else if (!namePattern.test(value)) {
       setLastnameError("Last name should only contain letters and spaces");
+      isValid = false;
     } else {
       setLastnameError("");
+      
     }
+    console.log(isValid);
+    return isValid; // Return the boolean indicating whether the value is valid
   };
 
   const validateUniregno = (value) => {
+    let isValid = true;
+
+    // Define your validation rules for the Uni. Reg. Number here
+    // For example, you can check if it contains only letters and numbers
+    const uniregnoPattern = /^[A-Za-z0-9]+$/i;
+
     if (!value) {
       setUniregnoError("Uni. Reg. Number is required");
-    } else if (!/^[A-Za-z0-9]+$/i.test(value)) {
+      isValid = false;
+    } else if (!uniregnoPattern.test(value)) {
       setUniregnoError(
         "Uni. Reg. Number should only contain letters and numbers"
       );
+     isValid = false;
     } else if (value.length !== 8) {
       setUniregnoError("Uni. Reg. Number should be 8 characters long");
+     isValid = false;
     } else {
       setUniregnoError("");
+      // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
 
   const validateGender = (value) => {
+    let isValid = true;
+
     if (!value) {
       setGenderError("Gender is required");
+      isValid = false;
     } else {
       setGenderError("");
+      // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
+
   const validatePhoneNumber = (value) => {
-    // Define a regular expression pattern for a valid mobile number
-    //const phonePattern = /^(?:(?:\+|00)91|0)[7-9]\d{9}$/;
+    let isValid = true;
+
     const phonePattern = /^[1-9]\d{9}$/;
+
     if (!value) {
       setMobnoError("Phone number is required");
+      isValid = false;
     } else if (!phonePattern.test(value)) {
       setMobnoError(
         "Invalid phone number. Please enter a valid Indian mobile number."
       );
+      isValid = false;
     } else {
       setMobnoError("");
+      // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
 
   const validateDob = (value) => {
-    const isValid = false;
+    let isValid = true;
     if (!value) {
       setDobError("Date of Birth is required");
+      isValid = false;
     } else {
       setDobError("");
     }
-    //  else {
-    //   // Split the date string into month, day, and year parts
-    //   const dateParts = value.split("/");
-
-    //   if (dateParts.length !== 3) {
-    //     setDobError("Invalid date format. Please use MM/DD/YYYY format.");
-    //   } else {
-    //     const month = parseInt(dateParts[0], 10);
-    //     const day = parseInt(dateParts[1], 10);
-    //     const year = parseInt(dateParts[2], 10);
-
-    //     // Check if month, day, and year are valid
-    //     if (isNaN(month) || isNaN(day) || isNaN(year)) {
-    //       setDobError("Invalid date format. Please use MM/DD/YYYY format.");
-    //     } else {
-    //       const dobDate = new Date(year, month - 1, day); // month is 0-based
-    //       const today = new Date();
-    //       const age = today.getFullYear() - dobDate.getFullYear();
-
-    //       // Check if the date is a valid date and the person is at least 18 years old
-    //       if (
-    //         dobDate.getDate() === day &&
-    //         dobDate.getMonth() === month - 1 &&
-    //         dobDate.getFullYear() === year &&
-    //         age >= 18
-    //       ) {
-    //         setDobError("");
-    //         isValid = true;
-    //       } else {
-    //         setDobError(
-    //           "Invalid date or age. You must be at least 18 years old."
-    //         );
-    //       }
-    //     }
-    //   }
-    // }
+   
     return isValid;
   };
   const validatePersonalEmail = (value) => {
-    // Regular expression pattern for a valid email
+    let isValid = true;
+
+   
     const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
     if (!value) {
       setPersonalemailError("Personal Email ID is required");
+      isValid = false;
     } else if (!emailPattern.test(value)) {
       setPersonalemailError(
         "Invalid email format. Please provide a valid email address."
       );
+      isValid = false;
     } else {
       setPersonalemailError("");
+       // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
+
   const validateCollegeEmail = (value) => {
-    // Regular expression pattern for a valid college email (adjust as needed)
+    let isValid = true;
+
     const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
     if (!value) {
       setEmailError("College Email ID is required");
+      isValid = false;
     } else if (!emailPattern.test(value)) {
       setEmailError(
         "Invalid college email format. Please use a valid college email address."
       );
+      isValid = false;
     } else {
       setEmailError("");
+       // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
+
   const validateFatherName = (value) => {
-    let isValid = false;
-    // Define your validation rules for the father's name here
-    // For example, you can check if it contains only letters and spaces
+    let isValid = true;
+  
     const namePattern = /^[A-Za-z ]+$/;
 
     if (!value) {
       setFathernameError("Father's name is required");
-
+      isValid = false;
     } else if (!namePattern.test(value)) {
       setFathernameError(
         "Father's name should only contain letters and spaces"
       );
+      isValid = false;
     } else {
       setFathernameError("");
-      isValid = true;
+      
     }
 
     return isValid;
   };
 
   const validateMotherName = (value) => {
-    // Define your validation rules for the mother's name here
-    // For example, you can check if it contains only letters and spaces
+    let isValid = true;
+
     const namePattern = /^[A-Za-z ]+$/;
 
     if (!value) {
       setMothernameError("Mother's name is required");
+      isValid = false;
     } else if (!namePattern.test(value)) {
       setMothernameError(
         "Mother's name should only contain letters and spaces"
       );
+      isValid = false;
     } else {
       setMothernameError("");
+       // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
+
   const validateHouseName = (value) => {
-    // Define your validation rules for house name here
-    // For example, you can check if it contains letters, numbers, and spaces
+    let isValid = true;
+
     const namePattern = /^[A-Za-z0-9 ]+$/;
 
     if (!value) {
       setHousenameError("House name is required");
+      isValid = false;
     } else if (!namePattern.test(value)) {
       setHousenameError(
         "House name should contain only letters, numbers, and spaces"
       );
+      isValid = false;
     } else {
       setHousenameError("");
+     // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
+
   const validatePostOffice = (value) => {
-    // Define your validation rules for post office here
-    // For example, you can check if it contains only letters and spaces
+    let isValid = true;
+
     const namePattern = /^[A-Za-z ]+$/;
 
     if (!value) {
       setPostofficeError("Post office is required");
+      isValid = false;
     } else if (!namePattern.test(value)) {
       setPostofficeError("Post office should only contain letters and spaces");
+      isValid = false;
     } else {
       setPostofficeError("");
+       // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
+
   const validateCity = (value) => {
-    // Define your validation rules for city here
-    // For example, you can check if it contains only letters and spaces
+    let isValid = true;
+
     const namePattern = /^[A-Za-z ]+$/;
 
     if (!value) {
       setCityError("City is required");
+      isValid = false;
     } else if (!namePattern.test(value)) {
       setCityError("City should only contain letters and spaces");
+      isValid = false;
     } else {
       setCityError("");
+      // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
+
   const validateState = (value) => {
-    // Define your validation rules for state here
-    // For example, you can check if it contains only letters and spaces
+    let isValid = true;
+
     const namePattern = /^[A-Za-z ]+$/;
 
     if (!value) {
       setStateError("State is required");
+      isValid = false;
     } else if (!namePattern.test(value)) {
       setStateError("State should only contain letters and spaces");
+      isValid = false;
     } else {
       setStateError("");
+     // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
+
   const validatePincode = (value) => {
-    // Define your validation rules for pincode here
-    // For example, you can check if it contains exactly 6 digits
+    let isValid = true;
+
     const pincodePattern = /^\d{6}$/;
 
     if (!value) {
       setPincodeError("Pincode is required");
+      isValid = false;
     } else if (!pincodePattern.test(value)) {
       setPincodeError("Pincode should be a 6-digit number");
+      isValid = false;
     } else {
       setPincodeError("");
+       // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
+
   const validateNationality = (value) => {
-    // Define your validation rules for nationality here
-    // For example, you can check if it contains only letters and spaces
+    let isValid = true;
+
     const namePattern = /^[A-Za-z ]+$/;
 
     if (!value) {
       setNationalityError("Nationality is required");
+      isValid = false;
     } else if (!namePattern.test(value)) {
       setNationalityError("Nationality should only contain letters and spaces");
+      isValid = false;
     } else {
       setNationalityError("");
+       // Set isValid to true if the validation passes
     }
+
+    return isValid; // Return the boolean indicating whether the value is valid
   };
 
-  const validateForm = () => {
-    // const isFatherNameValid = validateFatherName(fathername);
-    // const isDobValid = validateDob(dob)
-    setIsFormValid(
-      !dobError &&
-        !personalemailError &&
-        !emailError &&
-        !fathernameError &&
-        !mothernameError &&
-        !housenameError &&
-        !postofficeError &&
-        !cityError &&
-        !stateError &&
-        !pincodeError &&
-        !nationalityError
-    );
+ const validateForm = () => {
+  // Validate individual form fields
+  const isFirstNameValid = validateFirstname(firstname);
+  const isLastNameValid = validateLastname(lastname);
+  const isUniregnoValid = validateUniregno(uniregno);
+  const isGenderValid = validateGender(gender);
+  const isPhoneNumberValid = validatePhoneNumber(mobno);
+  const isDobValid = validateDob(dob);
+  const isPersonalEmailValid = validatePersonalEmail(personalemail);
+  const isCollegeEmailValid = validateCollegeEmail(email);
+  const isFatherNameValid = validateFatherName(fathername);
+  const isMotherNameValid = validateMotherName(mothername);
+  const isHouseNameValid = validateHouseName(housename);
+  const isPostOfficeValid = validatePostOffice(postoffice);
+  const isCityValid = validateCity(city);
+  const isStateValid = validateState(state);
+  const isPincodeValid = validatePincode(pincode);
+  const isNationalityValid = validateNationality(nationality);
 
-    // return isFatherNameValid && isDobValid;
-  };
+  // Set the form validity based on all validations
+  setIsFormValid(
+    isFirstNameValid &&
+    isLastNameValid &&
+    isUniregnoValid &&
+    isGenderValid &&
+    isPhoneNumberValid &&
+    isDobValid &&
+    isPersonalEmailValid &&
+    isCollegeEmailValid &&
+    isFatherNameValid &&
+    isMotherNameValid &&
+    isHouseNameValid &&
+    isPostOfficeValid &&
+    isCityValid &&
+    isStateValid &&
+    isPincodeValid &&
+    isNationalityValid
+  );
+
+  // Return the overall form validity
+  return (
+    isFirstNameValid &&
+    isLastNameValid &&
+    isUniregnoValid &&
+    isGenderValid &&
+    isPhoneNumberValid &&
+    isDobValid &&
+    isPersonalEmailValid &&
+    isCollegeEmailValid &&
+    isFatherNameValid &&
+    isMotherNameValid &&
+    isHouseNameValid &&
+    isPostOfficeValid &&
+    isCityValid &&
+    isStateValid &&
+    isPincodeValid &&
+    isNationalityValid
+  );
+};
+
 
   console.log(studentData);
   useEffect(() => {
@@ -365,27 +474,16 @@ function PersonalInfoForm({ onNext }) {
     uniregno: uniregno,
   };
 
-  console.log(personalData);
-  console.log(userData);
+  
 
   async function onSubmit(event) {
-    console.log('ppppppppppppppp')
     event.preventDefault();
-    validatePersonalEmail(personalemail);
-    validateCollegeEmail(email);
-    validateMotherName(mothername);
-    validateHouseName(housename);
-    validatePostOffice(postoffice);
-    validateCity(city);
-    validateState(state);
-    validatePincode(pincode);
-    validateNationality(nationality);
 
-    validateForm();
+    const isValid = validateForm();
 
-    console.log(isFormValid)
+    console.log("Mundalilll",isValid);
 
-    if (isFormValid) {
+    if (isValid) {
       try {
         const res = await axios.post(
           "http://localhost:5000/studentdetails/personaldetails",
@@ -396,7 +494,7 @@ function PersonalInfoForm({ onNext }) {
           "http://localhost:5000/studentdetails/userdetails",
           userData
         );
-        onNext({personalData, userData}, 'personalData');
+        onNext({ personalData, userData }, "personalData");
       } catch (error) {
         console.log(error);
       }
@@ -427,8 +525,6 @@ function PersonalInfoForm({ onNext }) {
           ...userByEmailResponse.data,
         };
 
-       
-
         setStudentData(updatedData);
       } catch (error) {
         console.error(error);
@@ -450,7 +546,7 @@ function PersonalInfoForm({ onNext }) {
             label="First Name"
             color="primary"
             fullWidth
-            value={firstname || ''}
+            value={firstname || ""}
             onChange={(e) => {
               setFirstname(e.target.value);
               validateFirstname(e.target.value);
@@ -466,7 +562,7 @@ function PersonalInfoForm({ onNext }) {
             name="lastname"
             label="Last Name"
             fullWidth
-            value={lastname || ''}
+            value={lastname || ""}
             onChange={(e) => {
               setLastname(e.target.value);
               validateLastname(e.target.value);
@@ -482,7 +578,7 @@ function PersonalInfoForm({ onNext }) {
             name="uniregno"
             label="Uni. Reg. Number"
             fullWidth
-            value={uniregno || ''}
+            value={uniregno || ""}
             onChange={(e) => {
               setUniregno(e.target.value);
               validateUniregno(e.target.value);
@@ -493,13 +589,13 @@ function PersonalInfoForm({ onNext }) {
             helperText={uniregnoError}
           />
         </Grid>
-        {console.log(gender, 'ppppppppp')}
+        {console.log(gender, "ppppppppp")}
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <InputLabel htmlFor="gender">Gender</InputLabel>
             <Select
               name="gender"
-              value={gender || ''}
+              value={gender || ""}
               onChange={(e) => {
                 setGender(e.target.value);
                 validateGender(e.target.value);
@@ -519,7 +615,7 @@ function PersonalInfoForm({ onNext }) {
             name="mobno"
             label="Phone Number"
             fullWidth
-            value={mobno || ''}
+            value={mobno || ""}
             onChange={(e) => {
               setMobno(e.target.value);
               validatePhoneNumber(e.target.value);
@@ -534,7 +630,7 @@ function PersonalInfoForm({ onNext }) {
             name="dob"
             label="Date of Birth"
             fullWidth
-            value={dob || ''}
+            value={dob || ""}
             onChange={(e) => {
               setDob(e.target.value);
               validateDob(e.target.value);
@@ -550,7 +646,7 @@ function PersonalInfoForm({ onNext }) {
             name="personalemail"
             label="Personal Email ID"
             fullWidth
-            value={personalemail || ''}
+            value={personalemail || ""}
             onChange={(e) => {
               setPersonalemail(e.target.value);
               validatePersonalEmail(e.target.value);
@@ -565,7 +661,7 @@ function PersonalInfoForm({ onNext }) {
             name="email"
             label="College Email ID"
             fullWidth
-            value={email || ''}
+            value={email || ""}
             onChange={(e) => {
               setEmail(e.target.value);
               validateCollegeEmail(e.target.value);
@@ -580,7 +676,7 @@ function PersonalInfoForm({ onNext }) {
             name="fathername"
             label="Father Name"
             fullWidth
-            value={fathername || ''}
+            value={fathername || ""}
             onChange={(e) => {
               setFathername(e.target.value);
               validateFatherName(e.target.value);
@@ -595,7 +691,7 @@ function PersonalInfoForm({ onNext }) {
             name="mothername"
             label="Mother Name"
             fullWidth
-            value={mothername || ''}
+            value={mothername || ""}
             onChange={(e) => {
               setMothername(e.target.value);
               validateMotherName(e.target.value);
@@ -610,7 +706,7 @@ function PersonalInfoForm({ onNext }) {
             name="housename"
             label="House Name"
             fullWidth
-            value={housename || ''}
+            value={housename || ""}
             onChange={(e) => {
               setHousename(e.target.value);
               validateHouseName(e.target.value);
@@ -625,7 +721,7 @@ function PersonalInfoForm({ onNext }) {
             name="postoffice"
             label="Post Office"
             fullWidth
-            value={postoffice || ''}
+            value={postoffice || ""}
             onChange={(e) => {
               setPostoffice(e.target.value);
               validatePostOffice(e.target.value);
@@ -640,7 +736,7 @@ function PersonalInfoForm({ onNext }) {
             name="city"
             label="City"
             fullWidth
-            value={city || ''}
+            value={city || ""}
             onChange={(e) => {
               setCity(e.target.value);
               validateCity(e.target.value);
@@ -658,7 +754,7 @@ function PersonalInfoForm({ onNext }) {
             label="State"
             type="calender"
             fullWidth
-            value={state || ''}
+            value={state || ""}
             onChange={(e) => {
               setState(e.target.value);
               validateState(e.target.value);
@@ -673,7 +769,7 @@ function PersonalInfoForm({ onNext }) {
             name="pincode"
             label="Pincode"
             fullWidth
-            value={pincode || ''}
+            value={pincode || ""}
             onChange={(e) => {
               setPincode(e.target.value);
               validatePincode(e.target.value);
@@ -688,7 +784,7 @@ function PersonalInfoForm({ onNext }) {
             name="nationality"
             label="Nationality"
             fullWidth
-            value={nationality || ''}
+            value={nationality || ""}
             onChange={(e) => {
               setNationality(e.target.value);
               validateNationality(e.target.value);

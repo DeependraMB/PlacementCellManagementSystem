@@ -36,7 +36,7 @@ function Navbar2() {
             <Link to="/" className="nav-item nav-link">
               Anouncements
             </Link>
-            <Link to="/" className="nav-item nav-link">
+            <Link to="/aboutus" className="nav-item nav-link">
               About
             </Link>
             <Link to="/" className="nav-item nav-link">

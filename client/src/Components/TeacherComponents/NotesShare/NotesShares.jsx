@@ -80,6 +80,7 @@ export default function NotesShares() {
         </Typography>
         <Link to="/notes-share-form">
           <Button
+            name="upload-button"
             variant="contained"
             color="primary"
             style={{
@@ -144,9 +145,9 @@ export default function NotesShares() {
                       <TableCell>{row.description}</TableCell>
                       <TableCell>{row.author}</TableCell>
                       <TableCell>
-                        <Button variant="contained" color="secondary" disabled>
+                        {/* <Button variant="contained" color="secondary" disabled>
                           Enabled
-                        </Button>
+                        </Button> */}
                         <Button
                           variant="contained"
                           color="primary"

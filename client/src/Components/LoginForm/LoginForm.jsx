@@ -38,6 +38,10 @@ function LoginForm() {
         navigate("/studenthome");
       } else if (authData.role === "admin") {
         navigate("/adminhome");
+      } else if(authData.role === "alumni") {
+        navigate("/alumnihome");
+      }  else if(authData.role === "teacher") {
+        navigate("/teacherhome");
       }
     }
   }, []);
@@ -72,6 +76,7 @@ function LoginForm() {
             sessionStorage.setItem("auth", JSON.stringify(res.data));
             
             console.log(res.data.message);
+            console.log(res.data.user.role);
             if (res.data.user.role === "student") {
               toast.success(res.data.message);
               navigate("/studenthome");
@@ -79,6 +84,8 @@ function LoginForm() {
               navigate("/adminhome");
             } else if (res.data.user.role === "teacher") {
               navigate("/teacherhome")
+            } else if (res.data.user.role === "alumni") {
+              navigate("/alumnihome")
             }
           } else {
             toast.error(res.data.message)

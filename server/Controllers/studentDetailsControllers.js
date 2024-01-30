@@ -39,6 +39,7 @@ const userFormUpdate = async (req, res) => {
 
 const personalFormUpdate = async (req, res) => {
   const formData = req.body;
+  console.log(formData);
 
   const email = formData.email;
 
@@ -63,6 +64,7 @@ const personalFormUpdate = async (req, res) => {
       state: formData.state,
       pincode: formData.pincode,
       nationality: formData.nationality,
+      remark:formData.remark,
       profilepicture: formData.profilepicture,
     };
     await Personal.updateOne({ email: formData.email }, updatedData);
@@ -82,6 +84,7 @@ const personalFormUpdate = async (req, res) => {
         state: formData.state,
         pincode: formData.pincode,
         nationality: formData.nationality,
+        remark: formData.remark,
         profilepicture: formData.profilepicture,
       });
       await personalInfo.save();

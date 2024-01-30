@@ -266,6 +266,7 @@ function AdminHomeBoxes() {
             </Stack>
           </Card>
         </Grid>
+        
       </Grid>
     </div>
   );

@@ -38,6 +38,10 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import SchoolIcon from "@mui/icons-material/School";
 import { Grid, Tooltip } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
 const drawerWidth = 240;
 
@@ -93,6 +97,19 @@ export default function AdminDash(props) {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const [oopen, setOopen] = React.useState(true);
+
+  const handleClick = () => {
+    setOopen(!oopen);
+  };
+
+  const [nestedListOpen, setNestedListOpen] = React.useState(false);
+
+  const handleNestedListClick = () => {
+    setNestedListOpen(!nestedListOpen);
+  };
+
 
   useEffect(() => {
     const checkData = sessionStorage.getItem("auth");
@@ -266,23 +283,48 @@ export default function AdminDash(props) {
               </Tooltip>
             </NavLink>
 
-            <NavLink
-              to="/add-teacher"
-              className="nav-link"
-              name="nav-link-add-teacher"
-            >
-              <Tooltip title="Add Teacher" arrow placement="right">
-                <ListItemButton>
-                  <ListItemIcon>
-                    <SchoolIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Add Teacher"
-                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-                  />
-                </ListItemButton>
-              </Tooltip>
-            </NavLink>
+            <ListItemButton onClick={handleNestedListClick}>
+              <ListItemIcon>
+                <SchoolIcon />
+              </ListItemIcon>
+              <ListItemText primary="Add User" />
+              {nestedListOpen ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+
+            {/* Nested List - Add Teacher and Add Alumni */}
+            <Collapse in={nestedListOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <NavLink
+                  to="/add-teacher"
+                  className="nav-link"
+                  name="nav-link-add-teacher"
+                >
+                  <Tooltip title="Add Teacher" arrow placement="right">
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <PersonIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Add Teacher" />
+                    </ListItemButton>
+                  </Tooltip>
+                </NavLink>
+
+                <NavLink
+                  to="/add-alumni"
+                  className="nav-link"
+                  name="nav-link-add-alumni"
+                >
+                  <Tooltip title="Add Alumni" arrow placement="right">
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <PeopleAltIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Add Alumni" />
+                    </ListItemButton>
+                  </Tooltip>
+                </NavLink>
+              </List>
+            </Collapse>
 
             <NavLink
               to="/notes-management"

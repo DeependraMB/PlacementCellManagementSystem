@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["student", "teacher", "admin"],
+    enum: ["student", "teacher", "admin", "alumni"],
   },
   otp: {
     type: String,

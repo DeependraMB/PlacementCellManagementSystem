@@ -21,7 +21,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import Avatar from "@mui/material/Avatar";
 import Scrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import "./TeacherDash.css";
+import "./AlumniDash.css";
 import Logout from "../../Logout/Logout";
 import { useAuth } from "../../../Context/AuthContext";
 import { useEffect } from "react";
@@ -83,7 +83,7 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-export default function TeacherDash(props) {
+export default function AlumniDash(props) {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
   const [open, setOpen] = React.useState(false);

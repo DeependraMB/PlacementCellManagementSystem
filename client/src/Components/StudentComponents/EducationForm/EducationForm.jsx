@@ -144,8 +144,8 @@ function EducationForm({ onNext, onBack }) {
   const validateTenthSchoolName = (value) => {
     if (!value) {
       setTenthschoolnameError("10th School Name is required");
-    } else if (/[^A-Za-z\s]/.test(value)) {
-      setTenthschoolnameError("10th School Name should not contain special characters or numbers");
+    } else if (/\d/.test(value)) {
+      setTenthschoolnameError("10th School Name should not contain numbers");
     } else {
       setTenthschoolnameError("");
     }

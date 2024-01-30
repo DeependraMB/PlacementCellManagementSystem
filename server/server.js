@@ -8,6 +8,7 @@ require("dotenv").config();
 const loginRoutes = require("../server/Routes/loginRoutes");
 const studentRoutes = require("./Routes/studentRoutes");
 const teacherRoutes = require("./Routes/teacherRoutes");
+const alumniRoutes = require("./Routes/alumniRoute");
 const resetpasswordRoutes = require("./Routes/resetpasswordRoutes");
 const verifyEmailRoutes = require("../server/Routes/verifyEmailRoutes");
 const User = require("./Models/userModel");
@@ -41,6 +42,7 @@ app.use(bodyParser.json());
 // Routers
 app.use("/student/register", studentRoutes);
 app.use("/teacher/register", teacherRoutes);
+app.use("/alumni/register", alumniRoutes);
 
 app.use("/user/login", loginRoutes);
 

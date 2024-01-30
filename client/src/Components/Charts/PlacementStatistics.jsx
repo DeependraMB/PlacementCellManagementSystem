@@ -12,8 +12,9 @@ const StyledPaper = styled(Paper)({
   marginLeft: '240px',
   height: '495px', // Set the desired height
   width: '800px', // Set the desired width
-  padding: '16px', // Optional: Add padding for better appearance
+  padding: '6px', // Optional: Add padding for better appearance
   marginBottom: '20px',
+
 });
 
 function PlacementStatistics() {
@@ -22,18 +23,22 @@ function PlacementStatistics() {
     datasets: [
       {
         label: 'Students Placed',
-        data: [200, 177, 357, 170, 9],
-        backgroundColor: 'rgba(75,192,192,0.2)',
+        data: [200, 127, 357, 170, 29],
+        backgroundColor: 'red',
         borderColor: 'rgba(75,192,192,1)',
-        borderWidth: 1,
+        borderWidth: 0.5,
+        barThickness: 20,
       },
     ],
   });
 
+
   return (
     <>
     <StyledPaper elevation={3}>
-      <Bar data={placementData} options={{ maintainAspectRatio: false }} />
+      <Bar data={placementData} options={{ maintainAspectRatio: false, scales: {
+        
+      } }} />
     </StyledPaper>
     </>
   );

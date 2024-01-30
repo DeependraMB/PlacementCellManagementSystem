@@ -40,7 +40,7 @@ function FrontPage() {
                   Make The Best Move to <br />
                   Choose Your{" "}
                   <span className="text-emerald-600 text-warning">
-                    <TypingAnimation text="Future" />
+                    <TypingAnimation text="SinuMon" />
                   </span>
                 </p>
                 {/* <img

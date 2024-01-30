@@ -218,6 +218,7 @@ router.get("/generate-userdata-pdf/:email", async (req, res) => {
       { text: `Nationality: ${studentDetails.nationality}` },
       { text: `Father's Name: ${studentDetails.fathername}` },
       { text: `Mother's Name: ${studentDetails.mothername}` },
+      
     ];
 
     personalInfoDetails.forEach((detail) => {

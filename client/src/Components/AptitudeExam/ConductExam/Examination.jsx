@@ -74,10 +74,6 @@ function Examination() {
     }));
   };
 
-  const handleNextQuestion = () => {
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-  };
-
   const handleSubmitExam = async () => {
     try {
       const response = await fetch(
@@ -153,20 +149,10 @@ function Examination() {
             variant="contained"
             color="primary"
             style={{ marginTop: "10px" }}
-            onClick={handleNextQuestion}
+            onClick={handleSubmitExam}
           >
-            Next Question
+            Submit Exam
           </Button>
-          {currentQuestionIndex === questions.length - 1 && (
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginTop: "10px" }}
-              onClick={handleSubmitExam}
-            >
-              Submit Exam
-            </Button>
-          )}
           <Divider />
 
           {/* Result Section */}

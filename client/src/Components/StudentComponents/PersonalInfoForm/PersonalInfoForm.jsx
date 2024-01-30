@@ -12,6 +12,7 @@ import {
 import { useAuth } from "../../../Context/AuthContext";
 import { useEffect } from "react";
 import axios from "axios";
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 
 const blueBorder = {
   borderBottom: "2px solid #2196F3", // Replace with your preferred blue color

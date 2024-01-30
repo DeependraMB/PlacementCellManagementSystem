@@ -16,6 +16,7 @@ import OtpVerification from "./Components/PasswordReset/OtpVerification";
 import StudentUpdateProfile from "./Pages/StudentUpdateProfile";
 
 import AddTeacherPage from "./Pages/AdminPages/AddTeacherPage";
+import AddAlumniPage from "./Pages/AdminPages/AddAlumniPage";
 import TeacherManagePage from "./Pages/AdminPages/TeacherManagePage";
 import TeacherHome from "../src/Pages/TeacherPages/TeacherHome";
 import StudentAssistancePage from "../src/Pages/TeacherPages/StudentAssistancePage";
@@ -34,6 +35,7 @@ import StudentExamListPage from "./Pages/StudentPages/ExamListPage";
 import ConductExamPage from "./Pages/StudentPages/ConductExamPage";
 import StudentExamResultPage from "./Pages/StudentPages/StudentExamResultPage";
 import AboutUsPage from "./Pages/AboutUsPage";
+import AlumniHome from "./Pages/AlumniPages/AlumniHome";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -60,6 +62,16 @@ function App() {
             element={
               auth.token && auth.role === "admin" ? (
                 <AdminHome />
+              ) : (
+                <Navigate to="/signin" />
+              )
+            }
+          />
+          <Route
+            path="/alumnihome"
+            element={
+              auth.token && auth.role === "alumni" ? (
+                <AlumniHome />
               ) : (
                 <Navigate to="/signin" />
               )
@@ -95,6 +107,12 @@ function App() {
             path="/add-teacher"
             element={
               auth.token ? <AddTeacherPage /> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/add-alumni"
+            element={
+              auth.token ? <AddAlumniPage /> : <Navigate to="/signin" />
             }
           />
           <Route

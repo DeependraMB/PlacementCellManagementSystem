@@ -36,6 +36,7 @@ import ConductExamPage from "./Pages/StudentPages/ConductExamPage";
 import StudentExamResultPage from "./Pages/StudentPages/StudentExamResultPage";
 import AboutUsPage from "./Pages/AboutUsPage";
 import AlumniHome from "./Pages/AlumniPages/AlumniHome";
+import JobSharingPage from "./Pages/AlumniPages/JobSharingPage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -111,9 +112,7 @@ function App() {
           />
           <Route
             path="/add-alumni"
-            element={
-              auth.token ? <AddAlumniPage /> : <Navigate to="/signin" />
-            }
+            element={auth.token ? <AddAlumniPage /> : <Navigate to="/signin" />}
           />
           <Route
             path="/teacher-management"
@@ -211,6 +210,14 @@ function App() {
             path="/result/:examId"
             element={
               auth.token ? <StudentExamResultPage /> : <Navigate to="/signin" />
+            }
+          />
+
+          {/* ALUMNI ROUTES */}{/* ALUMNI ROUTES */}{/* ALUMNI ROUTES */}{/* ALUMNI ROUTES */}
+          <Route
+            path="/jobsharing"
+            element={
+              auth.token ? <JobSharingPage /> : <Navigate to="/signin" />
             }
           />
         </Routes>

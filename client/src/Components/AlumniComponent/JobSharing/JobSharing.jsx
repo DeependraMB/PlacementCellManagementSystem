@@ -42,7 +42,7 @@ const JobSharingForm = () => {
     };
     console.log(formData);
     try {
-      const response = await axios.post("your-api-endpoint", formData);
+      const response = await axios.post("http://localhost:5000/alumni/job-share", formData);
       console.log(response.data);
 
       setJobTitle("");
@@ -64,7 +64,7 @@ const JobSharingForm = () => {
       component={Box}
       p={3}
       sx={{
-        maxWidth: 1250,
+        maxWidth: 1000,
         margin: "auto",
         marginTop: "20px",
         marginBottom: "40px",

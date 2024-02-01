@@ -4,6 +4,7 @@ const {
   alumniRegController,
   alumniLoginController
 } = require("../Controllers/alumniController");
+const {alumniJobShareController} = require("../Controllers/alumniJobShareController")
 const AuthMiddleware = require("../Middleware/AuthMiddleware");
 
 //REGISTER || Alumni
@@ -17,11 +18,11 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", AuthMiddleware ,async (req,res) =>{
+router.post("/job-share" ,async (req,res) =>{
     try {
-        await alimniLoginController(req, res);
+        await alumniJobShareController(req, res);
     } catch (error) {
-        console.error("Error in /signup route:", error);
+        console.error("Error in /JobSharing route:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });

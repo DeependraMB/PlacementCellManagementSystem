@@ -81,6 +81,10 @@ app.use("/placed-students", chartsRoute);
 
 app.use("/exams", examRoute);
 
+//AlumniRoutes
+
+app.use("/alumni",alumniRoutes);
+
 
 
 const storage = multer.diskStorage({

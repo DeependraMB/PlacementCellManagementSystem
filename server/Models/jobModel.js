@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const jobSchema = new mongoose.Schema({
   jobTitle: String,
@@ -9,10 +9,14 @@ const jobSchema = new mongoose.Schema({
   salary: String,
   jobType: String,
   companyWeb: String,
-  status: { type: String, default: 'Pending' },
+  status: {
+    type: String,
+    enum: ['Pending', 'Approved', 'Rejected'], // Add other possible values if needed
+    default: 'Pending', // Set a default value if necessary
+  },
   createdAt: { type: Date, default: Date.now },
 });
 
-const Job = mongoose.model('Job', jobSchema);
+const Job = mongoose.model("Job", jobSchema);
 
 module.exports = Job;

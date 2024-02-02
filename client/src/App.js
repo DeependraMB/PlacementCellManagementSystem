@@ -37,6 +37,8 @@ import StudentExamResultPage from "./Pages/StudentPages/StudentExamResultPage";
 import AboutUsPage from "./Pages/AboutUsPage";
 import AlumniHome from "./Pages/AlumniPages/AlumniHome";
 import JobSharingPage from "./Pages/AlumniPages/JobSharingPage";
+import JobApprovalPage from "./Pages/AdminPages/JobApprovalPage";
+import JobPostPage from "./Pages/StudentPages/JobPostPage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -213,6 +215,16 @@ function App() {
             }
           />
 
+          {/* STUDENT ROUTES */}{/* STUDENT ROUTES */}{/* STUDENT ROUTES */}{/* STUDENT ROUTES */}
+          <Route
+            path="/job-post"
+            element={
+              auth.token ? <JobPostPage /> : <Navigate to="/signin" />
+            }
+          />
+
+
+
           {/* ALUMNI ROUTES */}{/* ALUMNI ROUTES */}{/* ALUMNI ROUTES */}{/* ALUMNI ROUTES */}
           <Route
             path="/jobsharing"
@@ -220,6 +232,17 @@ function App() {
               auth.token ? <JobSharingPage /> : <Navigate to="/signin" />
             }
           />
+
+
+
+          {/* ADMIN ROUTES */}{/* ADMIN ROUTES */}{/* ADMIN ROUTES */}{/* ADMIN ROUTES */}
+          <Route
+            path="/job-management"
+            element={
+              auth.token ? <JobApprovalPage /> : <Navigate to="/signin" />
+            }
+          />
+
         </Routes>
       </Router>
     </div>

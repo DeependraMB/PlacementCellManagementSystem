@@ -105,7 +105,16 @@ export default function AlumniAddForm() {
 
   return (
     <div>
+      <Button
+        onClick={() => navigate("/alumni-add")}
+        variant="contained"
+        color="primary"
+        style={{ position: 'absolute', top: '10px', right: '50px',marginTop: "80px" }}
+      >
+        Create Alumni Account Using CSV
+      </Button>
       <div className="add-alumni-page" style={{ paddingTop: "120px" }}>
+        
         <Container
           component="main"
           sx={{

@@ -47,8 +47,7 @@ function JobPost() {
               style={{ fontFamily: 'Your Preferred Font', textAlign: 'left', fontSize: '1.2rem' }}
             >
               <br />
-              <strong>Deadline:</strong> {new Date(job.jobDeadline).toLocaleDateString()}
-              <br />
+              
               <strong>Description:</strong> {job.jobDescription}
               <br />
               <strong>Required Skills:</strong> {job.reqSkills}
@@ -60,6 +59,8 @@ function JobPost() {
               <strong>Type:</strong> {job.jobType}
               <br />
               <strong>Company Website:</strong> {job.companyWeb}
+              <br />
+              <strong style={{color:"red"}}>Deadline:</strong> {new Date(job.jobDeadline).toLocaleDateString()}
               <br />
               <strong>Created At:</strong> {calculateDaysAgo(job.createdAt)} days ago
             </Typography>

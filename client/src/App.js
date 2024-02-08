@@ -39,6 +39,7 @@ import AlumniHome from "./Pages/AlumniPages/AlumniHome";
 import JobSharingPage from "./Pages/AlumniPages/JobSharingPage";
 import JobApprovalPage from "./Pages/AdminPages/JobApprovalPage";
 import JobPostPage from "./Pages/StudentPages/JobPostPage";
+import CSVAddPage from "./Pages/AdminPages/CSVAddPage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -240,6 +241,12 @@ function App() {
             path="/job-management"
             element={
               auth.token ? <JobApprovalPage /> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/alumni-add"
+            element={
+              auth.token ? <CSVAddPage /> : <Navigate to="/signin" />
             }
           />
 

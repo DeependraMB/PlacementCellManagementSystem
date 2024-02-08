@@ -11,15 +11,15 @@ function JobManagement() {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    // Fetch jobs when the component mounts
+    
     fetch('http://localhost:5000/alumni/get-job')
       .then(response => response.json())
       .then(data => {
-        // Assuming the response has a property named 'jobs'
+        
         setJobs(data.jobs);
       })
       .catch(error => console.error('Error fetching jobs:', error));
-  }, []); // The empty dependency array ensures the effect runs only once
+  }, []); 
 
   const handleStatusChange = async (jobId, newStatus) => {
     try {

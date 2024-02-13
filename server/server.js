@@ -26,6 +26,7 @@ const AuthMiddleware = require("./Middleware/AuthMiddleware")
 const statusRoute = require("./Routes/statusRoute");
 const chartsRoute = require("./Routes/chartsRoute");
 const examRoute = require("./Routes/examRoute");
+const resumeRoute = require("./Routes/resumeRoute");
 
 const otpStore = {};
 
@@ -65,17 +66,9 @@ app.use("/get-skills-details/:email",getDetailsRoute)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/get-profile-photo/:filename", getDetailsRoute);
 
-app.use("/get-personal-details",getUserDataRoutes);
-app.use("/get-education-details" ,getUserDataRoutes);
-app.use("/get-skills-details" ,getUserDataRoutes);
-
-app.use("/generate-userdata-pdf", generateUserDataPDF);
-
 app.use("/send-notification", sendNotificationRoute, AuthMiddleware);
 
 app.use("/teacher-change-password/:email",changePasswordRoute);
-
-app.use("/update-student-status", statusRoute);
 
 app.use("/placed-students", chartsRoute);
 
@@ -84,6 +77,19 @@ app.use("/exams", examRoute);
 //AlumniRoutes
 
 app.use("/alumni",alumniRoutes);
+
+//StudentRoutes
+
+app.use("/get-personal-details",getUserDataRoutes);
+app.use("/get-education-details" ,getUserDataRoutes);
+app.use("/get-skills-details" ,getUserDataRoutes);
+
+app.use("/generate-userdata-pdf", generateUserDataPDF);
+
+app.use("/update-student-status", statusRoute);
+
+app.use("/resume-ats-checker", resumeRoute);
+
 
 
 

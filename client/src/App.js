@@ -40,6 +40,7 @@ import JobSharingPage from "./Pages/AlumniPages/JobSharingPage";
 import JobApprovalPage from "./Pages/AdminPages/JobApprovalPage";
 import JobPostPage from "./Pages/StudentPages/JobPostPage";
 import CSVAddPage from "./Pages/AdminPages/CSVAddPage";
+import AtsCheckerPage from "./Pages/StudentPages/AtsCheckerPage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -221,6 +222,12 @@ function App() {
             path="/job-post"
             element={
               auth.token ? <JobPostPage /> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/ats-checker"
+            element={
+              auth.token ? <AtsCheckerPage /> : <Navigate to="/signin" />
             }
           />
 

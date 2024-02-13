@@ -32,7 +32,7 @@ function LoginForm() {
   useEffect(() => {
     const checkData = sessionStorage.getItem("auth");
     if (checkData) {
-      // If already authenticated, redirect to the appropriate home page
+      
       const authData = JSON.parse(checkData);
       if (authData.role === "student") {
         navigate("/studenthome");
@@ -75,8 +75,6 @@ function LoginForm() {
             });
             sessionStorage.setItem("auth", JSON.stringify(res.data));
             
-            console.log(res.data.message);
-            console.log(res.data.user.role);
             if (res.data.user.role === "student") {
               toast.success(res.data.message);
               navigate("/studenthome");

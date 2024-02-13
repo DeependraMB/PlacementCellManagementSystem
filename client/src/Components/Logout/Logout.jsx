@@ -8,10 +8,8 @@ function Logout({ varient }) {
 
   
   const handleLogout = () => {
-    // Clear auth data in session storage
     sessionStorage.removeItem("auth");
 
-    // Clear auth state
     setAuth({
       token: "",
       name: null,
@@ -20,7 +18,6 @@ function Logout({ varient }) {
       _id: null,
     });
 
-    // Redirect to home page
     navigate("/");
   };
 

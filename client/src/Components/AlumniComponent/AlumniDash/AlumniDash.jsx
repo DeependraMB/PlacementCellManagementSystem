@@ -36,6 +36,7 @@ import LockOutlined from "@mui/icons-material/LockOutlined";
 import { deepPurple } from "@mui/material/colors";
 import { Grid } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 
 const drawerWidth = 280;
 
@@ -181,35 +182,34 @@ export default function AlumniDash(props) {
         <Divider />
         <Scrollbar style={{ height: "90vh", overflowX: "hidden" }}>
           <List component="nav">
-            <NavLink to="/teacherhome" className="nav-link">
+            <NavLink to="/alumnihome" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
                   <DashboardIcon />
-                  {/* You can use the appropriate Material-UI icon */}
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItemButton>
             </NavLink>
 
-            <NavLink to="/student-assistance" className="nav-link">
+            <NavLink to="/jobsharing" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
-                  <AssignmentIndIcon />{" "}
-                  {/* You can use the appropriate Material-UI icon */}
+                  <HomeRepairServiceIcon />{" "}
+                  
                 </ListItemIcon>
-                <ListItemText primary="Student Assistance" />
+                <ListItemText primary="Share Jobs" />
               </ListItemButton>
             </NavLink>
 
-            <NavLink to="/teacher-exam-list" className="nav-link">
+            {/* <NavLink to="/teacher-exam-list" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
                   <SchoolIcon />
-                  {/* Use the appropriate icon */}
+                 
                 </ListItemIcon>
                 <ListItemText primary="Mock Aptitude Conduct" />
               </ListItemButton>
-            </NavLink>
+            </NavLink> */}
 
             {/* <NavLink to="/teacher-view-profile" className="nav-link">
               <ListItemButton>
@@ -247,14 +247,15 @@ export default function AlumniDash(props) {
               </ListItemButton>
             </NavLink> */}
 
-            <NavLink to="/notes-share" className="nav-link" name="nav-link-upload-notes">
+            {/* <NavLink to="/notes-share" className="nav-link" name="nav-link-upload-notes">
               <ListItemButton>
                 <ListItemIcon>
-                  <LibraryBooksIcon /> {/* Use the appropriate icon */}
+                  <LibraryBooksIcon /> 
                 </ListItemIcon>
                 <ListItemText primary="Notes Share" />
               </ListItemButton>
-            </NavLink>
+            </NavLink> */}
+
           </List>
         </Scrollbar>
       </Drawer>

@@ -15,6 +15,7 @@ const jobSchema = new mongoose.Schema({
     default: 'Pending', // Set a default value if necessary
   },
   createdAt: { type: Date, default: Date.now },
+  sharedBy: String
 });
 
 const Job = mongoose.model("Job", jobSchema);

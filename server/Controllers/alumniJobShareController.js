@@ -10,6 +10,7 @@ exports.jobShare = async (req, res) => {
     salary,
     jobType,
     companyWeb,
+    email
   } = req.body;
 
   try {
@@ -24,6 +25,7 @@ exports.jobShare = async (req, res) => {
       companyWeb,
       status: "Pending",
       createdAt: new Date(),
+      sharedBy: email
     });
 
     await newJob.save();
@@ -61,3 +63,5 @@ exports.updateJobStatus = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+

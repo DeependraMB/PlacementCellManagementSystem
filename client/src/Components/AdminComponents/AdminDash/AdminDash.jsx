@@ -42,8 +42,9 @@ import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import WorkIcon from "@mui/icons-material/Work";
 
-const drawerWidth = 240;
+const drawerWidth = 270;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -109,7 +110,6 @@ export default function AdminDash(props) {
   const handleNestedListClick = () => {
     setNestedListOpen(!nestedListOpen);
   };
-
 
   useEffect(() => {
     const checkData = sessionStorage.getItem("auth");
@@ -287,7 +287,11 @@ export default function AdminDash(props) {
               <ListItemIcon>
                 <SchoolIcon />
               </ListItemIcon>
-              <ListItemText primary="Add User" />
+              <ListItemText>
+                <Typography variant="body1" style={{ fontWeight: "bold" }}>
+                  Add User
+                </Typography>
+              </ListItemText>
               {nestedListOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
 
@@ -304,7 +308,14 @@ export default function AdminDash(props) {
                       <ListItemIcon>
                         <PersonIcon />
                       </ListItemIcon>
-                      <ListItemText primary="Add Teacher" />
+                      <ListItemText>
+                        <Typography
+                          variant="body2"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          Add Teacher
+                        </Typography>
+                      </ListItemText>
                     </ListItemButton>
                   </Tooltip>
                 </NavLink>
@@ -319,7 +330,14 @@ export default function AdminDash(props) {
                       <ListItemIcon>
                         <PeopleAltIcon />
                       </ListItemIcon>
-                      <ListItemText primary="Add Alumni" />
+                      <ListItemText>
+                        <Typography
+                          variant="body2"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          Add Alumni
+                        </Typography>
+                      </ListItemText>
                     </ListItemButton>
                   </Tooltip>
                 </NavLink>
@@ -338,6 +356,24 @@ export default function AdminDash(props) {
                   </ListItemIcon>
                   <ListItemText
                     primary="Notes Management"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
+            <NavLink
+              to="/job-management"
+              className="nav-link"
+              name="nav-link-job-management"
+            >
+              <Tooltip title="Jobs Management" arrow placement="right">
+                <ListItemButton component={Link} href="/jobr-management">
+                  <ListItemIcon>
+                    <WorkIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Jobs Management"
                     sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
                   />
                 </ListItemButton>

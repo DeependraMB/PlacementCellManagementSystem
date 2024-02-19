@@ -48,6 +48,7 @@ import Badge from "@mui/material/Badge";
 import ExitToApp from "@mui/icons-material/ExitToApp";
 import QuizIcon from "@mui/icons-material/Quiz";
 import WorkIcon from '@mui/icons-material/Work';
+import ScoreboardIcon from '@mui/icons-material/Scoreboard';
 
 const drawerWidth = 280;
 
@@ -379,6 +380,20 @@ export default function StudentDash(props) {
                   </ListItemIcon>
                   <ListItemText
                     primary="Notifications"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
+            <NavLink to="/ats-checker" className="nav-link">
+              <Tooltip title="ATS Checker" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ScoreboardIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="ATS Checker"
                     sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
                   />
                 </ListItemButton>

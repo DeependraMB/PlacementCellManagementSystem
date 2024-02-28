@@ -18,7 +18,7 @@ async function gemini(applicantResume) {
 
     Response Format Must be like this content must be chang based on the resume:
     {
-      "score": "0-100",
+      "score": "0-100" score must be a number between 0 to 100. only one number,
       "missing": [
         "- Point 1.",
         "- Point 2.",

@@ -7,7 +7,7 @@ const {
 } = require("../Controllers/alumniController");
 const alumniJobShareController = require("../Controllers/alumniJobShareController");
 const AuthMiddleware = require("../Middleware/AuthMiddleware");
-const multer = require("multer")
+const multer = require("multer");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -25,7 +25,7 @@ router.post("/register", async (req, res) => {
 
 // POST || Register Using CSV
 
-router.post("/register-csv", upload.single('file'),async (req, res) => {
+router.post("/register-csv", upload.single("file"), async (req, res) => {
   try {
     await registerAlumniCSV(req, res);
   } catch (error) {
@@ -63,6 +63,15 @@ router.post("/update-job-status", async (req, res) => {
     await alumniJobShareController.updateJobStatus(req, res);
   } catch (error) {
     console.error("Error in /update-job-status route:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.post("/get-job-by-Id", async (req, res) => {
+  try {
+    await alumniJobShareController.getJobById(req, res);
+  } catch (error) {
+    console.error("Error in /get-job-by-Id Route:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

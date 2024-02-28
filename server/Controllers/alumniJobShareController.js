@@ -10,8 +10,10 @@ exports.jobShare = async (req, res) => {
     salary,
     jobType,
     companyWeb,
-    email
+    email,
   } = req.body;
+
+  console.log(req.body);
 
   try {
     const newJob = new Job({
@@ -25,7 +27,7 @@ exports.jobShare = async (req, res) => {
       companyWeb,
       status: "Pending",
       createdAt: new Date(),
-      sharedBy: email
+      sharedBy: email,
     });
 
     await newJob.save();
@@ -50,18 +52,38 @@ exports.updateJobStatus = async (req, res) => {
   const { jobId, newStatus } = req.body;
 
   try {
-  
-    const updatedJob = await Job.findByIdAndUpdate(jobId, { status: newStatus }, { new: true });
+    const updatedJob = await Job.findByIdAndUpdate(
+      jobId,
+      { status: newStatus },
+      { new: true }
+    );
 
     if (!updatedJob) {
-      return res.status(404).json({ error: 'Job not found' });
+      return res.status(404).json({ error: "Job not found" });
     }
 
-    res.status(200).json({ message: 'Job status updated successfully', updatedJob });
+    res
+      .status(200)
+      .json({ message: "Job status updated successfully", updatedJob });
   } catch (error) {
-    console.error('Error updating job status:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error updating job status:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
+exports.getJobById = async (req, res) => {
+  try {
+    const email = req.body.email;
+    console.log(email);
+    const job = await Job.find({ sharedBy: email });
+    console.log(job);
+    if (!job) {
+      return res.status(404).json({ error: "Job not found" });
+    }
+    res.json({ job });
+  } catch (error) {
+    console.error("Error fetching job by ID:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 

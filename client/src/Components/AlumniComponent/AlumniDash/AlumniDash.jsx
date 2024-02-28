@@ -238,14 +238,14 @@ export default function AlumniDash(props) {
               </ListItemButton>
             </NavLink> */}
 
-            {/* <NavLink to="/placement-workshop-facilitation" className="nav-link">
+            <NavLink to="/shared-jobs" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
                   <WorkIcon />
                 </ListItemIcon>
-                <ListItemText primary="Workshop Facilitation" />
+                <ListItemText primary="Shared Jobs" />
               </ListItemButton>
-            </NavLink> */}
+            </NavLink>
 
             {/* <NavLink to="/notes-share" className="nav-link" name="nav-link-upload-notes">
               <ListItemButton>

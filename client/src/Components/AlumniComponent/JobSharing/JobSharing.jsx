@@ -14,7 +14,6 @@ import {
 import axios from "axios";
 import { useAuth } from "../../../Context/AuthContext";
 
-
 const JobSharingForm = () => {
   const blueBorder = {
     borderBottom: "2px solid #2196F3",
@@ -22,7 +21,7 @@ const JobSharingForm = () => {
 
   const { auth, setAuth } = useAuth();
 
-  const [jobtitle, setJobTitle] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
   const [jobDeadline, setJobDeadline] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [reqSkills, setReqSkills] = useState("");
@@ -40,14 +39,16 @@ const JobSharingForm = () => {
   const [jobTypeError, setJobTypeError] = useState("");
   const [companyWebError, setCompanyWebError] = useState("");
 
+  console.log(jobTitle);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const email = auth.email
+    const email = auth.email;
     const isFormValid = validateForm();
 
     if (isFormValid) {
       const formData = {
-        jobtitle,
+        jobTitle,
         jobDeadline,
         jobDescription,
         reqSkills,
@@ -55,10 +56,11 @@ const JobSharingForm = () => {
         salary,
         jobType,
         companyWeb,
-        email
+        email,
       };
 
       try {
+        console.log(formData);
         const response = await axios.post(
           "http://localhost:5000/alumni/job-share",
           formData
@@ -152,33 +154,32 @@ const JobSharingForm = () => {
 
   const validateJobApply = (value) => {
     let isValid = true;
-  
+
     if (!value) {
       setJobApplyError("Contact Email or Application Link is required");
       isValid = false;
     } else {
       // Regular expression for email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
+
       // Regular expression for URL validation
       // const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-  
+
       // Check if the input is a valid email or URL
-      if (!(emailRegex.test(value))) {
+      if (!emailRegex.test(value)) {
         setJobApplyError("Please enter a valid email or URL");
         isValid = false;
       } else {
         setJobApplyError("");
       }
     }
-  
+
     return isValid;
   };
-  
 
   const validateSalary = (value) => {
     let isValid = true;
-  
+
     // Check if the value is not empty
     if (!value) {
       setSalaryError("Salary is required");
@@ -186,7 +187,7 @@ const JobSharingForm = () => {
     } else {
       // Convert the value to a number
       const numericValue = parseFloat(value);
-  
+
       // Check if the numeric value is a positive number
       if (isNaN(numericValue) || numericValue <= 0) {
         setSalaryError("Please enter a valid positive salary");
@@ -195,10 +196,9 @@ const JobSharingForm = () => {
         setSalaryError("");
       }
     }
-  
+
     return isValid;
   };
-  
 
   const validateJobType = (value) => {
     let isValid = true;
@@ -222,7 +222,7 @@ const JobSharingForm = () => {
   };
 
   const validateForm = () => {
-    const isJobTitleValid = validateJobTitle(jobtitle);
+    const isJobTitleValid = validateJobTitle(jobTitle);
     const isJobDeadlineValid = validateJobDeadline(jobDeadline);
     const isJobDescriptionValid = validateJobDescription(jobDescription);
     const isReqSkillsValid = validateReqSkills(reqSkills);
@@ -272,7 +272,7 @@ const JobSharingForm = () => {
               margin="normal"
               required
               InputProps={{ style: blueBorder }}
-              value={jobtitle}
+              value={jobTitle}
               onChange={(e) => {
                 setJobTitle(e.target.value);
                 validateJobTitle(e.target.value);

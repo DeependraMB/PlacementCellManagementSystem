@@ -41,6 +41,9 @@ import JobApprovalPage from "./Pages/AdminPages/JobApprovalPage";
 import JobPostPage from "./Pages/StudentPages/JobPostPage";
 import CSVAddPage from "./Pages/AdminPages/CSVAddPage";
 import AtsCheckerPage from "./Pages/StudentPages/AtsCheckerPage";
+import JobSharedPage from "./Pages/AlumniPages/JobSharedPage";
+import AddNotesPage from "./Pages/AlumniPages/AddNotesPage";
+import SharedNotesPage from "./Pages/AlumniPages/SharedNotesPage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -217,12 +220,11 @@ function App() {
             }
           />
 
-          {/* STUDENT ROUTES */}{/* STUDENT ROUTES */}{/* STUDENT ROUTES */}{/* STUDENT ROUTES */}
+          {/* STUDENT ROUTES */}
+
           <Route
             path="/job-post"
-            element={
-              auth.token ? <JobPostPage /> : <Navigate to="/signin" />
-            }
+            element={auth.token ? <JobPostPage /> : <Navigate to="/signin" />}
           />
           <Route
             path="/ats-checker"
@@ -231,19 +233,31 @@ function App() {
             }
           />
 
+          {/* ALUMNI ROUTES */}
 
-
-          {/* ALUMNI ROUTES */}{/* ALUMNI ROUTES */}{/* ALUMNI ROUTES */}{/* ALUMNI ROUTES */}
           <Route
             path="/jobsharing"
             element={
               auth.token ? <JobSharingPage /> : <Navigate to="/signin" />
             }
           />
+          <Route
+            path="/shared-jobs"
+            element={auth.token ? <JobSharedPage /> : <Navigate to="/signin" />}
+          />
 
+          <Route
+            path="/notes-share-form"
+            element={auth.token ? <AddNotesPage /> : <Navigate to="/signin" />}
+          />
 
+          <Route
+            path="/notes-shared"
+            element={auth.token ? <SharedNotesPage /> : <Navigate to="/signin" />}
+          />
 
-          {/* ADMIN ROUTES */}{/* ADMIN ROUTES */}{/* ADMIN ROUTES */}{/* ADMIN ROUTES */}
+          {/* ADMIN ROUTES */}
+
           <Route
             path="/job-management"
             element={
@@ -252,11 +266,8 @@ function App() {
           />
           <Route
             path="/alumni-add"
-            element={
-              auth.token ? <CSVAddPage /> : <Navigate to="/signin" />
-            }
+            element={auth.token ? <CSVAddPage /> : <Navigate to="/signin" />}
           />
-
         </Routes>
       </Router>
     </div>

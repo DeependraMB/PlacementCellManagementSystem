@@ -152,7 +152,11 @@ app.get("/notes/download/:id", async (req, res) => {
     if (!document) {
       return res.status(404).json({ error: "Document not found" });
     }
-    res.download(document.filepath, document.title);
+    
+    // Assuming 'filepath' is a relative path to the 'uploads' directory
+    const fullPath = `uploads/${document.filepath}`;
+    
+    res.download(fullPath, document.title);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

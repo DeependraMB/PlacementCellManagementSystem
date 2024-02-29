@@ -44,6 +44,11 @@ import AtsCheckerPage from "./Pages/StudentPages/AtsCheckerPage";
 import JobSharedPage from "./Pages/AlumniPages/JobSharedPage";
 import AddNotesPage from "./Pages/AlumniPages/AddNotesPage";
 import SharedNotesPage from "./Pages/AlumniPages/SharedNotesPage";
+import FeedbackPageS from "./Pages/StudentPages/FeedbackPageS";
+import ViewFeedback from "./Pages/AdminPages/ViewFeedback";
+import FeedbackPageA from "./Pages/AlumniPages/FeedbackPageA";
+import FeedPageT from "./Pages/TeacherPages/FeedPageT";
+
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -232,6 +237,10 @@ function App() {
               auth.token ? <AtsCheckerPage /> : <Navigate to="/signin" />
             }
           />
+          <Route
+            path="/student-feedback-form"
+            element={auth.token ? <FeedbackPageS /> : <Navigate to="/signin" />}
+          />
 
           {/* ALUMNI ROUTES */}
 
@@ -253,8 +262,27 @@ function App() {
 
           <Route
             path="/notes-shared"
-            element={auth.token ? <SharedNotesPage /> : <Navigate to="/signin" />}
+            element={
+              auth.token ? <SharedNotesPage /> : <Navigate to="/signin" />
+            }
           />
+
+          <Route
+            path="/alumni-feedback-form"
+            element={
+              auth.token ? <FeedbackPageA /> : <Navigate to="/signin" />
+            }
+          />
+
+          {/* TEACHER ROUTES */}
+
+          <Route
+            path="/teacher-feedback-form"
+            element={
+              auth.token ? <FeedPageT /> : <Navigate to="/signin" />
+            }
+          />
+
 
           {/* ADMIN ROUTES */}
 
@@ -267,6 +295,10 @@ function App() {
           <Route
             path="/alumni-add"
             element={auth.token ? <CSVAddPage /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/feedbacks"
+            element={auth.token ? <ViewFeedback /> : <Navigate to="/signin" />}
           />
         </Routes>
       </Router>

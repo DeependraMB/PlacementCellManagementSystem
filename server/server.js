@@ -27,6 +27,7 @@ const statusRoute = require("./Routes/statusRoute");
 const chartsRoute = require("./Routes/chartsRoute");
 const examRoute = require("./Routes/examRoute");
 const resumeRoute = require("./Routes/resumeRoute");
+const feedbackRoute = require("./Routes/feedbackRoute");
 
 const otpStore = {};
 
@@ -73,6 +74,8 @@ app.use("/teacher-change-password/:email",changePasswordRoute);
 app.use("/placed-students", chartsRoute);
 
 app.use("/exams", examRoute);
+
+app.use("/feedback",feedbackRoute);
 
 //AlumniRoutes
 

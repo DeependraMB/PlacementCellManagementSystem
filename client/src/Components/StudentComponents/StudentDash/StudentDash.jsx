@@ -483,6 +483,20 @@ export default function StudentDash(props) {
               </Tooltip>
             </NavLink>
 
+            <NavLink to="/student-feedback-form" className="nav-link">
+              <Tooltip title="Feedback" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                  <FeedbackIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Feedback"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
             <NavLink to="" className="nav-link">
               <Tooltip title="Log Out" arrow placement="right">
                 <ListItemButton>

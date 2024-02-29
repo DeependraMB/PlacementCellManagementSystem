@@ -34,9 +34,10 @@ import WorkIcon from "@mui/icons-material/Work";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import LockOutlined from "@mui/icons-material/LockOutlined";
 import { deepPurple } from "@mui/material/colors";
-import { Grid } from "@mui/material";
+import { Grid, Tooltip } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+import FeedbackIcon from "@mui/icons-material/Feedback";
 
 const drawerWidth = 280;
 
@@ -229,6 +230,20 @@ export default function AlumniDash(props) {
               </ListItemButton>
             </NavLink>
 
+            <NavLink to="/alumni-feedback-form" className="nav-link">
+              <Tooltip title="Feedback" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                  <FeedbackIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Feedback"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
             {/* <NavLink to="/review-aptitude-tests" className="nav-link">
               <ListItemButton>
                 <ListItemIcon>
@@ -244,6 +259,19 @@ export default function AlumniDash(props) {
                   <WorkIcon />
                 </ListItemIcon>
                 <ListItemText primary="Shared Jobs" />
+              </ListItemButton>
+            </NavLink>
+
+            <NavLink
+              to="/notes-shared"
+              className="nav-link"
+              name="nav-link-upload-notes"
+            >
+              <ListItemButton>
+                <ListItemIcon>
+                  <LibraryBooksIcon /> {/* Use the appropriate icon */}
+                </ListItemIcon>
+                <ListItemText primary="Notes Share" />
               </ListItemButton>
             </NavLink>
 

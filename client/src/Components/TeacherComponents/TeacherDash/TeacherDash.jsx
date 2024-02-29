@@ -34,8 +34,10 @@ import WorkIcon from "@mui/icons-material/Work";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import LockOutlined from "@mui/icons-material/LockOutlined";
 import { deepPurple } from "@mui/material/colors";
-import { Grid } from "@mui/material";
+import { Grid, Tooltip } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import FeedbackIcon from "@mui/icons-material/Feedback";
+
 
 const drawerWidth = 280;
 
@@ -155,7 +157,9 @@ export default function TeacherDash(props) {
                   className="avatar-menu"
                   style={{ marginRight: "5px", marginLeft: "5px" }}
                 >
-                  <Avatar sx={{ bgcolor: deepPurple[500]}} className="avatar">{auth.name}</Avatar>
+                  <Avatar sx={{ bgcolor: deepPurple[500] }} className="avatar">
+                    {auth.name}
+                  </Avatar>
                 </div>
                 {auth.name ? <Logout varient="dark" /> : ""}
               </Box>
@@ -220,13 +224,31 @@ export default function TeacherDash(props) {
               </ListItemButton>
             </NavLink> */}
 
-            <NavLink to="/teacher-change-password" className="nav-link" name="nav-link-change-password">
+            <NavLink
+              to="/teacher-change-password"
+              className="nav-link"
+              name="nav-link-change-password"
+            >
               <ListItemButton>
                 <ListItemIcon>
                   <LockOutlined />
                 </ListItemIcon>
                 <ListItemText primary="Change Password" />
               </ListItemButton>
+            </NavLink>
+
+            <NavLink to="/teacher-feedback-form" className="nav-link">
+              <Tooltip title="Feedback" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                  <FeedbackIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Feedback"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
             </NavLink>
 
             {/* <NavLink to="/review-aptitude-tests" className="nav-link">
@@ -247,7 +269,11 @@ export default function TeacherDash(props) {
               </ListItemButton>
             </NavLink> */}
 
-            <NavLink to="/notes-share" className="nav-link" name="nav-link-upload-notes">
+            <NavLink
+              to="/notes-share"
+              className="nav-link"
+              name="nav-link-upload-notes"
+            >
               <ListItemButton>
                 <ListItemIcon>
                   <LibraryBooksIcon /> {/* Use the appropriate icon */}

@@ -5,6 +5,41 @@ const db = require("./db");
 const multer = require("multer");
 const path = require("path");
 require("dotenv").config();
+const http = require('http');
+const {Server} = require("socket.io");
+const initializeSocket = require("./socket");
+
+const app = express();
+const PORT = process.env.PORT;
+app.use(express.static("uploads"));
+
+const server = http.createServer(app).listen(PORT, () => {
+  console.log(`Express server listening on port ${PORT}`);
+});
+
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+
+initializeSocket(server);
+// io.on("connection", (socket) => {
+//   console.log("A user connected");
+
+//   socket.on('disconnect', () => {
+//       console.log('A user disconnected');
+//   });
+
+//   socket.on('sendMessage', (data) => {
+//       console.log('Received message from client:', data);
+//       // Broadcast the message to all connected clients
+//       io.emit('message', data);
+//   });
+// });
+
 const loginRoutes = require("../server/Routes/loginRoutes");
 const studentRoutes = require("./Routes/studentRoutes");
 const teacherRoutes = require("./Routes/teacherRoutes");
@@ -31,9 +66,7 @@ const feedbackRoute = require("./Routes/feedbackRoute");
 
 const otpStore = {};
 
-const app = express();
-const PORT = process.env.PORT;
-app.use(express.static("uploads"));
+
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -166,6 +199,6 @@ app.get("/notes/download/:id", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log("\x1b[44m\x1b[33m%s\x1b[0m", `Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log("\x1b[44m\x1b[33m%s\x1b[0m", `Server is running on port ${PORT}`);
+// });

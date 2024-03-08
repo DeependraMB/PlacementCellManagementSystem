@@ -49,6 +49,10 @@ import ViewFeedback from "./Pages/AdminPages/ViewFeedback";
 import FeedbackPageA from "./Pages/AlumniPages/FeedbackPageA";
 import FeedPageT from "./Pages/TeacherPages/FeedPageT";
 import ChatPage from "./Pages/ChatPage";
+import AdminChatPage from "./Pages/AdminPages/AdminChatPage";
+import TeacherChatPage from "./Pages/TeacherPages/TeacherChatPage";
+import AlumniChatPage from "./Pages/AlumniPages/AlumniChatPage";
+import StudentChatPage from "./Pages/StudentPages/StudentChatPage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -241,6 +245,10 @@ function App() {
             path="/student-feedback-form"
             element={auth.token ? <FeedbackPageS /> : <Navigate to="/signin" />}
           />
+          <Route
+            path="/student-chat-room"
+            element={auth.token ? <StudentChatPage /> : <Navigate to="/signin" />}
+          />
 
           {/* ALUMNI ROUTES */}
 
@@ -271,12 +279,22 @@ function App() {
             path="/alumni-feedback-form"
             element={auth.token ? <FeedbackPageA /> : <Navigate to="/signin" />}
           />
+          <Route
+            path="/alumni-chat-room"
+            element={auth.token ? <AlumniChatPage /> : <Navigate to="/signin" />}
+          />
+
+
 
           {/* TEACHER ROUTES */}
 
           <Route
             path="/teacher-feedback-form"
             element={auth.token ? <FeedPageT /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/teacher-chat-room"
+            element={auth.token ? <TeacherChatPage /> : <Navigate to="/signin" />}
           />
 
           {/* ADMIN ROUTES */}
@@ -297,8 +315,8 @@ function App() {
           />
 
           <Route
-            path="/chat-room"
-            element={auth.token ? <ChatPage /> : <Navigate to="/signin" />}
+            path="/admin-chat-room"
+            element={auth.token ? <AdminChatPage /> : <Navigate to="/signin" />}
           />
         </Routes>
       </Router>

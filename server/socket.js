@@ -1,47 +1,63 @@
 // socket.js
 const User = require("./Models/userModel");
+const Message = require("./Models/messageModel");
 
 const { Server } = require("socket.io");
 
 const initializeSocket = (server) => {
-    const io = new Server(server, {
-        cors: {
-            origin: "*",
-            methods: ["GET", "POST"]
-        }
+  const io = new Server(server, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"],
+    },
+  });
+
+  const updateUsersAndMessages = async (socket) => {
+    try {
+      const usersFromDB = await User.find();
+      const users = usersFromDB.map((user) => ({
+        id: user.email,
+        name: user.firstname,
+      }));
+
+      const allMessages = await Message.find().sort({ timestamp: 1 });
+
+      io.emit("userUpdate", users);
+      io.to(socket.id).emit("message", allMessages);
+    } catch (error) {
+      console.error("Error fetching users or messages from the database:", error);
+    }
+  };
+
+  io.on("connection", (socket) => {
+    console.log("user connected", `${socket.id}`);
+
+    updateUsersAndMessages(socket);
+
+    socket.on("disconnect", () => {
+      console.log("user disconnected");
+
+    //   updateUsersAndMessages(socket);
     });
 
-    // Function to update users from the database
-    const updateUsersFromDatabase = async () => {
-        try {
-            const usersFromDB = await User.find(); // Assuming you have a method to fetch all users
-            const users = usersFromDB.map(user => ({ id: user.email, name: user.firstname }));
-            io.emit('userUpdate', users);
-        } catch (error) {
-            console.error('Error fetching users from database:', error);
-        }
-    };
+    socket.on("sendMessage", async (data) => {
+      console.log("Received message from client:", data);
 
-    io.on("connection", (socket) => {
-        console.log("A user connected");
+      const { name, email, role, message } = data;
 
-        // Fetch users from the database and send to the newly connected user
-        updateUsersFromDatabase();
+      const newMessage = new Message({ name, email, role, message });
 
-        // Other connection handling code...
+      try {
+        await newMessage.save();
+        console.log("Message saved to MongoDB:", newMessage);
+      } catch (error) {
+        console.error("Error saving message to MongoDB:", error);
+      }
 
-        socket.on('disconnect', () => {
-            console.log('A user disconnected');
-            // Update the user list and broadcast to all clients
-            updateUsersFromDatabase();
-        });
-
-        socket.on('sendMessage', (data) => {
-            console.log('Received message from client:', data);
-            // Broadcast the message to all connected clients
-            io.emit('message', data);
-        });
+      io.emit("message", newMessage);
+      console.log("Message Emitted!")
     });
+  });
 };
 
 module.exports = initializeSocket;

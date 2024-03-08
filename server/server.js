@@ -8,6 +8,7 @@ require("dotenv").config();
 const http = require('http');
 const {Server} = require("socket.io");
 const initializeSocket = require("./socket");
+const Message = require("./Models/messageModel");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -128,6 +129,16 @@ app.use("/resume-ats-checker", resumeRoute);
 
 
 
+app.get('/api/messages', async (req, res) => {
+  try {
+    // Fetch all messages from MongoDB
+    const messages = await Message.find().sort({ timestamp: 1 });
+    res.json(messages);
+  } catch (error) {
+    console.error('Error fetching messages from the database:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

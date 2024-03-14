@@ -36,8 +36,10 @@ import LockOutlined from "@mui/icons-material/LockOutlined";
 import { deepPurple } from "@mui/material/colors";
 import { Grid, Tooltip } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import FeedbackIcon from "@mui/icons-material/Feedback";
+import ForumIcon from "@mui/icons-material/Forum";
+
 
 const drawerWidth = 280;
 
@@ -157,7 +159,9 @@ export default function AlumniDash(props) {
                   className="avatar-menu"
                   style={{ marginRight: "5px", marginLeft: "5px" }}
                 >
-                  <Avatar sx={{ bgcolor: deepPurple[500]}} className="avatar">{auth.name}</Avatar>
+                  <Avatar sx={{ bgcolor: deepPurple[500] }} className="avatar">
+                    {auth.name}
+                  </Avatar>
                 </div>
                 {auth.name ? <Logout varient="dark" /> : ""}
               </Box>
@@ -196,7 +200,6 @@ export default function AlumniDash(props) {
               <ListItemButton>
                 <ListItemIcon>
                   <HomeRepairServiceIcon />{" "}
-                  
                 </ListItemIcon>
                 <ListItemText primary="Share Jobs" />
               </ListItemButton>
@@ -221,7 +224,11 @@ export default function AlumniDash(props) {
               </ListItemButton>
             </NavLink> */}
 
-            <NavLink to="/teacher-change-password" className="nav-link" name="nav-link-change-password">
+            <NavLink
+              to="/teacher-change-password"
+              className="nav-link"
+              name="nav-link-change-password"
+            >
               <ListItemButton>
                 <ListItemIcon>
                   <LockOutlined />
@@ -234,7 +241,7 @@ export default function AlumniDash(props) {
               <Tooltip title="Feedback" arrow placement="right">
                 <ListItemButton>
                   <ListItemIcon>
-                  <FeedbackIcon />
+                    <FeedbackIcon />
                   </ListItemIcon>
                   <ListItemText
                     primary="Feedback"
@@ -284,6 +291,19 @@ export default function AlumniDash(props) {
               </ListItemButton>
             </NavLink> */}
 
+            <NavLink to="/alumni-chat-room" className="nav-link">
+              <Tooltip title="Chatroom" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ForumIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Chatroom"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
           </List>
         </Scrollbar>
       </Drawer>

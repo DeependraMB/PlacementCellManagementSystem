@@ -53,6 +53,9 @@ import AdminChatPage from "./Pages/AdminPages/AdminChatPage";
 import TeacherChatPage from "./Pages/TeacherPages/TeacherChatPage";
 import AlumniChatPage from "./Pages/AlumniPages/AlumniChatPage";
 import StudentChatPage from "./Pages/StudentPages/StudentChatPage";
+import WorkshopFormPage from "./Pages/AdminPages/WorkshopFormPage";
+import WorkshopListPage from "./Pages/AdminPages/WorkshopListPage";
+import WorkshopListPageS from "./Pages/StudentPages/WorkshopListPageS";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -247,7 +250,16 @@ function App() {
           />
           <Route
             path="/student-chat-room"
-            element={auth.token ? <StudentChatPage /> : <Navigate to="/signin" />}
+            element={
+              auth.token ? <StudentChatPage /> : <Navigate to="/signin" />
+            }
+          />
+
+          <Route
+            path="/student-workshop-list"
+            element={
+              auth.token ? <WorkshopListPageS /> : <Navigate to="/signin" />
+            }
           />
 
           {/* ALUMNI ROUTES */}
@@ -281,10 +293,10 @@ function App() {
           />
           <Route
             path="/alumni-chat-room"
-            element={auth.token ? <AlumniChatPage /> : <Navigate to="/signin" />}
+            element={
+              auth.token ? <AlumniChatPage /> : <Navigate to="/signin" />
+            }
           />
-
-
 
           {/* TEACHER ROUTES */}
 
@@ -294,7 +306,9 @@ function App() {
           />
           <Route
             path="/teacher-chat-room"
-            element={auth.token ? <TeacherChatPage /> : <Navigate to="/signin" />}
+            element={
+              auth.token ? <TeacherChatPage /> : <Navigate to="/signin" />
+            }
           />
 
           {/* ADMIN ROUTES */}
@@ -317,6 +331,20 @@ function App() {
           <Route
             path="/admin-chat-room"
             element={auth.token ? <AdminChatPage /> : <Navigate to="/signin" />}
+          />
+
+          <Route
+            path="/workshop-form"
+            element={
+              auth.token ? <WorkshopFormPage /> : <Navigate to="/signin" />
+            }
+          />
+
+          <Route
+            path="/workshop-list"
+            element={
+              auth.token ? <WorkshopListPage /> : <Navigate to="/signin" />
+            }
           />
         </Routes>
       </Router>

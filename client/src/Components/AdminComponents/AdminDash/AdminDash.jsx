@@ -389,15 +389,21 @@ export default function AdminDash(props) {
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
             </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <ForumIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Forums"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
+
+            <NavLink to="/admin-chat-room" className="nav-link">
+              <Tooltip title="Chatroom" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ForumIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Chatroom"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
             <ListItemButton>
               <ListItemIcon>
                 <ContactSupportIcon />

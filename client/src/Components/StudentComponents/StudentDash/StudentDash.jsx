@@ -47,8 +47,9 @@ import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
 import ExitToApp from "@mui/icons-material/ExitToApp";
 import QuizIcon from "@mui/icons-material/Quiz";
-import WorkIcon from '@mui/icons-material/Work';
-import ScoreboardIcon from '@mui/icons-material/Scoreboard';
+import WorkIcon from "@mui/icons-material/Work";
+import ScoreboardIcon from "@mui/icons-material/Scoreboard";
+import CastForEducationIcon from "@mui/icons-material/CastForEducation";
 
 const drawerWidth = 280;
 
@@ -418,6 +419,20 @@ export default function StudentDash(props) {
               </Tooltip>
             </NavLink>
 
+            <NavLink to="/student-workshop-list" className="nav-link">
+              <Tooltip title="Workshop Facilitation" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <CastForEducationIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Workshop"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
             <NavLink to="/student-exam-list" className="nav-link">
               <Tooltip title="Aptitude Exam" arrow placement="right">
                 <ListItemButton>
@@ -469,6 +484,20 @@ export default function StudentDash(props) {
               />
             </ListItemButton> */}
 
+            <NavLink to="/student-chat-room" className="nav-link">
+              <Tooltip title="Chatroom" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ForumIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Chatroom"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+            
             <NavLink to="/job-post" className="nav-link">
               <Tooltip title="Jobs" arrow placement="right">
                 <ListItemButton>
@@ -487,7 +516,7 @@ export default function StudentDash(props) {
               <Tooltip title="Feedback" arrow placement="right">
                 <ListItemButton>
                   <ListItemIcon>
-                  <FeedbackIcon />
+                    <FeedbackIcon />
                   </ListItemIcon>
                   <ListItemText
                     primary="Feedback"

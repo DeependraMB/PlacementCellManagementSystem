@@ -37,6 +37,7 @@ import { deepPurple } from "@mui/material/colors";
 import { Grid, Tooltip } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import FeedbackIcon from "@mui/icons-material/Feedback";
+import ForumIcon from "@mui/icons-material/Forum";
 
 
 const drawerWidth = 280;
@@ -241,7 +242,7 @@ export default function TeacherDash(props) {
               <Tooltip title="Feedback" arrow placement="right">
                 <ListItemButton>
                   <ListItemIcon>
-                  <FeedbackIcon />
+                    <FeedbackIcon />
                   </ListItemIcon>
                   <ListItemText
                     primary="Feedback"
@@ -268,6 +269,20 @@ export default function TeacherDash(props) {
                 <ListItemText primary="Workshop Facilitation" />
               </ListItemButton>
             </NavLink> */}
+
+            <NavLink to="/teacher-chat-room" className="nav-link">
+              <Tooltip title="Chatroom" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ForumIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Chatroom"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
 
             <NavLink
               to="/notes-share"

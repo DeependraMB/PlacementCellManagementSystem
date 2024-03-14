@@ -64,7 +64,7 @@ const chartsRoute = require("./Routes/chartsRoute");
 const examRoute = require("./Routes/examRoute");
 const resumeRoute = require("./Routes/resumeRoute");
 const feedbackRoute = require("./Routes/feedbackRoute");
-
+const workshopRoute = require("./Routes/workshopRoute");
 const otpStore = {};
 
 
@@ -110,6 +110,8 @@ app.use("/placed-students", chartsRoute);
 app.use("/exams", examRoute);
 
 app.use("/feedback",feedbackRoute);
+
+app.use("/workshop", workshopRoute)
 
 //AlumniRoutes
 

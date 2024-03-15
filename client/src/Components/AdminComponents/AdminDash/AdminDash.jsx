@@ -43,6 +43,8 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import WorkIcon from "@mui/icons-material/Work";
+import CastForEducationIcon from "@mui/icons-material/CastForEducation";
+
 
 const drawerWidth = 270;
 
@@ -380,15 +382,19 @@ export default function AdminDash(props) {
               </Tooltip>
             </NavLink>
 
-            <ListItemButton>
-              <ListItemIcon>
-                <HelpIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Reports"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton>
+            <NavLink to="/feedbacks" className="nav-link">
+              <Tooltip title="Feedbacks Analysis" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <HelpIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Feedback"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
 
             <NavLink to="/admin-chat-room" className="nav-link">
               <Tooltip title="Chatroom" arrow placement="right">
@@ -398,6 +404,20 @@ export default function AdminDash(props) {
                   </ListItemIcon>
                   <ListItemText
                     primary="Chatroom"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
+            <NavLink to="/workshop-list" className="nav-link">
+              <Tooltip title="Workshop" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <CastForEducationIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Workshop"
                     sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
                   />
                 </ListItemButton>

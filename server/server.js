@@ -131,6 +131,7 @@ app.use("/resume-ats-checker", resumeRoute);
 
 
 
+
 app.get('/api/messages', async (req, res) => {
   try {
     // Fetch all messages from MongoDB
@@ -138,6 +139,16 @@ app.get('/api/messages', async (req, res) => {
     res.json(messages);
   } catch (error) {
     console.error('Error fetching messages from the database:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = await User.find().sort({ timestamp: 1 });
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching users from the database:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
@@ -196,6 +207,7 @@ app.get("/get-pdfs", async (req, res) => {
 
 app.get("/notes/download/:id", async (req, res) => {
   try {
+    console.log(req.params.id);
     const document = await Document.findById(req.params.id);
     console.log(document);
     if (!document) {
@@ -203,7 +215,7 @@ app.get("/notes/download/:id", async (req, res) => {
     }
     
     // Assuming 'filepath' is a relative path to the 'uploads' directory
-    const fullPath = `uploads/${document.filepath}`;
+    const fullPath = `${document.filepath}`;
     
     res.download(fullPath, document.title);
   } catch (error) {

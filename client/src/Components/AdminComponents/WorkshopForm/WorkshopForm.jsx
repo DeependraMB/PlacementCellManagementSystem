@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Grid, Button, Typography, Box, Paper } from "@mui/material";
+import {useNavigate} from 'react-router-dom'
 
 const blueBorder = {
   borderBottom: "2px solid #2196F3",
@@ -25,6 +26,7 @@ const WorkshopForm = () => {
   const [descriptionError, setDescriptionError] = useState("");
   const [virtualPlatformLinkError, setVirtualPlatformLinkError] = useState("");
   const [posterError, setPosterError] = useState("");
+  const navigate = useNavigate();
 
   const validateForm = () => {
     let isValid = true;
@@ -120,6 +122,7 @@ const WorkshopForm = () => {
 
         if (response.ok) {
           console.log("Workshop details added successfully!", data);
+          navigate('/workshop-list');
         } else {
           console.error("Error adding workshop details:", data.message);
         }

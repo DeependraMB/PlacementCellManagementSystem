@@ -2,6 +2,17 @@
 
 const mongoose = require("mongoose");
 
+const participantSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  }
+});
+
 const workshopSchema = new mongoose.Schema(
   {
     type: {
@@ -44,6 +55,7 @@ const workshopSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    participants: [participantSchema]
   },
   {
     collection: "workshopCollection",

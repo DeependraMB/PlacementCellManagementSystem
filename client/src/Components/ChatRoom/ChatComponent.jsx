@@ -40,18 +40,29 @@ function ChatComponent() {
       socket.off("userUpdate");
       socket.off("message");
     };
-  }, [message]);
+  }, []);
 
   const fetchInitialMessages = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/messages"); // Replace with your actual API endpoint
       const initialMessages = await response.json();
+      
       setMessages(initialMessages);
     } catch (error) {
       console.error(
         "Error fetching initial messages from the database:",
         error
       );
+    }
+  };
+
+  const fetchInitialUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/users");
+      const initialUsers = await response.json();
+      setUsers(initialUsers.name);
+    } catch (error) {
+      console.error("Error fetching initial users:", error);
     }
   };
 

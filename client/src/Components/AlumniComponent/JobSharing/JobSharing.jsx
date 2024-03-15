@@ -270,6 +270,7 @@ const JobSharingForm = () => {
               label="Job Title"
               variant="outlined"
               margin="normal"
+              name="jobTitle"
               required
               InputProps={{ style: blueBorder }}
               value={jobTitle}
@@ -288,6 +289,7 @@ const JobSharingForm = () => {
               type="date"
               variant="outlined"
               margin="normal"
+              name="jobDeadline"
               required
               InputProps={{ style: blueBorder }}
               value={jobDeadline}
@@ -307,6 +309,7 @@ const JobSharingForm = () => {
               label="Job Description"
               variant="outlined"
               margin="normal"
+              name="jobDescription"
               required
               InputProps={{ style: blueBorder }}
               value={jobDescription}
@@ -324,6 +327,7 @@ const JobSharingForm = () => {
               label="Required Skills"
               variant="outlined"
               margin="normal"
+              name="requiredSkills"
               required
               InputProps={{ style: blueBorder }}
               value={reqSkills}
@@ -341,6 +345,7 @@ const JobSharingForm = () => {
               label="Contact Email or Application Link"
               variant="outlined"
               margin="normal"
+              name="applicationLinkOrEmail"
               required
               InputProps={{ style: blueBorder }}
               value={jobApply}
@@ -358,6 +363,7 @@ const JobSharingForm = () => {
               label="Salary Range"
               variant="outlined"
               margin="normal"
+              name="salaryRange"
               InputProps={{ style: blueBorder }}
               value={salary}
               onChange={(e) => {
@@ -385,6 +391,7 @@ const JobSharingForm = () => {
                 label="Type of Employment"
                 labelId="employment-type-label"
                 id="employment-type"
+                name="jobType"
                 InputProps={{ style: blueBorder }}
                 value={jobType}
                 onChange={(e) => {
@@ -405,6 +412,7 @@ const JobSharingForm = () => {
               label="Company Website"
               variant="outlined"
               margin="normal"
+              name="companyWebsite"
               InputProps={{ style: blueBorder }}
               value={companyWeb}
               onChange={(e) => {
@@ -421,6 +429,7 @@ const JobSharingForm = () => {
           variant="contained"
           color="primary"
           type="submit"
+          name="submitButton"
           style={{ marginTop: "20px", marginBottom: "20px" }}
         >
           Submit

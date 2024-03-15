@@ -15,7 +15,6 @@ exports.addWorkshop = async (req, res) => {
       virtual_platform_link, 
     } = req.body;
 
-    // Get the file path of the uploaded image
     const poster = req.file ? req.file.path : "";
 
     const newWorkshop = new Workshop({
@@ -55,16 +54,34 @@ exports.getWorkshop= async (req, res) => {
 
 exports.getPoster = async (req, res) => {
   try {
-    // Extract the filename from the route parameters
     const { filename } = req.params;
 
-    // Construct the file path
     const filePath = path.join(__dirname, "../uploads", filename);
 
-    // Send the file to the client
     res.sendFile(filePath);
   } catch (error) {
     console.error("Error in getPoster controller:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.addParticipant = async (req, res) => {
+  try {
+    const { workshopId, name, email } = req.body;
+
+    const workshop = await Workshop.findById(workshopId);
+
+    if (!workshop) {
+      return res.status(404).json({ error: 'Workshop not found' });
+    }
+
+    workshop.participants.push({ name, email });
+
+    const updatedWorkshop = await workshop.save();
+
+    res.status(200).json({ message: 'Participant added successfully', workshop: updatedWorkshop });
+  } catch (error) {
+    console.error('Error adding participant:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };

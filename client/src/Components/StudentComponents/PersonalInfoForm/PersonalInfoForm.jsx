@@ -12,7 +12,7 @@ import {
 import { useAuth } from "../../../Context/AuthContext";
 import { useEffect } from "react";
 import axios from "axios";
-import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 
 const blueBorder = {
   borderBottom: "2px solid #2196F3", // Replace with your preferred blue color
@@ -70,11 +70,9 @@ function PersonalInfoForm({ onNext }) {
       isValid = false;
     } else {
       setFirstnameError("");
-      
     }
-console.log(isValid);
+    console.log(isValid);
     return isValid;
-
   };
 
   const validateLastname = (value) => {
@@ -86,13 +84,12 @@ console.log(isValid);
 
     if (!value) {
       setLastnameError("Last name is required");
-    isValid = false;
+      isValid = false;
     } else if (!namePattern.test(value)) {
       setLastnameError("Last name should only contain letters and spaces");
       isValid = false;
     } else {
       setLastnameError("");
-      
     }
     console.log(isValid);
     return isValid; // Return the boolean indicating whether the value is valid
@@ -112,10 +109,10 @@ console.log(isValid);
       setUniregnoError(
         "Uni. Reg. Number should only contain letters and numbers"
       );
-     isValid = false;
+      isValid = false;
     } else if (value.length !== 8) {
       setUniregnoError("Uni. Reg. Number should be 8 characters long");
-     isValid = false;
+      isValid = false;
     } else {
       setUniregnoError("");
       // Set isValid to true if the validation passes
@@ -167,13 +164,12 @@ console.log(isValid);
     } else {
       setDobError("");
     }
-   
+
     return isValid;
   };
   const validatePersonalEmail = (value) => {
     let isValid = true;
 
-   
     const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
     if (!value) {
@@ -186,7 +182,7 @@ console.log(isValid);
       isValid = false;
     } else {
       setPersonalemailError("");
-       // Set isValid to true if the validation passes
+      // Set isValid to true if the validation passes
     }
 
     return isValid; // Return the boolean indicating whether the value is valid
@@ -207,7 +203,7 @@ console.log(isValid);
       isValid = false;
     } else {
       setEmailError("");
-       // Set isValid to true if the validation passes
+      // Set isValid to true if the validation passes
     }
 
     return isValid; // Return the boolean indicating whether the value is valid
@@ -215,7 +211,7 @@ console.log(isValid);
 
   const validateFatherName = (value) => {
     let isValid = true;
-  
+
     const namePattern = /^[A-Za-z ]+$/;
 
     if (!value) {
@@ -228,7 +224,6 @@ console.log(isValid);
       isValid = false;
     } else {
       setFathernameError("");
-      
     }
 
     return isValid;
@@ -249,7 +244,7 @@ console.log(isValid);
       isValid = false;
     } else {
       setMothernameError("");
-       // Set isValid to true if the validation passes
+      // Set isValid to true if the validation passes
     }
 
     return isValid; // Return the boolean indicating whether the value is valid
@@ -270,7 +265,7 @@ console.log(isValid);
       isValid = false;
     } else {
       setHousenameError("");
-     // Set isValid to true if the validation passes
+      // Set isValid to true if the validation passes
     }
 
     return isValid; // Return the boolean indicating whether the value is valid
@@ -289,7 +284,7 @@ console.log(isValid);
       isValid = false;
     } else {
       setPostofficeError("");
-       // Set isValid to true if the validation passes
+      // Set isValid to true if the validation passes
     }
 
     return isValid; // Return the boolean indicating whether the value is valid
@@ -327,7 +322,7 @@ console.log(isValid);
       isValid = false;
     } else {
       setStateError("");
-     // Set isValid to true if the validation passes
+      // Set isValid to true if the validation passes
     }
 
     return isValid; // Return the boolean indicating whether the value is valid
@@ -346,7 +341,7 @@ console.log(isValid);
       isValid = false;
     } else {
       setPincodeError("");
-       // Set isValid to true if the validation passes
+      // Set isValid to true if the validation passes
     }
 
     return isValid; // Return the boolean indicating whether the value is valid
@@ -365,72 +360,71 @@ console.log(isValid);
       isValid = false;
     } else {
       setNationalityError("");
-       // Set isValid to true if the validation passes
+      // Set isValid to true if the validation passes
     }
 
     return isValid; // Return the boolean indicating whether the value is valid
   };
 
- const validateForm = () => {
-  // Validate individual form fields
-  const isFirstNameValid = validateFirstname(firstname);
-  const isLastNameValid = validateLastname(lastname);
-  const isUniregnoValid = validateUniregno(uniregno);
-  const isGenderValid = validateGender(gender);
-  const isPhoneNumberValid = validatePhoneNumber(mobno);
-  const isDobValid = validateDob(dob);
-  const isPersonalEmailValid = validatePersonalEmail(personalemail);
-  const isCollegeEmailValid = validateCollegeEmail(email);
-  const isFatherNameValid = validateFatherName(fathername);
-  const isMotherNameValid = validateMotherName(mothername);
-  const isHouseNameValid = validateHouseName(housename);
-  const isPostOfficeValid = validatePostOffice(postoffice);
-  const isCityValid = validateCity(city);
-  const isStateValid = validateState(state);
-  const isPincodeValid = validatePincode(pincode);
-  const isNationalityValid = validateNationality(nationality);
+  const validateForm = () => {
+    // Validate individual form fields
+    const isFirstNameValid = validateFirstname(firstname);
+    const isLastNameValid = validateLastname(lastname);
+    const isUniregnoValid = validateUniregno(uniregno);
+    const isGenderValid = validateGender(gender);
+    const isPhoneNumberValid = validatePhoneNumber(mobno);
+    const isDobValid = validateDob(dob);
+    const isPersonalEmailValid = validatePersonalEmail(personalemail);
+    const isCollegeEmailValid = validateCollegeEmail(email);
+    const isFatherNameValid = validateFatherName(fathername);
+    const isMotherNameValid = validateMotherName(mothername);
+    const isHouseNameValid = validateHouseName(housename);
+    const isPostOfficeValid = validatePostOffice(postoffice);
+    const isCityValid = validateCity(city);
+    const isStateValid = validateState(state);
+    const isPincodeValid = validatePincode(pincode);
+    const isNationalityValid = validateNationality(nationality);
 
-  // Set the form validity based on all validations
-  setIsFormValid(
-    isFirstNameValid &&
-    isLastNameValid &&
-    isUniregnoValid &&
-    isGenderValid &&
-    isPhoneNumberValid &&
-    isDobValid &&
-    isPersonalEmailValid &&
-    isCollegeEmailValid &&
-    isFatherNameValid &&
-    isMotherNameValid &&
-    isHouseNameValid &&
-    isPostOfficeValid &&
-    isCityValid &&
-    isStateValid &&
-    isPincodeValid &&
-    isNationalityValid
-  );
+    // Set the form validity based on all validations
+    setIsFormValid(
+      isFirstNameValid &&
+        isLastNameValid &&
+        isUniregnoValid &&
+        isGenderValid &&
+        isPhoneNumberValid &&
+        isDobValid &&
+        isPersonalEmailValid &&
+        isCollegeEmailValid &&
+        isFatherNameValid &&
+        isMotherNameValid &&
+        isHouseNameValid &&
+        isPostOfficeValid &&
+        isCityValid &&
+        isStateValid &&
+        isPincodeValid &&
+        isNationalityValid
+    );
 
-  // Return the overall form validity
-  return (
-    isFirstNameValid &&
-    isLastNameValid &&
-    isUniregnoValid &&
-    isGenderValid &&
-    isPhoneNumberValid &&
-    isDobValid &&
-    isPersonalEmailValid &&
-    isCollegeEmailValid &&
-    isFatherNameValid &&
-    isMotherNameValid &&
-    isHouseNameValid &&
-    isPostOfficeValid &&
-    isCityValid &&
-    isStateValid &&
-    isPincodeValid &&
-    isNationalityValid
-  );
-};
-
+    // Return the overall form validity
+    return (
+      isFirstNameValid &&
+      isLastNameValid &&
+      isUniregnoValid &&
+      isGenderValid &&
+      isPhoneNumberValid &&
+      isDobValid &&
+      isPersonalEmailValid &&
+      isCollegeEmailValid &&
+      isFatherNameValid &&
+      isMotherNameValid &&
+      isHouseNameValid &&
+      isPostOfficeValid &&
+      isCityValid &&
+      isStateValid &&
+      isPincodeValid &&
+      isNationalityValid
+    );
+  };
 
   console.log(studentData);
   useEffect(() => {
@@ -475,14 +469,12 @@ console.log(isValid);
     uniregno: uniregno,
   };
 
-  
-
   async function onSubmit(event) {
     event.preventDefault();
 
     const isValid = validateForm();
 
-    console.log("Mundalilll",isValid);
+    console.log("Mundalilll", isValid);
 
     if (isValid) {
       try {

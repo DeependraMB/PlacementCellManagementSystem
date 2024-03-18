@@ -27,19 +27,7 @@ const io = new Server(server, {
 
 
 initializeSocket(server);
-// io.on("connection", (socket) => {
-//   console.log("A user connected");
 
-//   socket.on('disconnect', () => {
-//       console.log('A user disconnected');
-//   });
-
-//   socket.on('sendMessage', (data) => {
-//       console.log('Received message from client:', data);
-//       // Broadcast the message to all connected clients
-//       io.emit('message', data);
-//   });
-// });
 
 const loginRoutes = require("../server/Routes/loginRoutes");
 const studentRoutes = require("./Routes/studentRoutes");

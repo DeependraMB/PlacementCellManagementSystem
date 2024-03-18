@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Grid, Button, Typography, Box, Paper } from "@mui/material";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 const blueBorder = {
   borderBottom: "2px solid #2196F3",
@@ -15,7 +15,7 @@ const WorkshopForm = () => {
   const [facilitator, setFacilitator] = useState("");
   const [description, setDescription] = useState("");
   const [virtualPlatformLink, setVirtualPlatformLink] = useState("");
-  const [poster, setPoster] = useState(null); // Updated to accept image file
+  const [poster, setPoster] = useState(null);
 
   const [workshopTitleError, setWorkshopTitleError] = useState("");
   const [dateError, setDateError] = useState("");
@@ -28,79 +28,145 @@ const WorkshopForm = () => {
   const [posterError, setPosterError] = useState("");
   const navigate = useNavigate();
 
-  const validateForm = () => {
-    let isValid = true;
-
-    if (!workshopTitle.trim()) {
+  const validateWorkshopTitle = (value) => {
+    if (!value) {
       setWorkshopTitleError("Workshop Title is required");
-      isValid = false;
+      return false;
     } else {
       setWorkshopTitleError("");
+      return true;
     }
+  };
 
-    if (!date) {
+  const validateDate = (value) => {
+    if (!value) {
       setDateError("Date is required");
-      isValid = false;
+      return false;
     } else {
       setDateError("");
+      return true;
     }
+  };
 
-    if (!time) {
+  const validateTime = (value) => {
+    if (!value) {
       setTimeError("Time is required");
-      isValid = false;
+      return false;
     } else {
       setTimeError("");
+      return true;
     }
+  };
 
-    if (!duration) {
+  const validateDuration = (value) => {
+    if (!value) {
       setDurationError("Duration is required");
-      isValid = false;
+      return false;
     } else {
       setDurationError("");
+      return true;
     }
+  };
 
-    if (!type) {
+  const validateType = (value) => {
+    if (!value) {
       setTypeError("Type is required");
-      isValid = false;
+      return false;
     } else {
       setTypeError("");
+      return true;
     }
+  };
 
-    if (!facilitator.trim()) {
+  const handleTypeChange = (e) => {
+    const value = e.target.value;
+    setType(value);
+    validateType(value);
+  };
+
+  const handleWorkshopTitleChange = (e) => {
+    const value = e.target.value;
+    setWorkshopTitle(value);
+    validateWorkshopTitle(value);
+  };
+
+  const handleDateChange = (e) => {
+    const value = e.target.value;
+    setDate(value);
+    validateDate(value);
+  };
+
+  const handleTimeChange = (e) => {
+    const value = e.target.value;
+    setTime(value);
+    validateTime(value);
+  };
+
+  const handleDurationChange = (e) => {
+    const value = e.target.value;
+    setDuration(value);
+    validateDuration(value);
+  };
+
+  const validateFacilitator = (value) => {
+    if (!value) {
       setFacilitatorError("Facilitator is required");
-      isValid = false;
+      return false;
     } else {
       setFacilitatorError("");
+      return true;
     }
-
-    if (!description.trim()) {
+  };
+  
+  const validateDescription = (value) => {
+    if (!value) {
       setDescriptionError("Description is required");
-      isValid = false;
+      return false;
     } else {
       setDescriptionError("");
+      return true;
     }
-
-    if (!virtualPlatformLink.trim()) {
+  };
+  
+  const validateVirtualPlatformLink = (value) => {
+    if (!value) {
       setVirtualPlatformLinkError("Virtual Platform Link is required");
-      isValid = false;
+      return false;
     } else {
       setVirtualPlatformLinkError("");
+      return true;
     }
-
-    if (!poster) {
-      setPosterError("Poster is required");
-      isValid = false;
-    } else {
-      setPosterError("");
-    }
-
-    return isValid;
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (validateForm()) {
+  
+    // Validate all fields before submission
+    const isWorkshopTitleValid = validateWorkshopTitle(workshopTitle);
+    const isDateValid = validateDate(date);
+    const isTimeValid = validateTime(time);
+    const isDurationValid = validateDuration(duration);
+    const isTypeValid = validateType(type);
+    const isFacilitatorValid = validateFacilitator(facilitator);
+    const isDescriptionValid = validateDescription(description);
+    const isVirtualPlatformLinkValid = validateVirtualPlatformLink(
+      virtualPlatformLink
+    );
+    // Add validation for poster if needed
+  
+    // Proceed with form submission if all fields are valid
+    if (
+      isWorkshopTitleValid &&
+      isDateValid &&
+      isTimeValid &&
+      isDurationValid &&
+      isTypeValid &&
+      isFacilitatorValid &&
+      isDescriptionValid &&
+      isVirtualPlatformLinkValid
+      // Add condition for poster if needed
+    ) {
       try {
         const formData = new FormData();
         formData.append("workshop_title", workshopTitle);
@@ -112,17 +178,20 @@ const WorkshopForm = () => {
         formData.append("description", description);
         formData.append("virtual_platform_link", virtualPlatformLink);
         formData.append("poster", poster);
-
-        const response = await fetch("http://localhost:5000/workshop/add-workshop", {
-          method: "POST",
-          body: formData,
-        });
-
+  
+        const response = await fetch(
+          "http://localhost:5000/workshop/add-workshop",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+  
         const data = await response.json();
-
+  
         if (response.ok) {
           console.log("Workshop details added successfully!", data);
-          navigate('/workshop-list');
+          navigate("/workshop-list");
         } else {
           console.error("Error adding workshop details:", data.message);
         }
@@ -131,19 +200,20 @@ const WorkshopForm = () => {
       }
     }
   };
+  
 
   return (
     <div
-      style={{ backgroundImage: "url('/bg6.jpg')", backgroundSize: "cover", padding: "80px 80px" }}
+      style={{
+        backgroundImage: "url('/bg6.jpg')",
+        backgroundSize: "cover",
+        padding: "80px 80px",
+      }}
     >
       <Box
         component={Paper}
         elevation={3}
-        sx={{
-          padding: "20px",
-          maxWidth: "600px",
-          margin: "",
-        }}
+        sx={{ padding: "20px", maxWidth: "600px", margin: "" }}
       >
         <Typography variant="h5" gutterBottom style={{ fontFamily: "nunito" }}>
           Add Workshop
@@ -160,6 +230,8 @@ const WorkshopForm = () => {
                 InputProps={{ style: blueBorder }}
                 error={!!workshopTitleError}
                 helperText={workshopTitleError}
+                onBlur={(e) => validateWorkshopTitle(e.target.value)}
+
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -173,6 +245,8 @@ const WorkshopForm = () => {
                 InputProps={{ style: blueBorder }}
                 error={!!dateError}
                 helperText={dateError}
+                onBlur={(e) => validateDate(e.target.value)}
+
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -182,10 +256,11 @@ const WorkshopForm = () => {
                 type="time"
                 fullWidth
                 value={time}
-                onChange={(e) => setTime(e.target.value)}
+                onChange={handleTimeChange}
                 InputProps={{ style: blueBorder }}
                 error={!!timeError}
                 helperText={timeError}
+                onBlur={(e) => validateTime(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -194,10 +269,12 @@ const WorkshopForm = () => {
                 label="Duration"
                 fullWidth
                 value={duration}
-                onChange={(e) => setDuration(e.target.value)}
+                onChange={handleDurationChange}
                 InputProps={{ style: blueBorder }}
                 error={!!durationError}
                 helperText={durationError}
+                onBlur={(e) => validateDuration(e.target.value)}
+
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -206,10 +283,11 @@ const WorkshopForm = () => {
                 label="Type"
                 fullWidth
                 value={type}
-                onChange={(e) => setType(e.target.value)}
+                onChange={handleTypeChange}
                 InputProps={{ style: blueBorder }}
                 error={!!typeError}
                 helperText={typeError}
+                onBlur={(e) => validateType(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -222,6 +300,7 @@ const WorkshopForm = () => {
                 InputProps={{ style: blueBorder }}
                 error={!!facilitatorError}
                 helperText={facilitatorError}
+                onBlur={(e) => validateFacilitator(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -236,6 +315,7 @@ const WorkshopForm = () => {
                 InputProps={{ style: blueBorder }}
                 error={!!descriptionError}
                 helperText={descriptionError}
+                onBlur={(e) => validateDescription(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -248,6 +328,7 @@ const WorkshopForm = () => {
                 InputProps={{ style: blueBorder }}
                 error={!!virtualPlatformLinkError}
                 helperText={virtualPlatformLinkError}
+                onBlur={(e) => validateVirtualPlatformLink(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>

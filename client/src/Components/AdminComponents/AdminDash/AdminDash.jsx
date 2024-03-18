@@ -231,7 +231,7 @@ export default function AdminDash(props) {
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
             </ListItemButton> */}
-            <NavLink
+            {/* <NavLink
               to="/notifications"
               className="nav-link"
               name="nav-link-notifications"
@@ -247,7 +247,7 @@ export default function AdminDash(props) {
                   />
                 </ListItemButton>
               </Tooltip>
-            </NavLink>
+            </NavLink> */}
 
             <NavLink
               to="/student-management"
@@ -424,7 +424,7 @@ export default function AdminDash(props) {
               </Tooltip>
             </NavLink>
 
-            <ListItemButton>
+            {/* <ListItemButton>
               <ListItemIcon>
                 <ContactSupportIcon />
               </ListItemIcon>
@@ -432,7 +432,8 @@ export default function AdminDash(props) {
                 primary="Aptitudetest Manage"
                 sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
               />
-            </ListItemButton>
+            </ListItemButton> */}
+
             <ListItemButton>
               <ListItemIcon>
                 <ExitToAppIcon />

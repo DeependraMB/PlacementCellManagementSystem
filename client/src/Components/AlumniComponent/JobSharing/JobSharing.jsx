@@ -201,16 +201,16 @@ const JobSharingForm = () => {
   };
 
   const validateJobType = (value) => {
-    let isValid = true;
+    // let isValid = true;
 
-    if (!value) {
-      setJobTypeError("Type of Employment is required");
-      isValid = false;
-    } else {
-      setJobTypeError("");
-    }
+    // if (!value) {
+    //   setJobTypeError("Type of Employment is required");
+    //   isValid = false;
+    // } else {
+    //   setJobTypeError("");
+    // }
 
-    return isValid;
+    // return isValid;
   };
 
   const validateCompanyWeb = (value) => {

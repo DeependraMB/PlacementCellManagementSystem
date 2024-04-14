@@ -308,7 +308,7 @@ const WorkshopForm = () => {
                 name="description"
                 label="Description"
                 fullWidth
-                multiline
+                
                 rows={4}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}

@@ -53,6 +53,7 @@ const examRoute = require("./Routes/examRoute");
 const resumeRoute = require("./Routes/resumeRoute");
 const feedbackRoute = require("./Routes/feedbackRoute");
 const workshopRoute = require("./Routes/workshopRoute");
+const machineLearningRoute = require("./Routes/machineLearningRoute");
 const otpStore = {};
 
 
@@ -99,7 +100,9 @@ app.use("/exams", examRoute);
 
 app.use("/feedback",feedbackRoute);
 
-app.use("/workshop", workshopRoute)
+app.use("/workshop", workshopRoute);
+
+// app.use("/machine-learning", machineLearningRoute);
 
 //AlumniRoutes
 

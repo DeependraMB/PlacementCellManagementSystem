@@ -50,6 +50,7 @@ import QuizIcon from "@mui/icons-material/Quiz";
 import WorkIcon from "@mui/icons-material/Work";
 import ScoreboardIcon from "@mui/icons-material/Scoreboard";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 
 const drawerWidth = 280;
 
@@ -506,6 +507,20 @@ export default function StudentDash(props) {
                   </ListItemIcon>
                   <ListItemText
                     primary="Jobs"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
+            <NavLink to="/student-placement-prediction" className="nav-link">
+              <Tooltip title="Prediction" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <PublishedWithChangesIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Prediction"
                     sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
                   />
                 </ListItemButton>

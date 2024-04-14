@@ -410,7 +410,7 @@ export default function AdminDash(props) {
               </Tooltip>
             </NavLink>
 
-            <NavLink to="/workshop-list" className="nav-link">
+            <NavLink to="/workshop-list" className="nav-link" name="nav-link-workshop">
               <Tooltip title="Workshop" arrow placement="right">
                 <ListItemButton>
                   <ListItemIcon>

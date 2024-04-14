@@ -56,6 +56,7 @@ import StudentChatPage from "./Pages/StudentPages/StudentChatPage";
 import WorkshopFormPage from "./Pages/AdminPages/WorkshopFormPage";
 import WorkshopListPage from "./Pages/AdminPages/WorkshopListPage";
 import WorkshopListPageS from "./Pages/StudentPages/WorkshopListPageS";
+import PredictPage from "./Pages/StudentPages/PredictPage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -259,6 +260,13 @@ function App() {
             path="/student-workshop-list"
             element={
               auth.token ? <WorkshopListPageS /> : <Navigate to="/signin" />
+            }
+          />
+
+          <Route
+            path="/student-placement-prediction"
+            element={
+              auth.token ? <PredictPage /> : <Navigate to="/signin" />
             }
           />
 

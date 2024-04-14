@@ -40,6 +40,7 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-slick": "^0.29.0",
     "sentiment": "^5.0.2",
+    "sklearn": "^0.4.0",
     "slick-carousel": "^1.8.1",
     "socket.io": "^4.7.4",
     "vader-sentiment": "^1.1.3"

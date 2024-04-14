@@ -71,6 +71,7 @@ const WorkshopList = () => {
         variant="contained"
         color="primary"
         component={Link}
+        name="add-workshop-button"
         to="/workshop-form"
         style={{ marginTop: "20px", marginLeft: "auto", marginRight: "14px" }}
       >

@@ -57,6 +57,8 @@ import WorkshopFormPage from "./Pages/AdminPages/WorkshopFormPage";
 import WorkshopListPage from "./Pages/AdminPages/WorkshopListPage";
 import WorkshopListPageS from "./Pages/StudentPages/WorkshopListPageS";
 import PredictPage from "./Pages/StudentPages/PredictPage";
+import AlumniChangePassword from "./Pages/AlumniPages/AlumniChangePassword";
+import AdminNotificationPage from "./Pages/AdminPages/AdminNotificationPage";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -265,9 +267,7 @@ function App() {
 
           <Route
             path="/student-placement-prediction"
-            element={
-              auth.token ? <PredictPage /> : <Navigate to="/signin" />
-            }
+            element={auth.token ? <PredictPage /> : <Navigate to="/signin" />}
           />
 
           {/* ALUMNI ROUTES */}
@@ -303,6 +303,13 @@ function App() {
             path="/alumni-chat-room"
             element={
               auth.token ? <AlumniChatPage /> : <Navigate to="/signin" />
+            }
+          />
+
+          <Route
+            path="/alumni-change-password"
+            element={
+              auth.token ? <AlumniChangePassword /> : <Navigate to="/signin" />
             }
           />
 
@@ -354,6 +361,14 @@ function App() {
               auth.token ? <WorkshopListPage /> : <Navigate to="/signin" />
             }
           />
+
+          <Route
+            path="/admin-notifications"
+            element={
+              auth.token ? <AdminNotificationPage /> : <Navigate to="/signin" />
+            }
+          />
+
         </Routes>
       </Router>
     </div>

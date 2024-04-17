@@ -42,6 +42,9 @@ function ChatComponent() {
     };
   }, []);
 
+
+  
+
   const fetchInitialMessages = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/messages"); // Replace with your actual API endpoint

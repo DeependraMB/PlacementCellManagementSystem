@@ -562,7 +562,7 @@ export default function StudentManagement({onChange}) {
     });
   });
 
-  console.log(filteredData);
+  // console.log(filteredData);
 
   // useEffect(() => {
   //   const filteredEmails = filteredData.map((userObj) => userObj.email);
@@ -578,9 +578,6 @@ export default function StudentManagement({onChange}) {
   const emailsJSON = JSON.stringify(emailsData);
 
   const handleSendNotification = () => {
-    console.log("Subject:", subject);
-    console.log("Message:", message);
-    console.log("Selected Emails:", selectedEmails);
 
     const notificationData = {
       subject,
@@ -640,7 +637,6 @@ export default function StudentManagement({onChange}) {
     console.log("Updated Selected Emails in State:", selectedEmails);
   };
 
-  console.log(selectedEmails);
 
   return (
     <div className="my-5 mx-5">

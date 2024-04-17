@@ -151,4 +151,13 @@ router.post('/send-notification', async (req, res) => {
   }
 });
 
+router.get('/get-all-notifications', async(req, res) => {
+  try {
+    data = await Notification.find();
+    res.status(200).json({data});
+  } catch (error) {
+      console.log("Error in the /get-all-notifications", error)
+  }
+})
+
 module.exports = router;

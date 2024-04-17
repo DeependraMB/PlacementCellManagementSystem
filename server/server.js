@@ -90,7 +90,7 @@ app.use("/get-skills-details/:email",getDetailsRoute)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/get-profile-photo/:filename", getDetailsRoute);
 
-app.use("/send-notification", sendNotificationRoute, AuthMiddleware);
+app.use("/send-notification", sendNotificationRoute);
 
 app.use("/teacher-change-password/:email",changePasswordRoute);
 

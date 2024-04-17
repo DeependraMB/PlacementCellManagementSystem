@@ -1,56 +1,38 @@
 import React, { useState, useEffect } from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 import axios from "axios";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 const columns = [
-  { id: "serialNumber", label: "Serial No", minWidth: 20 },
-  { id: "firstname", label: "First Name", minWidth: 100 },
-  { id: "lastname", label: "Last Name", minWidth: 100 },
-  { id: "department", label: "Department", minWidth: 100 },
-  { id: "gender", label: "Gender", minWidth: 50 },
-  { id: "email", label: "Email", minWidth: 150 },
-  { id: "mobno", label: "Mobile No", minWidth: 100 },
+  { field: "serialNumber", headerName: "Serial No", width: 80 },
+  { field: "firstname", headerName: "First Name", width: 100 },
+  { field: "lastname", headerName: "Last Name", width: 100 },
+  { field: "department", headerName: "Department", width: 200 },
+  { field: "gender", headerName: "Gender", width: 100 },
+  { field: "email", headerName: "Email", width: 200 },
+  { field: "mobno", headerName: "Mobile No", width: 150 },
 ];
 
 export default function TeacherManagement() {
   const [teachers, setTeachers] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
-
-  const fetchDepartmentName = async (departmentId) => {
-    try {
-      const response = await axios.get(`http://localhost:5000/get-department-name/${departmentId}`);
-      return response.data.departmentName;
-    } catch (error) {
-      console.error(`Error fetching department name for ID ${departmentId}:`, error);
-      return "";
-    }
-  };
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:5000/get-teachers/get-teachers");
-        const teacherData = response.data.map((teacher, index) => ({
-          ...teacher,
-          serialNumber: index + 1,
-        }));
-
-        const teachersWithDepartmentNames = await Promise.all(
-          teacherData.map(async (teacher) => {
-            const departmentName = await fetchDepartmentName(teacher.departmentId);
-            return { ...teacher, department: departmentName };
-          })
-        );
-
-        setTeachers(teachersWithDepartmentNames);
+        const teacherData = response.data.map(async (teacher, index) => {
+          const departmentName = await fetchDepartmentName(teacher.departmentId);
+          console.log(departmentName)
+          return {
+            ...teacher,
+            serialNumber: index + 1,
+            department: departmentName,
+            id: index + 1,
+          };
+        });
+        const resolvedTeacherData = await Promise.all(teacherData);
+        setTeachers(resolvedTeacherData);
       } catch (error) {
         console.error("Error fetching teachers:", error);
       }
@@ -59,72 +41,41 @@ export default function TeacherManagement() {
     fetchData();
   }, []);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const fetchDepartmentName = async (departmentId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/get-department-name/get-department-name/get-department-name/${departmentId}`);
+      return response.data.departmentName;
+    } catch (error) {
+      console.error(`Error fetching department name for ID ${departmentId}:`, error);
+      return "";
+    }
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+  const handleChangePage = (params) => {
+    setPage(params.page);
+  };
+
+  const handleChangePageSize = (params) => {
+    setPageSize(params.pageSize);
   };
 
   return (
-    <div className="my-5 mx-5">
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 720 }}>
-          <Table stickyHeader aria-label="sticky table" sx={{ borderRadius: "8px" }}>
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    style={{
-                      minWidth: column.minWidth,
-                      position: "sticky",
-                      top: 0,
-                      backgroundColor: "#defcfb",
-                      zIndex: 100,
-                      fontWeight: "bold",
-                      border: "2px solid #000",
-                      borderRadius: "3px",
-                      textAlign: "center",
-                    }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {teachers
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                  <TableRow
-                    key={row.id}
-                    style={{
-                      border: "1px solid #000",
-                    }}
-                  >
-                    {columns.map((column) => (
-                      <TableCell key={column.id} style={{ border: "1px solid #000" }}>
-                        {row[column.id]}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[20, 25, 100]}
-          component="div"
-          count={teachers.length}
-          rowsPerPage={rowsPerPage}
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50vh", marginTop: "120px" }}>
+      <div style={{ height: 500, width: "80%" }}>
+        <DataGrid
+          rows={teachers}
+          columns={columns}
+          pageSize={pageSize}
           page={page}
           onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+          onPageSizeChange={handleChangePageSize}
+          checkboxSelection
+          disableSelectionOnClick
+          components={{
+            Toolbar: GridToolbar,
+          }}
         />
-      </Paper>
+      </div>
     </div>
   );
 }

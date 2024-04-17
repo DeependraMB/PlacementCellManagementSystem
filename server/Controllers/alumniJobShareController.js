@@ -74,9 +74,9 @@ exports.updateJobStatus = async (req, res) => {
 exports.getJobById = async (req, res) => {
   try {
     const email = req.body.email;
-    console.log(email);
+    
     const job = await Job.find({ sharedBy: email });
-    console.log(job);
+    
     if (!job) {
       return res.status(404).json({ error: "Job not found" });
     }

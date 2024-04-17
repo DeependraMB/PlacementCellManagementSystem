@@ -39,8 +39,6 @@ const JobSharingForm = () => {
   const [jobTypeError, setJobTypeError] = useState("");
   const [companyWebError, setCompanyWebError] = useState("");
 
-  console.log(jobTitle);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const email = auth.email;
@@ -201,16 +199,16 @@ const JobSharingForm = () => {
   };
 
   const validateJobType = (value) => {
-    // let isValid = true;
+    let isValid = true;
 
-    // if (!value) {
-    //   setJobTypeError("Type of Employment is required");
-    //   isValid = false;
-    // } else {
-    //   setJobTypeError("");
-    // }
+    if (!value) {
+      setJobTypeError("Type of Employment is required");
+      isValid = false;
+    } else {
+      setJobTypeError("");
+    }
 
-    // return isValid;
+    return isValid;
   };
 
   const validateCompanyWeb = (value) => {
@@ -271,7 +269,7 @@ const JobSharingForm = () => {
               variant="outlined"
               margin="normal"
               name="jobTitle"
-              required
+              
               InputProps={{ style: blueBorder }}
               value={jobTitle}
               onChange={(e) => {
@@ -290,7 +288,7 @@ const JobSharingForm = () => {
               variant="outlined"
               margin="normal"
               name="jobDeadline"
-              required
+              
               InputProps={{ style: blueBorder }}
               value={jobDeadline}
               onChange={(e) => {
@@ -310,7 +308,7 @@ const JobSharingForm = () => {
               variant="outlined"
               margin="normal"
               name="jobDescription"
-              required
+              
               InputProps={{ style: blueBorder }}
               value={jobDescription}
               onChange={(e) => {
@@ -328,7 +326,7 @@ const JobSharingForm = () => {
               variant="outlined"
               margin="normal"
               name="requiredSkills"
-              required
+              
               InputProps={{ style: blueBorder }}
               value={reqSkills}
               onChange={(e) => {
@@ -346,7 +344,7 @@ const JobSharingForm = () => {
               variant="outlined"
               margin="normal"
               name="applicationLinkOrEmail"
-              required
+              
               InputProps={{ style: blueBorder }}
               value={jobApply}
               onChange={(e) => {

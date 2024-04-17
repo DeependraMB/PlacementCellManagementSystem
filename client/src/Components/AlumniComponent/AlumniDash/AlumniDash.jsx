@@ -225,7 +225,7 @@ export default function AlumniDash(props) {
             </NavLink> */}
 
             <NavLink
-              to="/teacher-change-password"
+              to="/alumni-change-password"
               className="nav-link"
               name="nav-link-change-password"
             >

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
@@ -14,7 +14,6 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Logo from "../../Logo/Logo";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -28,11 +27,6 @@ import { useAuth } from "../../../Context/AuthContext";
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import BookIcon from "@mui/icons-material/Book";
-import FeedbackIcon from "@mui/icons-material/Feedback";
-import HelpIcon from "@mui/icons-material/Help";
-import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ForumIcon from "@mui/icons-material/Forum";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import SchoolIcon from "@mui/icons-material/School";
@@ -44,6 +38,10 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import WorkIcon from "@mui/icons-material/Work";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
+import GradingIcon from "@mui/icons-material/Grading";
 
 
 const drawerWidth = 270;
@@ -116,14 +114,11 @@ export default function AdminDash(props) {
   useEffect(() => {
     const checkData = sessionStorage.getItem("auth");
     if (!checkData) {
-      // If not authenticated and no auth data in session storage, redirect to login
       navigate("/signin");
     }
   }, [auth.token, navigate, setAuth]);
 
   return (
-    //<ThemeProvider theme={theme}>
-
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
 
@@ -157,7 +152,7 @@ export default function AdminDash(props) {
                   display: "flex",
                   alignItems: "center",
                   [theme.breakpoints.down("md")]: {
-                    marginLeft: "auto", // Move to the right when screen size is below medium
+                    marginLeft: "auto",
                   },
                 }}
               >
@@ -222,33 +217,6 @@ export default function AdminDash(props) {
               </Tooltip>
             </NavLink>
 
-            {/* <ListItemButton>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Profile Settings"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton> */}
-            {/* <NavLink
-              to="/notifications"
-              className="nav-link"
-              name="nav-link-notifications"
-            >
-              <Tooltip title="Notifications Send" arrow placement="right">
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NotificationsActiveIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Notifications Send"
-                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-                  />
-                </ListItemButton>
-              </Tooltip>
-            </NavLink> */}
-
             <NavLink
               to="/student-management"
               className="nav-link"
@@ -275,7 +243,7 @@ export default function AdminDash(props) {
               <Tooltip title="Teachers Management" arrow placement="right">
                 <ListItemButton component={Link} href="/teacher-management">
                   <ListItemIcon>
-                    <BookIcon />
+                    <SupervisedUserCircleIcon />
                   </ListItemIcon>
                   <ListItemText
                     primary="Teachers Management"
@@ -285,9 +253,25 @@ export default function AdminDash(props) {
               </Tooltip>
             </NavLink>
 
+
+            <NavLink to="/adin-notifications" className="nav-link">
+              <Tooltip title="Notifications" arrow placement="right">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ExitToAppIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Notifications"
+                    sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
+                  />
+                </ListItemButton>
+              </Tooltip>
+            </NavLink>
+
+
             <ListItemButton onClick={handleNestedListClick}>
               <ListItemIcon>
-                <SchoolIcon />
+                <AddCircleOutlineOutlinedIcon />
               </ListItemIcon>
               <ListItemText>
                 <Typography variant="body1" style={{ fontWeight: "bold" }}>
@@ -297,7 +281,6 @@ export default function AdminDash(props) {
               {nestedListOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
 
-            {/* Nested List - Add Teacher and Add Alumni */}
             <Collapse in={nestedListOpen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <NavLink
@@ -354,7 +337,7 @@ export default function AdminDash(props) {
               <Tooltip title="Notes Management" arrow placement="right">
                 <ListItemButton>
                   <ListItemIcon>
-                    <FeedbackIcon />
+                    <DocumentScannerIcon />
                   </ListItemIcon>
                   <ListItemText
                     primary="Notes Management"
@@ -386,7 +369,7 @@ export default function AdminDash(props) {
               <Tooltip title="Feedbacks Analysis" arrow placement="right">
                 <ListItemButton>
                   <ListItemIcon>
-                    <HelpIcon />
+                    <GradingIcon />
                   </ListItemIcon>
                   <ListItemText
                     primary="Feedback"
@@ -410,7 +393,11 @@ export default function AdminDash(props) {
               </Tooltip>
             </NavLink>
 
-            <NavLink to="/workshop-list" className="nav-link" name="nav-link-workshop">
+            <NavLink
+              to="/workshop-list"
+              className="nav-link"
+              name="nav-link-workshop"
+            >
               <Tooltip title="Workshop" arrow placement="right">
                 <ListItemButton>
                   <ListItemIcon>
@@ -423,16 +410,6 @@ export default function AdminDash(props) {
                 </ListItemButton>
               </Tooltip>
             </NavLink>
-
-            {/* <ListItemButton>
-              <ListItemIcon>
-                <ContactSupportIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Aptitudetest Manage"
-                sx={{ "& .MuiTypography-root": { fontWeight: "bold" } }}
-              />
-            </ListItemButton> */}
 
             <ListItemButton>
               <ListItemIcon>
@@ -464,6 +441,5 @@ export default function AdminDash(props) {
         {props.children}
       </Box>
     </Box>
-    //</ThemeProvider>
   );
 }

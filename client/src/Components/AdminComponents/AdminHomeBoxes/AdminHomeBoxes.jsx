@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "../../../Context/AuthContext";
-import { Link } from "react-router-dom";
-import { Button, Card, Paper, Stack } from "@mui/material";
+import { Avatar, Card, Stack } from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
 import SchoolIcon from "@mui/icons-material/School";
 import CheckIcon from "@mui/icons-material/Check";
 import NoteIcon from "@mui/icons-material/Note";
 import axios from "axios";
-import AppWidgetSummary from "./AppWidgetSummary";
 import { useNavigate } from "react-router-dom";
-
 
 function AdminHomeBoxes() {
   const { auth, setAuth } = useAuth();
@@ -23,14 +18,13 @@ function AdminHomeBoxes() {
   const [totalNotes, setTotalNotes] = useState(0);
   const navigate = useNavigate();
 
-
   useEffect(() => {
     axios
       .get("http://localhost:5000/get-students/get-students")
       .then((response) => {
         if (Array.isArray(response.data)) {
-          const count = response.data.length; // Get the count from the array's length
-          setStudentCount(count); // Set the student count in the state variable
+          const count = response.data.length;
+          setStudentCount(count);
         } else {
           console.error("Response data is not an array:", response.data);
         }
@@ -43,8 +37,8 @@ function AdminHomeBoxes() {
       .get("http://localhost:5000/get-teachers/get-teachers")
       .then((response) => {
         if (Array.isArray(response.data)) {
-          const count = response.data.length; // Get the count from the array's length
-          setTeacherCount(count); // Set the student count in the state variable
+          const count = response.data.length;
+          setTeacherCount(count);
         } else {
           console.error("Response data is not an array:", response.data);
         }
@@ -53,15 +47,12 @@ function AdminHomeBoxes() {
         console.error("Error fetching student data:", error);
       });
 
-      // const notesResponse =  axios.get("http://localhost:5000/get-pdfs");
-      // setTotalNotes(notesResponse.data.length)
-
-      axios
+    axios
       .get("http://localhost:5000/get-pdfs")
       .then((response) => {
         if (Array.isArray(response.data)) {
-          const count = response.data.length; // Get the count from the array's length
-          setTotalNotes(count); // Set the student count in the state variable
+          const count = response.data.length;
+          setTotalNotes(count);
         } else {
           console.error("Response data is not an array:", response.data);
         }
@@ -71,13 +62,13 @@ function AdminHomeBoxes() {
       });
   }, []);
 
-  const handleClickOnAddTeacher=()=>{
+  const handleClickOnAddTeacher = () => {
     navigate("/add-teacher");
-  }
+  };
 
-  const handleClickOnStudentManagement=()=>{
-    navigate("/student-management")
-  }
+  const handleClickOnStudentManagement = () => {
+    navigate("/student-management");
+  };
 
   return (
     <div>
@@ -87,17 +78,26 @@ function AdminHomeBoxes() {
             <div className="card-body pb-0 d-flex justify-content-between">
               <div className="text-center">
                 {" "}
-                {/* Center text */}
                 <div
                   className="fs-3 fw-semibold"
-                  style={{ paddingTop: "40px" }}
+                  style={{ paddingTop: "40px", color: "white" }}
                 >
                   {studentCount}
                   <span className="fs-6 fw-normal"></span>
                 </div>
-                <div className="">Students</div>
+                <div className=""  style={{color : "white"}}>Students</div>
               </div>
-              <PeopleIcon fontSize="large" /> {/* Increase icon size */}
+              <Avatar
+                variant="rounded"
+                sx={{
+                  bgcolor: "primary.dark",
+                  color: "primary.contrastText",
+                  width: 56,
+                  height: 56,
+                }}
+              >
+                <PeopleIcon fontSize="large" />
+              </Avatar>
             </div>
             <div className="chart-wrapper mt-3 mx-3" style={{ height: 70 }}>
               <canvas
@@ -119,8 +119,6 @@ function AdminHomeBoxes() {
           <div className="card bg-info text-high-emphasis-inverse mb-4">
             <div className="card-body pb-0 d-flex justify-content-between align-items-start justify-content-center">
               <div className="text-center">
-                {" "}
-                {/* Center text */}
                 <div
                   className="fs-3 fw-semibold"
                   style={{ paddingTop: "40px" }}
@@ -130,7 +128,17 @@ function AdminHomeBoxes() {
                 </div>
                 <div>Teachers</div>
               </div>
-              <SchoolIcon fontSize="large" /> {/* Increase icon size */}
+              <Avatar
+                variant="rounded"
+                sx={{
+                  bgcolor: "primary.light",
+                  color: "black",
+                  width: 56,
+                  height: 56,
+                }}
+              >
+                <SchoolIcon fontSize="large" />
+              </Avatar>
             </div>
             <div className="chart-wrapper mt-3 mx-3" style={{ height: 70 }}>
               <canvas
@@ -139,10 +147,10 @@ function AdminHomeBoxes() {
                 role="img"
                 width={312}
                 style={{
-                  height: "69.5906px",
+                  height: "70px", // Adjusted height to match the wrapper height
                   display: "block",
                   boxSizing: "border-box",
-                  width: "182.456px",
+                  width: "100%", // Adjusted width to fill the container
                 }}
               />
               <div
@@ -152,6 +160,7 @@ function AdminHomeBoxes() {
             </div>
           </div>
         </div>
+
         <div className="col-lg-3 col-sm-6">
           <div className="card bg-warning text-high-emphasis-inverse mb-4">
             <div className="card-body pb-0 d-flex justify-content-between align-items-start justify-content-center">
@@ -167,7 +176,17 @@ function AdminHomeBoxes() {
                 </div>
                 <div>Placed Students</div>
               </div>
-              <CheckIcon fontSize="large" /> {/* Increase icon size */}
+              <Avatar
+                variant="rounded"
+                sx={{
+                  bgcolor: "warning.light",
+                  color: "dark.contrastText",
+                  width: 56,
+                  height: 56,
+                }}
+              >
+                <CheckIcon fontSize="large" />
+              </Avatar>
             </div>
             <div className="chart-wrapper mt-3" style={{ height: 70 }}>
               <canvas
@@ -190,7 +209,6 @@ function AdminHomeBoxes() {
             <div className="card-body pb-0 d-flex justify-content-between align-items-start justify-content-center">
               <div className="text-center">
                 {" "}
-                {/* Center text */}
                 <div
                   className="fs-4 fw-semibold"
                   style={{ paddingTop: "40px" }}
@@ -200,7 +218,17 @@ function AdminHomeBoxes() {
                 </div>
                 <div>Total Notes</div>
               </div>
-              <NoteIcon fontSize="large" /> {/* Increase icon size */}
+              <Avatar
+                variant="rounded"
+                sx={{
+                  bgcolor: "error.light",
+                  color: "black",
+                  width: 56,
+                  height: 56,
+                }}
+              >
+                <NoteIcon fontSize="large" />
+              </Avatar>
             </div>
             <div className="chart-wrapper mt-3 mx-3" style={{ height: 70 }}>
               <canvas
@@ -220,20 +248,17 @@ function AdminHomeBoxes() {
         </div>
       </div>
 
-      <Grid container spacing={3} justifyContent="center" >
-        <Grid xs={12} sm={5} item >
+      <Grid container spacing={3} justifyContent="center">
+        <Grid xs={12} sm={5} item>
           <Card
             component={Stack}
-            
             direction="row"
             sx={{
               px: 3,
               py: 5,
               borderRadius: 2,
-              
             }}
             onClick={handleClickOnAddTeacher}
-            
           >
             <Stack spacing={0.5}>
               <Typography variant="h4"></Typography>
@@ -244,29 +269,24 @@ function AdminHomeBoxes() {
             </Stack>
           </Card>
         </Grid>
-        <Grid xs={12} sm={5}  item>
+        <Grid xs={12} sm={5} item>
           <Card
             component={Stack}
-            
             direction="row"
             sx={{
               px: 3,
               py: 5,
               borderRadius: 2,
-              
             }}
             onClick={handleClickOnStudentManagement}
           >
             <Stack spacing={0.5}>
-              
-
               <Typography variant="subtitle2" sx={{ color: "text.disabled" }}>
                 Student Management
               </Typography>
             </Stack>
           </Card>
         </Grid>
-        
       </Grid>
     </div>
   );

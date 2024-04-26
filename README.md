@@ -18,9 +18,9 @@ This project is a web application developed to streamline and optimize the place
 ## Installation
 
 1. Clone the repository: `git clone <repository-url>`
-2. Navigate to the project directory: `cd online-placement-cell`
-3. Install dependencies: `npm install`
-4. Start the server: `npm start`
+2. Install dependencies: `npm install`
+3. Navigate to the project directory: `cd server`
+4. Start the server: `npm run dev`
 
 ## Usage
 

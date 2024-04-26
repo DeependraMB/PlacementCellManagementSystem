@@ -254,7 +254,7 @@ export default function AdminDash(props) {
             </NavLink>
 
 
-            <NavLink to="/adin-notifications" className="nav-link">
+            <NavLink to="/admin-notifications" className="nav-link">
               <Tooltip title="Notifications" arrow placement="right">
                 <ListItemButton>
                   <ListItemIcon>

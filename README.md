@@ -28,3 +28,6 @@ This project is a web application developed to streamline and optimize the place
 2. Register/login based on your role (student, alumni, teacher, admin).
 3. Explore the various modules and functionalities available.
 
+### Front Page
+
+![Screenshot](./screenshots/a.png)

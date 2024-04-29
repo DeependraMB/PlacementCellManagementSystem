@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const examSchema = new mongoose.Schema({
   email: { type: String, required: true },
@@ -14,6 +14,6 @@ const examSchema = new mongoose.Schema({
   numberOfQuestions: { type: Number, required: true },
 });
 
-const Exam = mongoose.model('Exam', examSchema);
+const Exam = mongoose.model("Exam", examSchema);
 
 module.exports = Exam;

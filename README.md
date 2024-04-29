@@ -31,3 +31,27 @@ This project is a web application developed to streamline and optimize the place
 ### Front Page
 
 ![Screenshot](./screenshots/a.png)
+
+### Dashboard
+
+![Screenshot](./screenshots/b.png)
+
+### Profile Management
+
+![Screenshot](./screenshots/c.png)
+
+### ATS Checker
+
+![Screenshot](./screenshots/d.png)
+
+### Real Time Chat
+
+![Screenshot](./screenshots/e.png)
+
+### Student Management
+
+![Screenshot](./screenshots/f.png)
+
+### Feedback Analysis
+
+![Screenshot](./screenshots/g.png)
